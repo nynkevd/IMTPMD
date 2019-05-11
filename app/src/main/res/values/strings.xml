@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">IMTPMD</string>
+    <string name="welkom">Welkom!</string>
+    <string name="begin_nu_met_het_toevoegen_van_pillen_aan_jouw_collectie">Begin nu met het toevoegen van pillen aan jouw collectie.</string>
+    <string name="verder">VERDER</string>
+    <string name="overslaan">overslaan</string>
 </resources>
