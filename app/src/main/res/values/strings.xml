@@ -4,4 +4,10 @@
     <string name="begin_nu_met_het_toevoegen_van_pillen_aan_jouw_collectie">Begin nu met het toevoegen van pillen aan jouw collectie.</string>
     <string name="verder">VERDER</string>
     <string name="overslaan">overslaan</string>
+    <string name="nav_home">Home</string>
+    <string name="nav_kalender">Kalender</string>
+    <string name="nav_instellingen">Instellingen</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

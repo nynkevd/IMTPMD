@@ -6,11 +6,25 @@
     android:layout_height="match_parent"
     tools:context=".DashboardActivity">
 
-    <TextView
-        android:id="@+id/textView3"
-        android:layout_width="wrap_content"
-        android:layout_height="12dp"
-        android:text="dashboard"
-        tools:layout_editor_absoluteX="176dp"
-        tools:layout_editor_absoluteY="328dp" />
+    <android.support.design.widget.BottomNavigationView
+        android:id="@+id/dashboard_nav"
+        android:layout_width="match_parent"
+        android:layout_height="56dp"
+        android:background="@color/colorPrimary"
+        app:layout_constraintBottom_toBottomOf="parent"
+        tools:layout_editor_absoluteX="0dp"
+        app:itemIconTint="@color/nav_item_colors"
+        app:itemTextColor="@color/nav_item_colors"
+        app:menu="@menu/nav_items"/>
+
+    <FrameLayout
+        android:id="@+id/dashboard_frame"
+        android:layout_width="395dp"
+        android:layout_height="659dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+    </FrameLayout>
 </android.support.constraint.ConstraintLayout>
