@@ -4,7 +4,10 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.method.ScrollingMovementMethod;
 import android.util.Log;
+import android.view.View;
+import android.widget.Button;
 import android.widget.SearchView;
 import android.widget.TextView;
 
@@ -13,14 +16,24 @@ import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
-    private List<String> pills = Arrays.asList("hallo", "hoi", "boe");
+    private List<String> pills = Arrays.asList("hallo", "hoi", "boe", "yoyo", "anouk", "nynke", "test", "goedemiddag", "lijst", "uitbreiden");
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        Button naarhome = (Button) findViewById(R.id.naarhome);
+
+        naarhome.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view){
+                startActivity(new Intent(MainActivity.this, DashboardActivity.class));
+            }
+        });
+
         TextView searchmatches = (TextView)findViewById(R.id.matchPills);
+        searchmatches.setMovementMethod(new ScrollingMovementMethod());
         for(int i = 0; i < pills.size(); i++){
             searchmatches.append(pills.get(i) + "\n");
         }
