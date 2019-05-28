@@ -6,8 +6,13 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
 import android.widget.FrameLayout;
+
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 
 public class DashboardActivity extends AppCompatActivity {
 
@@ -17,6 +22,8 @@ public class DashboardActivity extends AppCompatActivity {
     private HomeFragment homeFragment;
     private CalendarFragment calendarFragment;
     private SettingsFragment settingsFragment;
+
+    private String date;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,7 +37,10 @@ public class DashboardActivity extends AppCompatActivity {
         calendarFragment = new CalendarFragment();
         settingsFragment = new SettingsFragment();
 
+        date = new SimpleDateFormat("EEEE").format(new Date()); // Toevoegen dat de dag met een hoofdletter is
+
         setFragment(homeFragment);
+        setTitle(date);
 
         DashboardNav.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
@@ -38,14 +48,17 @@ public class DashboardActivity extends AppCompatActivity {
                 switch(menuItem.getItemId()){
                     case R.id.nav_home:
                         setFragment(homeFragment);
+                        setTitle(date);
                         return true;
 
                     case R.id.nav_calendar:
                         setFragment(calendarFragment);
+                        setTitle("Kalender");
                         return true;
 
                     case R.id.nav_settings:
                         setFragment(settingsFragment);
+                        setTitle("Instellingen");
                         return true;
 
                     default:
