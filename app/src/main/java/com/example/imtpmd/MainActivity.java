@@ -6,17 +6,24 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.SearchView;
+import android.widget.TextView;
 
 import java.util.Arrays;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
+    private List<String> pills = Arrays.asList("hallo", "hoi", "boe");
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        TextView searchmatches = (TextView)findViewById(R.id.matchPills);
+        for(int i = 0; i < pills.size(); i++){
+            searchmatches.append(pills.get(i) + "\n");
+        }
 
         SharedPreferences prefs = getSharedPreferences("prefs", MODE_PRIVATE);
         boolean firstStart = prefs.getBoolean("firstStart", true);
@@ -58,10 +65,12 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void findMatches(String search){
-        List<String> pills = Arrays.asList("hallo", "hoi", "boe");
+        TextView searchmatches = (TextView)findViewById(R.id.matchPills);
+        searchmatches.setText("");
 
         for(int i = 0; i < pills.size() ; i++){
             if (pills.get(i).startsWith(search)){
+                searchmatches.append(pills.get(i) + "\n");
                 Log.d("pills",pills.get(i));
             }
         }
