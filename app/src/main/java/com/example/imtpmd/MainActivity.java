@@ -4,6 +4,11 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
+import android.widget.SearchView;
+
+import java.util.Arrays;
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -19,6 +24,26 @@ public class MainActivity extends AppCompatActivity {
         if (firstStart){
             showStartScreen();
         }
+
+        SearchView searchView = (SearchView) findViewById(R.id.searchview);
+
+        searchView.setOnQueryTextListener(
+                new SearchView.OnQueryTextListener() {
+                    @Override
+                    public boolean onQueryTextSubmit(String s) {
+                        Log.d("searchsubmit", s);
+                        return false;
+                    }
+
+                    @Override
+                    public boolean onQueryTextChange(String s) {
+                        Log.d("searchchange", s);
+                        findMatches(s);
+                        return false;
+                    }
+                }
+        );
+
     }
 
     private void showStartScreen() {
@@ -30,5 +55,15 @@ public class MainActivity extends AppCompatActivity {
         editor.apply();
 
         startActivity(myIntent);
+    }
+
+    private void findMatches(String search){
+        List<String> pills = Arrays.asList("hallo", "hoi", "boe");
+
+        for(int i = 0; i < pills.size() ; i++){
+            if (pills.get(i).startsWith(search)){
+                Log.d("pills",pills.get(i));
+            }
+        }
     }
 }
