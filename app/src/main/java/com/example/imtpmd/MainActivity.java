@@ -1,5 +1,6 @@
 package com.example.imtpmd;
 
+import android.arch.persistence.room.Room;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
@@ -87,5 +88,22 @@ public class MainActivity extends AppCompatActivity {
                 Log.d("pills",pills.get(i));
             }
         }
+    }
+
+    private void insertIntoDatabase(String name, int milligram, String time){
+        // DEze database wordt ook in HomeFragment aangemaakt, dus ik weet niet of we het ergens 'globaal' kunnen doen?
+        AppDatabase db = Room
+                .databaseBuilder(getApplicationContext(), AppDatabase.class, "medicine")
+                .allowMainThreadQueries() // Dit moet nog weg!!!
+                .build();
+
+        Medicine m = new Medicine();
+        m.setMilligram(milligram);
+        m.setName(name);
+        m.setTime(time);
+
+        db.medicineDAO().insertAll(m);
+
+        Log.d("Medicine", "Naar de database geschreven");
     }
 }
