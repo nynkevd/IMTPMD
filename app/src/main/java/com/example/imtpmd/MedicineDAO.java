@@ -12,8 +12,9 @@ public interface MedicineDAO {
     @Query("SELECT * FROM medicine")
     List<Medicine> loadAll();
 
-    @Query("SELECT * FROM medicine WHERE time = :time ")
-    List<Medicine> loadByTime(String time);
+    // Selecteert medicijnen op basis van de tijd dat het genomen moet worden
+    @Query("SELECT * FROM medicine WHERE time >= :timeStart AND time < :timeEnd")
+    List<Medicine> loadByTime(int timeStart, int timeEnd);
 
     @Insert
     void insertAll(Medicine... medicines);

@@ -24,6 +24,11 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+//        insertIntoDatabase("ochtendMed", 40, 9);
+//        insertIntoDatabase("middagMed", 40, 15);
+//        insertIntoDatabase("avondMed", 40, 21);
+//        insertIntoDatabase("test", 100, 10);
+
         Button naarhome = (Button) findViewById(R.id.naarhome);
 
         naarhome.setOnClickListener(new View.OnClickListener(){
@@ -90,7 +95,7 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    private void insertIntoDatabase(String name, int milligram, String time){
+    private void insertIntoDatabase(String name, int milligram, int time){
         // DEze database wordt ook in HomeFragment aangemaakt, dus ik weet niet of we het ergens 'globaal' kunnen doen?
         AppDatabase db = Room
                 .databaseBuilder(getApplicationContext(), AppDatabase.class, "medicine")

@@ -34,17 +34,17 @@ public class HomeFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_home, container, false);
 
         //Ochtend
-        ArrayList<String> ochtendList = getMedicine("ochtend");
+        ArrayList<String> ochtendList = getMedicine(6, 12);
 
         vulList("pil_list_ochtend", ochtendList, view);
 
         //Middag
-        ArrayList<String> middagList = getMedicine("middag");
+        ArrayList<String> middagList = getMedicine(12, 18);
 
         vulList("pil_list_middag", middagList, view);
 
         //Avond
-        ArrayList<String> avondList = getMedicine("avond");
+        ArrayList<String> avondList = getMedicine(18, 24);
 
         vulList("pil_list_avond", avondList, view);
 
@@ -63,13 +63,13 @@ public class HomeFragment extends Fragment {
     }
 
     // Geeft een lijst van de namen van de medicijnen terug voor het tijdstip dat is opgegeven
-    private ArrayList<String> getMedicine(String time){
+    private ArrayList<String> getMedicine(int timeStart, int timeEnd){
         AppDatabase db = Room
                 .databaseBuilder(getActivity(), AppDatabase.class, "medicine")
                 .allowMainThreadQueries() // Dit moet nog weg!!!
                 .build();
 
-        List<Medicine> medicineList = db.medicineDAO().loadByTime(time);
+        List<Medicine> medicineList = db.medicineDAO().loadByTime(timeStart, timeEnd);
 
         ArrayList<String> namen = new ArrayList<>();
 
