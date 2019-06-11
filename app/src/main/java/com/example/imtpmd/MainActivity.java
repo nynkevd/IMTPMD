@@ -12,6 +12,8 @@ import android.widget.Button;
 import android.widget.SearchView;
 import android.widget.TextView;
 
+import com.google.gson.Gson;
+
 import java.util.Arrays;
 import java.util.List;
 
@@ -70,7 +72,40 @@ public class MainActivity extends AppCompatActivity {
                 }
         );
 
+        Log.d("tessst", "tessst");
+
+        NetworkManager.getInstance(this).getRequest("http://136.144.230.97:8090/api/medication?api_token=CilZjPDfkHDmb29qcJkqBS7bB2cup9T7Onqcmfaqt027QhvpqBhFvLinJ6Dp", new VolleyCallback(){
+            @Override
+            public void onSuccess(String result) { //de anonieme klasse gaat nu dingen doen
+//                Log.d("tessst", "HET WERKT");
+            Gson gson = new Gson();
+            testApi testpi = gson.fromJson(result, testApi.class);
+
+            Log.d("tessst", result);
+
+            }
+        });
+
+//        NetworkManager.getInstance(getApplicationContext()).getRequest("http://136.144.230.97:8080/api/userinfo/anouk?api_token=rx7Mi675A1WDEvZPsGnrgvwkCEeOKlrX7rIPoXocluBKnupp9A02OLz7QcSL", new VolleyCallback(){
+//            @Override
+//            public void onSuccess(String result) { //de anonieme klasse gaat nu dingen doen
+//                Gson gson = new Gson();
+//
+//                testApi testpi = gson.fromJson(result, testApi.class);
+//
+//                Log.d("tessst", testpi.getName());
+//                Log.d("tessst", "tessst");
+//
+//           }
+//        });
+
+
+
     }
+
+//    private void test(){
+//
+//    }
 
     private void showStartScreen() {
         Intent myIntent = new Intent(getBaseContext(), WelcomeActivity.class);
