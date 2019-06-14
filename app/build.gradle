@@ -37,5 +37,7 @@ dependencies {
     annotationProcessor "android.arch.persistence.room:compiler:1.1.1"
 
     // Gson & Volley > API
+    implementation 'com.google.code.gson:gson:2.8.5'
+    implementation 'com.android.volley:volley:1.1.1'
 
 }

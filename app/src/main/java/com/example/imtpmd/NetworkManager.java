@@ -11,7 +11,7 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 
 public class NetworkManager {
-    private static final String TAG = "NetworkManager";
+    private static final String TAG = "NetworkManagerERROR";
     private static NetworkManager instance = null;
 
     public RequestQueue requestQueue;
@@ -45,6 +45,7 @@ public class NetworkManager {
             @Override
             public void onErrorResponse(VolleyError error) {
                 Log.d(TAG, "oeps");
+                Log.d(TAG, error.toString());
             }
         }); //als het misgaat wordt dit uitgevoerd
 
