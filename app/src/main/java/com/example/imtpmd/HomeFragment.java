@@ -8,8 +8,11 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.CheckBox;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -19,7 +22,6 @@ import java.util.List;
  * A simple {@link Fragment} subclass.
  */
 public class HomeFragment extends Fragment {
-
 
     public HomeFragment() {
         // Required empty public constructor
@@ -34,17 +36,17 @@ public class HomeFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_home, container, false);
 
         //Ochtend
-        ArrayList<String> ochtendList = getMedicine(6, 12);
+        ArrayList<Medicine> ochtendList = getMedicine(6, 12);
 
         vulList("pil_list_ochtend", ochtendList, view);
 
         //Middag
-        ArrayList<String> middagList = getMedicine(12, 18);
+        ArrayList<Medicine> middagList = getMedicine(12, 18);
 
         vulList("pil_list_middag", middagList, view);
 
         //Avond
-        ArrayList<String> avondList = getMedicine(18, 24);
+        ArrayList<Medicine> avondList = getMedicine(18, 24);
 
         vulList("pil_list_avond", avondList, view);
 
@@ -55,15 +57,24 @@ public class HomeFragment extends Fragment {
     private void vulList(String id, ArrayList list, View view){
         int listId = getResources().getIdentifier(id, "id", getContext().getPackageName());
 
-        ArrayAdapter<String> listAdapter= new ArrayAdapter<String>(getActivity(),android.R.layout.simple_list_item_1,list);
+        MedicineListAdapter medicineAdapter = new MedicineListAdapter(getActivity(), list);
 
         ListView listView = view.findViewById(listId);
 
-        listView.setAdapter(listAdapter);
+        listView.setAdapter(medicineAdapter);
+
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                Toast.makeText(getActivity(), "Je hebt geklikt op iets, wat een feest", Toast.LENGTH_LONG).show();
+            }
+        });
+
+
     }
 
     // Geeft een lijst van de namen van de medicijnen terug voor het tijdstip dat is opgegeven
-    private ArrayList<String> getMedicine(int timeStart, int timeEnd){
+    private ArrayList<Medicine> getMedicine(int timeStart, int timeEnd){
         AppDatabase db = Room
                 .databaseBuilder(getActivity(), AppDatabase.class, "medicine")
                 .allowMainThreadQueries() // Dit moet nog weg!!!
@@ -71,10 +82,11 @@ public class HomeFragment extends Fragment {
 
         List<Medicine> medicineList = db.medicineDAO().loadByTime(timeStart, timeEnd);
 
-        ArrayList<String> namen = new ArrayList<>();
+        ArrayList<Medicine> namen = new ArrayList<>();
 
-        for(Medicine item : medicineList ){
-            namen.add(item.getName());
+        for(Medicine medicine : medicineList ){
+            namen.add(medicine);
+
         }
 
         return namen;

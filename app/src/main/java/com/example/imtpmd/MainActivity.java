@@ -32,11 +32,11 @@ public class MainActivity extends AppCompatActivity {
                     StrictMode.ThreadPolicy.Builder().permitAll().build();
             StrictMode.setThreadPolicy(policy);
         }
-
-//        insertIntoDatabase("ochtendMed", 40, 9);
-//        insertIntoDatabase("middagMed", 40, 15);
-//        insertIntoDatabase("avondMed", 40, 21);
-//        insertIntoDatabase("test", 100, 10);
+//
+//        insertIntoDatabase("ochtendMed", 40, 9, true);
+//        insertIntoDatabase("middagMed", 40, 15, false);
+//        insertIntoDatabase("avondMed", 40, 21, true);
+//        insertIntoDatabase("test", 100, 10, false);
 
         Button naarhome = (Button) findViewById(R.id.naarhome);
 
@@ -110,10 +110,6 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-//    private void test(){
-//
-//    }
-
     private void showStartScreen() {
         Intent myIntent = new Intent(getBaseContext(), WelcomeActivity.class);
 
@@ -137,7 +133,7 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    private void insertIntoDatabase(String name, int milligram, int time){
+    private void insertIntoDatabase(String name, int milligram, int time, Boolean isChecked){
         // DEze database wordt ook in HomeFragment aangemaakt, dus ik weet niet of we het ergens 'globaal' kunnen doen?
         AppDatabase db = Room
                 .databaseBuilder(getApplicationContext(), AppDatabase.class, "medicine")
@@ -148,8 +144,9 @@ public class MainActivity extends AppCompatActivity {
         m.setMilligram(milligram);
         m.setName(name);
         m.setTime(time);
+        m.setChecked(isChecked);
 
-        //db.medicineDAO().insertAll(m);
+        db.medicineDAO().insertAll(m);
 
         Log.d("Medicine", "Naar de database geschreven");
     }
