@@ -9,21 +9,38 @@ import android.os.Bundle;
 import android.text.method.ScrollingMovementMethod;
 import android.util.Log;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ListView;
 import android.widget.SearchView;
 import android.widget.TextView;
 
 import com.google.gson.Gson;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
-    private List<String> pills = Arrays.asList("hallo", "hoi", "boe", "yoyo", "anouk", "nynke", "test", "goedemiddag", "lijst", "uitbreiden");
+    private ListView searchmatches;
+    private List<MedicationName> allMedicationNames;
+
+    Gson gson = new Gson();
+    private AppDatabase db;
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        // DEze database wordt ook in HomeFragment aangemaakt, dus ik weet niet of we het ergens 'globaal' kunnen doen?
+         db = Room
+                .databaseBuilder(getApplicationContext(), AppDatabase.class, "medicine")
+                .allowMainThreadQueries() // Dit moet nog weg!!!
+                .build();
+
+        allMedicationNames = new ArrayList<MedicationName>();
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         if (android.os.Build.VERSION.SDK_INT > 9)
@@ -32,6 +49,8 @@ public class MainActivity extends AppCompatActivity {
                     StrictMode.ThreadPolicy.Builder().permitAll().build();
             StrictMode.setThreadPolicy(policy);
         }
+
+        ListView medsList = findViewById(R.id.medslistview);
 //
 //        insertIntoDatabase("ochtendMed", 40, 9, true);
 //        insertIntoDatabase("middagMed", 40, 15, false);
@@ -47,12 +66,6 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        TextView searchmatches = (TextView)findViewById(R.id.matchPills);
-        searchmatches.setMovementMethod(new ScrollingMovementMethod());
-        for(int i = 0; i < pills.size(); i++){
-            searchmatches.append(pills.get(i) + "\n");
-        }
-
         SharedPreferences prefs = getSharedPreferences("prefs", MODE_PRIVATE);
         boolean firstStart = prefs.getBoolean("firstStart", true);
 
@@ -60,54 +73,11 @@ public class MainActivity extends AppCompatActivity {
             showStartScreen();
         }
 
-        SearchView searchView = (SearchView) findViewById(R.id.searchview);
-
-        searchView.setOnQueryTextListener(
-                new SearchView.OnQueryTextListener() {
-                    @Override
-                    public boolean onQueryTextSubmit(String s) {
-                        Log.d("searchsubmit", s);
-                        return false;
-                    }
-
-                    @Override
-                    public boolean onQueryTextChange(String s) {
-                        Log.d("searchchange", s);
-                        findMatches(s);
-                        return false;
-                    }
-                }
-        );
-
-        Log.d("tessst", "tessst");
-
-        NetworkManager.getInstance(this).getRequest("http://136.144.230.97:8090/api/medication?api_token=CilZjPDfkHDmb29qcJkqBS7bB2cup9T7Onqcmfaqt027QhvpqBhFvLinJ6Dp", new VolleyCallback(){
-            @Override
-            public void onSuccess(String result) { //de anonieme klasse gaat nu dingen doen
-//                Log.d("tessst", "HET WERKT");
-            Gson gson = new Gson();
-            testApi testpi = gson.fromJson(result, testApi.class);
-
-            Log.d("tessst", result);
-
-            }
-        });
-
-//        NetworkManager.getInstance(getApplicationContext()).getRequest("http://136.144.230.97:8080/api/userinfo/anouk?api_token=rx7Mi675A1WDEvZPsGnrgvwkCEeOKlrX7rIPoXocluBKnupp9A02OLz7QcSL", new VolleyCallback(){
-//            @Override
-//            public void onSuccess(String result) { //de anonieme klasse gaat nu dingen doen
-//                Gson gson = new Gson();
-//
-//                testApi testpi = gson.fromJson(result, testApi.class);
-//
-//                Log.d("tessst", testpi.getName());
-//                Log.d("tessst", "tessst");
-//
-//           }
-//        });
-
-
-
+        //Database vullen
+        db.medicationNameDAO().deleteAll();
+        for (int i = 1; i <= 25; i++){
+            this.handleApiCall(i);
+        }
     }
 
     private void showStartScreen() {
@@ -121,25 +91,19 @@ public class MainActivity extends AppCompatActivity {
         startActivity(myIntent);
     }
 
-    private void findMatches(String search){
-        TextView searchmatches = (TextView)findViewById(R.id.matchPills);
-        searchmatches.setText("");
-
-        for(int i = 0; i < pills.size() ; i++){
-            if (pills.get(i).startsWith(search)){
-                searchmatches.append(pills.get(i) + "\n");
-                Log.d("pills",pills.get(i));
-            }
-        }
-    }
+//    private void findMatches(String search){
+//        TextView searchmatches = (TextView)findViewById(R.id.matchPills);
+//        searchmatches.setText("");
+//
+//        for(int i = 0; i < meds.size() ; i++){
+//            if (meds.get(i).startsWith(search)){
+//                searchmatches.append(meds.get(i) + "\n");
+//                Log.d("meds",meds.get(i));
+//            }
+//        }
+//    }
 
     private void insertIntoDatabase(String name, int milligram, int time, Boolean isChecked){
-        // DEze database wordt ook in HomeFragment aangemaakt, dus ik weet niet of we het ergens 'globaal' kunnen doen?
-        AppDatabase db = Room
-                .databaseBuilder(getApplicationContext(), AppDatabase.class, "medicine")
-                .allowMainThreadQueries() // Dit moet nog weg!!!
-                .build();
-
         Medicine m = new Medicine();
         m.setMilligram(milligram);
         m.setName(name);
@@ -149,5 +113,27 @@ public class MainActivity extends AppCompatActivity {
         db.medicineDAO().insertAll(m);
 
         Log.d("Medicine", "Naar de database geschreven");
+    }
+
+    private void handleApiCall(int id){
+        int callid = id;
+        NetworkManager.getInstance(this).getRequest("http://136.144.230.97:8090/api/medicationname/" + String.valueOf(callid) + "?api_token=CilZjPDfkHDmb29qcJkqBS7bB2cup9T7Onqcmfaqt027QhvpqBhFvLinJ6Dp", new VolleyCallback() {
+            @Override
+            public void onSuccess(String result) { //de anonieme klasse gaat nu dingen doen
+                testApi testapi = gson.fromJson(result, testApi.class);
+//                Log.d("tessst", "Toevoegen aan db:: " + testapi.getName());
+                handleApiResult(testapi.getName());
+            }
+        });
+    }
+
+    private void handleApiResult(String name){
+//        Log.d("tessst", "AAAAAAAAAA");
+        MedicationName mName = new MedicationName();
+        mName.setName(name);
+
+        db.medicationNameDAO().insertAll(mName);
+        List<MedicationName> medicationNamesFromApi= db.medicationNameDAO().loadAll();
+//        Log.d("list", allMedicationNames.get(1).toString());
     }
 }

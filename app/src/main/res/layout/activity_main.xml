@@ -17,20 +17,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <TextView
-        android:id="@+id/matchPills"
-        android:layout_width="290dp"
-        android:layout_height="418dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="36dp"
-        android:layout_marginEnd="8dp"
-        android:textColor="#000000"
-        android:textSize="24sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.495"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/searchview" />
-
     <Button
         android:id="@+id/naarhome"
         android:layout_width="wrap_content"
@@ -43,4 +29,13 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent" />
+
+    <ListView
+        android:id="@+id/medslistview"
+        android:layout_width="243dp"
+        android:layout_height="444dp"
+        android:layout_marginTop="8dp"
+        app:layout_constraintBottom_toTopOf="@+id/naarhome"
+        app:layout_constraintTop_toBottomOf="@+id/searchview"
+        tools:layout_editor_absoluteX="83dp" />
 </android.support.constraint.ConstraintLayout>
