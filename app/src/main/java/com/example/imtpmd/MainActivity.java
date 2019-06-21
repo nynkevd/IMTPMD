@@ -1,9 +1,16 @@
 package com.example.imtpmd;
 
+import android.arch.lifecycle.Observer;
+import android.arch.lifecycle.ViewModelProviders;
+import android.arch.persistence.db.SupportSQLiteOpenHelper;
+import android.arch.persistence.room.DatabaseConfiguration;
+import android.arch.persistence.room.InvalidationTracker;
 import android.arch.persistence.room.Room;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.StrictMode;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -20,6 +27,7 @@ import static java.lang.Integer.parseInt;
 
 
 public class MainActivity extends AppCompatActivity {
+    private MedicineViewModel medicineViewModel;
 
     private ListView searchmatches;
     private List<String> allMedicationNames;
@@ -43,19 +51,15 @@ public class MainActivity extends AppCompatActivity {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        medicineViewModel = ViewModelProviders.of(this).get(MedicineViewModel.class);
+
         if (android.os.Build.VERSION.SDK_INT > 9)
         {
             StrictMode.ThreadPolicy policy = new
                     StrictMode.ThreadPolicy.Builder().permitAll().build();
             StrictMode.setThreadPolicy(policy);
         }
-
-        ListView medsList = findViewById(R.id.medslistview);
-//
-//        insertIntoDatabase("ochtendMed", 40, 9, true);
-//        insertIntoDatabase("middagMed", 40, 15, false);
-//        insertIntoDatabase("avondMed", 40, 21, true);
-//        insertIntoDatabase("test", 100, 10, false);
 
         Button naarhome = (Button) findViewById(R.id.naarhome);
 
@@ -73,23 +77,46 @@ public class MainActivity extends AppCompatActivity {
             showStartScreen();
         }
 
-//        NetworkManager.getInstance(this).getRequest("http://136.144.230.97:8090/api/medicationcount?api_token=CilZjPDfkHDmb29qcJkqBS7bB2cup9T7Onqcmfaqt027QhvpqBhFvLinJ6Dp", new VolleyCallback() {
+
+        SearchView searchView = (SearchView) findViewById(R.id.searchview);
+
+        searchView.setOnQueryTextListener(
+                new SearchView.OnQueryTextListener() {
+                    @Override
+                    public boolean onQueryTextSubmit(String s) {
+                        Log.d("searchsubmit", s);
+                        return false;
+                    }
+
+                    @Override
+                    public boolean onQueryTextChange(String s) {
+                        Log.d("searchchange", s);
+                        findMatches(s);
+                        return false;
+                    }
+                }
+        );
+
+        Log.d("tessst", "tessst");
+
+//        NetworkManager.getInstance(this).getRequest("http://136.144.230.97:8090/api/medication?api_token=CilZjPDfkHDmb29qcJkqBS7bB2cup9T7Onqcmfaqt027QhvpqBhFvLinJ6Dp", new VolleyCallback(){
+//            @Override
+//            public void onSuccess(String result) { //de anonieme klasse gaat nu dingen doen
+////                Log.d("tessst", "HET WERKT");
+//            Gson gson = new Gson();
+//            testApi testpi = gson.fromJson(result, testApi.class);
+//
+//            Log.d("tessst", result);
+//
+//            }
+//        });
+
+//        NetworkManager.getInstance(getApplicationContext()).getRequest("http://136.144.230.97:8080/api/userinfo/anouk?api_token=rx7Mi675A1WDEvZPsGnrgvwkCEeOKlrX7rIPoXocluBKnupp9A02OLz7QcSL", new VolleyCallback(){
 //            @Override
 //            public void onSuccess(String result) {
 //                medicationCount = parseInt(result);
 //            }
 //        });
-
-        medicationCount = db.medicationCountDAO().getCount();
-        Log.d("DBTESTma", "medcount: " + medicationCount);
-        firstId = db.medicationNameDAO().getFirstId("first");
-        Log.d("TESTDB", "name: " + db.medicationNameDAO().getMedicationName(firstId));
-
-        for (int i = 1; i <= medicationCount; i++) {
-            int nameNeeded = (firstId + i);
-            String mn2 = db.medicationNameDAO().getMedicationName(nameNeeded);
-            Log.d("ma", "medicationname: " + mn2);
-        }
 
     }
 
@@ -105,13 +132,9 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void insertIntoDatabase(String name, int milligram, int time, Boolean isChecked){
-        Medicine m = new Medicine();
-        m.setMilligram(milligram);
-        m.setName(name);
-        m.setTime(time);
-        m.setChecked(isChecked);
+        Medicine m = new Medicine(name, milligram, time, isChecked);
 
-        db.medicineDAO().insertAll(m);
+        medicineViewModel.insert(m);
 
         Log.d("Medicine", "Naar de database geschreven");
     }
