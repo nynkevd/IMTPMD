@@ -6,25 +6,25 @@ import android.content.SharedPreferences;
 import android.os.StrictMode;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.text.method.ScrollingMovementMethod;
 import android.util.Log;
 import android.view.View;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
-import android.widget.SearchView;
-import android.widget.TextView;
 
 import com.google.gson.Gson;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
+
+import static java.lang.Integer.parseInt;
+
 
 public class MainActivity extends AppCompatActivity {
 
     private ListView searchmatches;
-    private List<MedicationName> allMedicationNames;
+    private List<String> allMedicationNames;
+    private int firstId;
+    private int medicationCount;
 
     Gson gson = new Gson();
     private AppDatabase db;
@@ -39,7 +39,7 @@ public class MainActivity extends AppCompatActivity {
                 .allowMainThreadQueries() // Dit moet nog weg!!!
                 .build();
 
-        allMedicationNames = new ArrayList<MedicationName>();
+        allMedicationNames = new ArrayList<>();
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
@@ -73,11 +73,24 @@ public class MainActivity extends AppCompatActivity {
             showStartScreen();
         }
 
-        //Database vullen
-        db.medicationNameDAO().deleteAll();
-        for (int i = 1; i <= 25; i++){
-            this.handleApiCall(i);
+//        NetworkManager.getInstance(this).getRequest("http://136.144.230.97:8090/api/medicationcount?api_token=CilZjPDfkHDmb29qcJkqBS7bB2cup9T7Onqcmfaqt027QhvpqBhFvLinJ6Dp", new VolleyCallback() {
+//            @Override
+//            public void onSuccess(String result) {
+//                medicationCount = parseInt(result);
+//            }
+//        });
+
+        medicationCount = db.medicationCountDAO().getCount();
+        Log.d("DBTESTma", "medcount: " + medicationCount);
+        firstId = db.medicationNameDAO().getFirstId("first");
+        Log.d("TESTDB", "name: " + db.medicationNameDAO().getMedicationName(firstId));
+
+        for (int i = 1; i <= medicationCount; i++) {
+            int nameNeeded = (firstId + i);
+            String mn2 = db.medicationNameDAO().getMedicationName(nameNeeded);
+            Log.d("ma", "medicationname: " + mn2);
         }
+
     }
 
     private void showStartScreen() {
@@ -90,18 +103,6 @@ public class MainActivity extends AppCompatActivity {
 
         startActivity(myIntent);
     }
-
-//    private void findMatches(String search){
-//        TextView searchmatches = (TextView)findViewById(R.id.matchPills);
-//        searchmatches.setText("");
-//
-//        for(int i = 0; i < meds.size() ; i++){
-//            if (meds.get(i).startsWith(search)){
-//                searchmatches.append(meds.get(i) + "\n");
-//                Log.d("meds",meds.get(i));
-//            }
-//        }
-//    }
 
     private void insertIntoDatabase(String name, int milligram, int time, Boolean isChecked){
         Medicine m = new Medicine();
@@ -117,23 +118,8 @@ public class MainActivity extends AppCompatActivity {
 
     private void handleApiCall(int id){
         int callid = id;
-        NetworkManager.getInstance(this).getRequest("http://136.144.230.97:8090/api/medicationname/" + String.valueOf(callid) + "?api_token=CilZjPDfkHDmb29qcJkqBS7bB2cup9T7Onqcmfaqt027QhvpqBhFvLinJ6Dp", new VolleyCallback() {
-            @Override
-            public void onSuccess(String result) { //de anonieme klasse gaat nu dingen doen
-                testApi testapi = gson.fromJson(result, testApi.class);
-//                Log.d("tessst", "Toevoegen aan db:: " + testapi.getName());
-                handleApiResult(testapi.getName());
-            }
-        });
+
     }
 
-    private void handleApiResult(String name){
-//        Log.d("tessst", "AAAAAAAAAA");
-        MedicationName mName = new MedicationName();
-        mName.setName(name);
 
-        db.medicationNameDAO().insertAll(mName);
-        List<MedicationName> medicationNamesFromApi= db.medicationNameDAO().loadAll();
-//        Log.d("list", allMedicationNames.get(1).toString());
-    }
 }

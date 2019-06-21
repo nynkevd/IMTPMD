@@ -23,6 +23,11 @@ import java.util.List;
  */
 public class HomeFragment extends Fragment {
 
+    AppDatabase db = Room
+            .databaseBuilder(getActivity(), AppDatabase.class, "medicine")
+            .allowMainThreadQueries() // Dit moet nog weg!!!
+            .build();
+
     public HomeFragment() {
         // Required empty public constructor
     }
@@ -75,10 +80,7 @@ public class HomeFragment extends Fragment {
 
     // Geeft een lijst van de namen van de medicijnen terug voor het tijdstip dat is opgegeven
     private ArrayList<Medicine> getMedicine(int timeStart, int timeEnd){
-        AppDatabase db = Room
-                .databaseBuilder(getActivity(), AppDatabase.class, "medicine")
-                .allowMainThreadQueries() // Dit moet nog weg!!!
-                .build();
+
 
         List<Medicine> medicineList = db.medicineDAO().loadByTime(timeStart, timeEnd);
 
