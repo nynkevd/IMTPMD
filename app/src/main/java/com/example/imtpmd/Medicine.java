@@ -3,6 +3,8 @@ package com.example.imtpmd;
 import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.PrimaryKey;
 
+import java.util.List;
+
 @Entity
 public class Medicine {
     // Het id wordt automatisch gegenereerd
@@ -13,7 +15,12 @@ public class Medicine {
     private int time;
     private Boolean isChecked;
 
-    public Medicine(){};
+    public Medicine(String name, int milligram, int time, Boolean isChecked){
+        this.name = name;
+        this.milligram = milligram;
+        this.time = time;
+        this.isChecked = isChecked;
+    }
 
     public int getId(){return this.id;}
     public String getName(){return this.name;}

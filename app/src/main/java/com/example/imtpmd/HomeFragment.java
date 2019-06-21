@@ -1,8 +1,12 @@
 package com.example.imtpmd;
 
 
+import android.arch.lifecycle.Observer;
+import android.arch.lifecycle.ViewModelProvider;
+import android.arch.lifecycle.ViewModelProviders;
 import android.arch.persistence.room.Room;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -22,6 +26,7 @@ import java.util.List;
  * A simple {@link Fragment} subclass.
  */
 public class HomeFragment extends Fragment {
+    private static MedicineViewModel medicineViewModel;
 
     public HomeFragment() {
         // Required empty public constructor
@@ -32,23 +37,80 @@ public class HomeFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
+        final View view = inflater.inflate(R.layout.fragment_home, container, false);
 
-        View view = inflater.inflate(R.layout.fragment_home, container, false);
+        medicineViewModel = ViewModelProviders.of(this).get(MedicineViewModel.class);
 
-        //Ochtend
-        ArrayList<Medicine> ochtendList = getMedicine(6, 12);
+        final Observer<List<Medicine>> ochtendObserver = new Observer<List<Medicine>>(){
+            @Override
+            public void onChanged(@Nullable final List<Medicine> newList){
+                ArrayList<Medicine> list  = new ArrayList<>();
 
-        vulList("pil_list_ochtend", ochtendList, view);
+                for(Medicine medicine : newList ){
+                    list.add(medicine);
+                }
 
-        //Middag
-        ArrayList<Medicine> middagList = getMedicine(12, 18);
+                vulList("pil_list_ochtend", list, view);
+                Log.d("tessst", "OBSERVVVEEEEEEEE" + newList.get(0).getName());
+            }
 
-        vulList("pil_list_middag", middagList, view);
+        };
 
-        //Avond
-        ArrayList<Medicine> avondList = getMedicine(18, 24);
+        medicineViewModel.getOchtendList().observe(this, ochtendObserver);
 
-        vulList("pil_list_avond", avondList, view);
+        final Observer<List<Medicine>> middagObserver = new Observer<List<Medicine>>(){
+            @Override
+            public void onChanged(@Nullable final List<Medicine> newList){
+                ArrayList<Medicine> list  = new ArrayList<>();
+
+                for(Medicine medicine : newList ){
+                    list.add(medicine);
+                }
+
+                vulList("pil_list_middag", list, view);
+                Log.d("tessst", "OBSERVVVEEEEEEEE" + newList.get(0).getName());
+            }
+
+        };
+
+        medicineViewModel.getMiddagList().observe(this, middagObserver);
+
+        final Observer<List<Medicine>> avondObserver = new Observer<List<Medicine>>(){
+            @Override
+            public void onChanged(@Nullable final List<Medicine> newList){
+                ArrayList<Medicine> list  = new ArrayList<>();
+
+                for(Medicine medicine : newList ){
+                    list.add(medicine);
+                }
+
+                vulList("pil_list_avond", list, view);
+                Log.d("tessst", "OBSERVVVEEEEEEEE" + newList.get(0).getName());
+            }
+
+        };
+
+        medicineViewModel.getAvondList().observe(this, avondObserver);
+
+        //Er moet nog een optie voor nacht gemaakt worden:
+
+//        final Observer<List<Medicine>> nachtObserver = new Observer<List<Medicine>>(){
+//            @Override
+//            public void onChanged(@Nullable final List<Medicine> newList){
+//                ArrayList<Medicine> list  = new ArrayList<>();
+//
+//                for(Medicine medicine : newList ){
+//                    list.add(medicine);
+//                }
+//
+//                vulList("pil_list_nacht", list, view);
+//                Log.d("tessst", "OBSERVVVEEEEEEEE" + newList.get(0).getName());
+//            }
+//
+//        };
+//
+//        medicineViewModel.getNachtList().observe(this, nachtObserver);
+
 
         return view;
     }
@@ -73,23 +135,12 @@ public class HomeFragment extends Fragment {
 
     }
 
-    // Geeft een lijst van de namen van de medicijnen terug voor het tijdstip dat is opgegeven
-    private ArrayList<Medicine> getMedicine(int timeStart, int timeEnd){
-        AppDatabase db = Room
-                .databaseBuilder(getActivity(), AppDatabase.class, "medicine")
-                .allowMainThreadQueries() // Dit moet nog weg!!!
-                .build();
+    public static void updateMedicineChecked(Medicine medicine, View view){
+        medicine.setChecked(!medicine.getChecked());
 
-        List<Medicine> medicineList = db.medicineDAO().loadByTime(timeStart, timeEnd);
+        medicineViewModel.update(medicine);
 
-        ArrayList<Medicine> namen = new ArrayList<>();
-
-        for(Medicine medicine : medicineList ){
-            namen.add(medicine);
-
-        }
-
-        return namen;
+        Log.d("Medicine", medicine.getName() + ": " + medicine.getChecked().toString());
     }
 
 }

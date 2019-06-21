@@ -16,11 +16,11 @@ public interface MedicineDAO {
 
     // Selecteert medicijnen op basis van de tijd dat het genomen moet worden
     @Query("SELECT * FROM medicine WHERE time >= :timeStart AND time < :timeEnd")
-    List<Medicine> loadByTime(int timeStart, int timeEnd);
+    LiveData<List<Medicine>> loadByTime(int timeStart, int timeEnd);
 
     // Verander de waardes van een bepaald medicijn (bijvoorbeeld checked)
     @Update
-    void update(Medicine medicine);
+    void update(Medicine... medicines);
 
 
     @Insert

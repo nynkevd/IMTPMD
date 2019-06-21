@@ -1,5 +1,6 @@
 package com.example.imtpmd;
 
+import android.arch.persistence.room.util.StringUtil;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.Fragment;
@@ -23,7 +24,9 @@ public class DashboardActivity extends AppCompatActivity {
     private CalendarFragment calendarFragment;
     private SettingsFragment settingsFragment;
 
+    private String day;
     private String date;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,10 +40,14 @@ public class DashboardActivity extends AppCompatActivity {
         calendarFragment = new CalendarFragment();
         settingsFragment = new SettingsFragment();
 
-        date = new SimpleDateFormat("EEEE").format(new Date()); // Toevoegen dat de dag met een hoofdletter is
+        day = new SimpleDateFormat("EEEE").format(new Date()); // Toevoegen dat de dag met een hoofdletter is
+
+        day = day.substring(0, 1).toUpperCase() + day.substring(1);
+
+        date = new SimpleDateFormat("dd-MM-yyyy").format(new Date());
 
         setFragment(homeFragment);
-        setTitle(date);
+        setTitle(day + " " + date);
 
         DashboardNav.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
@@ -48,7 +55,7 @@ public class DashboardActivity extends AppCompatActivity {
                 switch(menuItem.getItemId()){
                     case R.id.nav_home:
                         setFragment(homeFragment);
-                        setTitle(date);
+                        setTitle(day + " " + date);
                         return true;
 
                     case R.id.nav_calendar:

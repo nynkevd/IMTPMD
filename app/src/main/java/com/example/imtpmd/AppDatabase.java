@@ -34,7 +34,7 @@ public abstract class AppDatabase extends RoomDatabase {
             //Dit wordt  uitgevoerd bij het opstarten van de app
             public void onOpen(@NonNull SupportSQLiteDatabase db) {
                 super.onOpen(db);
-                new PopulateDBAsync(INSTANCE).execute();
+
             }
         };
 

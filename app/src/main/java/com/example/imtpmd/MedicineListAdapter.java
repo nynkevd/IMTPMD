@@ -1,5 +1,8 @@
 package com.example.imtpmd;
 
+import android.app.Activity;
+import android.app.Application;
+import android.arch.lifecycle.ViewModelProviders;
 import android.arch.persistence.room.Room;
 import android.content.Context;
 import android.support.annotation.Nullable;
@@ -47,7 +50,7 @@ public class MedicineListAdapter extends ArrayAdapter<Medicine> {
             public void onClick(View view) {
                 //Verander de checked waarde in de database
                 Log.d("tessst", currentItem.getName());
-                updateMedicineChecked(currentItem, view);
+                HomeFragment.updateMedicineChecked(currentItem, view);
             }
         });
 
@@ -55,19 +58,14 @@ public class MedicineListAdapter extends ArrayAdapter<Medicine> {
 
     }
 
-    private void updateMedicineChecked(Medicine medicine, View view){
-        // DEze database wordt ook in HomeFragment aangemaakt, dus ik weet niet of we het ergens 'globaal' kunnen doen?
-        AppDatabase db = Room
-                .databaseBuilder(view.getContext(), AppDatabase.class, "medicine")
-                .allowMainThreadQueries() // Dit moet nog weg!!!
-                .build();
-
-        medicine.setChecked(!medicine.getChecked());
-
-        db.medicineDAO().update(medicine);
-
-        Log.d("Medicine", medicine.getName() + ": " + medicine.getChecked().toString());
-    }
+//    private void updateMedicineChecked(Medicine medicine, View view){
+//
+//        medicine.setChecked(!medicine.getChecked());
+//
+//        medicineRepository.update(medicine);
+//
+//        Log.d("Medicine", medicine.getName() + ": " + medicine.getChecked().toString());
+//    }
 
 
 }

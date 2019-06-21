@@ -43,11 +43,6 @@ public class MainActivity extends AppCompatActivity {
                     StrictMode.ThreadPolicy.Builder().permitAll().build();
             StrictMode.setThreadPolicy(policy);
         }
-////
-        insertIntoDatabase("ochtendMed", 40, 9, false);
-        insertIntoDatabase("middagMed", 40, 15, false);
-        insertIntoDatabase("avondMed", 40, 21, false);
-        insertIntoDatabase("test", 100, 10, false);
 
         Button naarhome = (Button) findViewById(R.id.naarhome);
 
@@ -70,6 +65,7 @@ public class MainActivity extends AppCompatActivity {
         if (firstStart){
             showStartScreen();
         }
+
 
         SearchView searchView = (SearchView) findViewById(R.id.searchview);
 
@@ -117,8 +113,6 @@ public class MainActivity extends AppCompatActivity {
 //           }
 //        });
 
-
-
     }
 
     private void showStartScreen() {
@@ -145,19 +139,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void insertIntoDatabase(String name, int milligram, int time, Boolean isChecked){
-        // DEze database wordt ook in HomeFragment aangemaakt, dus ik weet niet of we het ergens 'globaal' kunnen doen?
-//        AppDatabase db = Room
-//                .databaseBuilder(getApplicationContext(), AppDatabase.class, "medicine")
-//                .allowMainThreadQueries() // Dit moet nog weg!!!
-//                .build()
-
-
-
-        Medicine m = new Medicine();
-        m.setMilligram(milligram);
-        m.setName(name);
-        m.setTime(time);
-        m.setChecked(isChecked);
+        Medicine m = new Medicine(name, milligram, time, isChecked);
 
         medicineViewModel.insert(m);
 
