@@ -8,104 +8,21 @@
     android:label="hallo?"
     tools:context=".HomeFragment">
 
-    <ScrollView
+
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:fillViewport="true">
+        android:layout_height="match_parent">
 
-        <RelativeLayout
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/recycler_view_home"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginStart="0dp"
+            android:layout_marginTop="0dp" />
 
-            <!-- Misschien kunnen we beter aparte xml's maken per dagdeel? -->
-            <!-- Of een list met de dagdelen ^^ -->
-            <android.support.v7.widget.RecyclerView
-                android:id="@+id/recycler_view_ochtend"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_alignParentStart="true"
-                android:layout_alignParentTop="true"
-                android:layout_marginStart="0dp"
-                android:layout_marginTop="0dp" />
+    </RelativeLayout>
 
-            <!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
-
-            <!--<TextView-->
-                <!--android:id="@+id/textView_ochtend"-->
-                <!--android:layout_width="wrap_content"-->
-                <!--android:layout_height="wrap_content"-->
-                <!--android:layout_alignParentStart="true"-->
-                <!--android:layout_alignParentTop="true"-->
-                <!--android:layout_marginStart="8dp"-->
-                <!--android:layout_marginTop="8dp"-->
-                <!--android:text="Ochtend"-->
-                <!--android:textSize="24sp" />-->
-
-            <!--<ListView-->
-                <!--android:id="@+id/pil_list_ochtend"-->
-                <!--android:layout_width="match_parent"-->
-                <!--android:layout_height="wrap_content"-->
-                <!--android:layout_below="@+id/textView_ochtend"-->
-                <!--android:layout_alignParentStart="true"-->
-                <!--android:layout_marginStart="8dp"-->
-                <!--android:layout_marginEnd="8dp"-->
-                <!--android:layout_marginTop="8dp"-->
-                <!--android:adjustViewBounds="true">-->
-            <!--</ListView>-->
-
-            <!--&lt;!&ndash;~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~&ndash;&gt;-->
-
-            <!--<TextView-->
-                <!--android:id="@+id/textView_middag"-->
-                <!--android:layout_width="wrap_content"-->
-                <!--android:layout_height="wrap_content"-->
-                <!--android:layout_below="@+id/pil_list_middag"-->
-                <!--android:layout_alignParentStart="true"-->
-                <!--android:layout_marginStart="8dp"-->
-                <!--android:layout_marginTop="8dp"-->
-                <!--android:text="Avond"-->
-                <!--android:textSize="24sp" />-->
-
-            <!--<ListView-->
-                <!--android:id="@+id/pil_list_avond"-->
-                <!--android:layout_width="match_parent"-->
-                <!--android:layout_height="wrap_content"-->
-                <!--android:layout_below="@+id/textView_middag"-->
-                <!--android:layout_alignParentStart="true"-->
-                <!--android:layout_marginStart="8dp"-->
-                <!--android:layout_marginEnd="8dp"-->
-                <!--android:layout_marginTop="8dp">-->
-            <!--</ListView>-->
-
-            <!--&lt;!&ndash;~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~&ndash;&gt;-->
-
-            <!--<TextView-->
-                <!--android:id="@+id/textView_avond"-->
-                <!--android:layout_width="match_parent"-->
-                <!--android:layout_height="wrap_content"-->
-                <!--android:layout_below="@+id/pil_list_ochtend"-->
-                <!--android:layout_alignParentStart="true"-->
-                <!--android:layout_marginStart="8dp"-->
-                <!--android:layout_marginTop="8dp"-->
-                <!--android:text="Middag"-->
-                <!--android:textSize="24sp" />-->
-
-
-            <!--<ListView-->
-                <!--android:id="@+id/pil_list_middag"-->
-                <!--android:layout_width="match_parent"-->
-                <!--android:layout_height="wrap_content"-->
-                <!--android:layout_below="@+id/textView_avond"-->
-                <!--android:layout_alignParentStart="true"-->
-                <!--android:layout_marginStart="8dp"-->
-                <!--android:layout_marginEnd="8dp"-->
-                <!--android:layout_marginTop="8dp">-->
-            <!--</ListView>-->
-
-
-
-        </RelativeLayout>
-
-    </ScrollView>
 
  </FrameLayout>

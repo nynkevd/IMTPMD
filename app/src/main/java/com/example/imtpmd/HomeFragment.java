@@ -53,7 +53,7 @@ public class HomeFragment extends Fragment {
         // Inflate the layout for this fragment
         final View view = inflater.inflate(R.layout.fragment_home, container, false);
 
-        recyclerView = (RecyclerView) view.findViewById(R.id.recycler_view_ochtend);
+        recyclerView = (RecyclerView) view.findViewById(R.id.recycler_view_home);
         layoutManager = new LinearLayoutManager(getContext());
         recyclerView.setLayoutManager(layoutManager);
         mAdapter = new DagdeelAdapter(homeData);
@@ -96,8 +96,6 @@ public class HomeFragment extends Fragment {
                 //mAdapter.notifyDataSetChanged();
                 mAdapter.notifyItemChanged(1);
 
-                Log.d("recycler", "middagObserver");
-
 
             }
 
@@ -113,6 +111,9 @@ public class HomeFragment extends Fragment {
                 for(Medicine medicine : newList ){
                     list.add(medicine);
                 }
+
+                homeData[2] = new HomeData("Avond", list);
+                mAdapter.notifyItemChanged(2);
             }
 
         };
@@ -121,22 +122,22 @@ public class HomeFragment extends Fragment {
 
         //Er moet nog een optie voor nacht gemaakt worden:
 
-//        final Observer<List<Medicine>> nachtObserver = new Observer<List<Medicine>>(){
-//            @Override
-//            public void onChanged(@Nullable final List<Medicine> newList){
-//                ArrayList<Medicine> list  = new ArrayList<>();
-//
-//                for(Medicine medicine : newList ){
-//                    list.add(medicine);
-//                }
-//
-//                vulList("pil_list_nacht", list, view);
-//                Log.d("tessst", "OBSERVVVEEEEEEEE" + newList.get(0).getName());
-//            }
-//
-//        };
-//
-//        medicineViewModel.getNachtList().observe(this, nachtObserver);
+        final Observer<List<Medicine>> nachtObserver = new Observer<List<Medicine>>(){
+            @Override
+            public void onChanged(@Nullable final List<Medicine> newList){
+                ArrayList<Medicine> list  = new ArrayList<>();
+
+                for(Medicine medicine : newList ){
+                    list.add(medicine);
+                }
+
+                homeData[3] = new HomeData("Nacht", list);
+                mAdapter.notifyItemChanged(3);
+            }
+
+        };
+
+        medicineViewModel.getNachtList().observe(this, nachtObserver);
 
         return view;
     }

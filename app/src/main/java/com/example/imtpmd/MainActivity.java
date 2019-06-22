@@ -98,6 +98,11 @@ public class MainActivity extends AppCompatActivity {
 //            }
 //        });
 
+//        insertIntoDatabase("testOchtend", 40, 9, false);
+//        insertIntoDatabase("testMiddag", 40, 13, false);
+//        insertIntoDatabase("testAvond", 40, 20, false);
+//        insertIntoDatabase("testNacht", 40, 5, false);
+
     }
 
     private void showStartScreen() {
