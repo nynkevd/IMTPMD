@@ -12,7 +12,7 @@ public class MedicationNameViewModel extends AndroidViewModel {
     private LiveData<List<MedicationName>> allMedicationNames;
     private static LiveData<String> requestedMedicationName;
     private int id;
-    private static int firstId;
+    private static LiveData<Integer> firstId;
 
     public MedicationNameViewModel(Application application) {
         super(application);
@@ -31,7 +31,7 @@ public class MedicationNameViewModel extends AndroidViewModel {
         return this.requestedMedicationName;
     }
 
-    int getFirstId() {
+    LiveData<Integer> getFirstId() {
         return this.firstId;
     }
 

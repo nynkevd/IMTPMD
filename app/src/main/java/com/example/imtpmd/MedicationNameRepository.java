@@ -12,7 +12,7 @@ public class MedicationNameRepository {
     private LiveData<List<MedicationName>> allMedicationNames;
     private LiveData<String> requestedMedicationName;
     private int id;
-    private int firstId;
+    private LiveData<Integer> firstId;
     private String firstName;
     private static Application app;
 
@@ -35,7 +35,7 @@ public class MedicationNameRepository {
         return requestedMedicationName;
     }
 
-    int getFirstId() {
+    LiveData<Integer> getFirstId() {
         return firstId;
     }
 

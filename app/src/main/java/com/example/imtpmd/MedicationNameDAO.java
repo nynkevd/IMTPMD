@@ -17,7 +17,7 @@ public interface MedicationNameDAO {
     LiveData<String> getMedicationName(int givenID);
 
     @Query("SELECT id FROM medicationName WHERE name = :firstName")
-    int getFirstId(String firstName);
+    LiveData<Integer> getFirstId(String firstName);
 
     @Insert
     void insertAll(MedicationName... medicationNames);

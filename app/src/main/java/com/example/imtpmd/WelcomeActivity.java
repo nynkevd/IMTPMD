@@ -1,5 +1,6 @@
 package com.example.imtpmd;
 
+import android.arch.lifecycle.ViewModelProviders;
 import android.arch.persistence.room.Room;
 import android.content.Intent;
 import android.os.Bundle;
@@ -25,16 +26,10 @@ public class WelcomeActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_welcome);
 
-//        db = Room
-//            .databaseBuilder(getApplicationContext(), AppDatabase.class, "medicine")
-//            .allowMainThreadQueries() // Dit moet nog weg!!!
-//            .build();
+        medicationNameViewModel = ViewModelProviders.of(this).get(MedicationNameViewModel.class);
 
-//        db.medicationNameDAO().deleteAll();
-//        db.medicationCountDAO().deleteAll();
         MedicationName mn = new MedicationName("first");
         medicationNameViewModel.insert(mn);
-//        db.medicationNameDAO().insertAll(mn);
 
         NetworkManager.getInstance(this).getRequest("http://136.144.230.97:8090/api/medicationcount?api_token=CilZjPDfkHDmb29qcJkqBS7bB2cup9T7Onqcmfaqt027QhvpqBhFvLinJ6Dp", new VolleyCallback() {
             @Override
@@ -49,7 +44,7 @@ public class WelcomeActivity extends AppCompatActivity {
                         public void onSuccess(String result) { //de anonieme klasse gaat nu dingen doen
                             MedicationName apicall = gson.fromJson(result, MedicationName.class);
                             MedicationName mn = new MedicationName(apicall.getName());
-//                            db.medicationNameDAO().insertAll(mn);
+                            medicationNameViewModel.insert(mn);
                         }
                     });
                 }
