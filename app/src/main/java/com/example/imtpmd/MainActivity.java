@@ -77,26 +77,6 @@ public class MainActivity extends AppCompatActivity {
             showStartScreen();
         }
 
-
-        SearchView searchView = (SearchView) findViewById(R.id.searchview);
-
-        searchView.setOnQueryTextListener(
-                new SearchView.OnQueryTextListener() {
-                    @Override
-                    public boolean onQueryTextSubmit(String s) {
-                        Log.d("searchsubmit", s);
-                        return false;
-                    }
-
-                    @Override
-                    public boolean onQueryTextChange(String s) {
-                        Log.d("searchchange", s);
-                        findMatches(s);
-                        return false;
-                    }
-                }
-        );
-
         Log.d("tessst", "tessst");
 
 //        NetworkManager.getInstance(this).getRequest("http://136.144.230.97:8090/api/medication?api_token=CilZjPDfkHDmb29qcJkqBS7bB2cup9T7Onqcmfaqt027QhvpqBhFvLinJ6Dp", new VolleyCallback(){

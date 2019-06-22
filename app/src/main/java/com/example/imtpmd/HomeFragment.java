@@ -28,10 +28,10 @@ import java.util.List;
 public class HomeFragment extends Fragment {
     private static MedicineViewModel medicineViewModel;
 
-    AppDatabase db = Room
-            .databaseBuilder(getActivity(), AppDatabase.class, "medicine")
-            .allowMainThreadQueries() // Dit moet nog weg!!!
-            .build();
+//    AppDatabase db = Room
+//            .databaseBuilder(getActivity(), AppDatabase.class, "medicine")
+//            .allowMainThreadQueries() // Dit moet nog weg!!!
+//            .build();
 
     public HomeFragment() {
         // Required empty public constructor

@@ -28,7 +28,7 @@ public class MedicineRepository {
         app = application;
     }
 
-    LiveData<List<Medicine>> getAllMedication(){
+    LiveData<List<Medicine>> getAllMedication() {
         return allMedication;
     }
 
