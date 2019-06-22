@@ -7,9 +7,10 @@ import android.arch.persistence.room.RoomDatabase;
 import android.content.Context;
 import android.support.annotation.NonNull;
 
-@Database(entities = {Medicine.class}, version=1)
+@Database(entities = {Medicine.class, MedicationName.class, MedicationCount.class}, version=1)
 public abstract class AppDatabase extends RoomDatabase {
     public abstract MedicineDAO medicineDAO();
+    public abstract MedicationNameDAO medicationNameDAO();
 
     public static volatile AppDatabase INSTANCE;
 

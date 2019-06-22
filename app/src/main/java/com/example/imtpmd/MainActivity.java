@@ -13,25 +13,42 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.text.method.ScrollingMovementMethod;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-import android.widget.SearchView;
-import android.widget.TextView;
+import android.widget.ListView;
 
 import com.google.gson.Gson;
 
-import java.util.Arrays;
+import java.util.ArrayList;
 import java.util.List;
+
+import static java.lang.Integer.parseInt;
+
 
 public class MainActivity extends AppCompatActivity {
     private MedicineViewModel medicineViewModel;
 
-    private List<String> pills = Arrays.asList("hallo", "hoi", "boe", "yoyo", "anouk", "nynke", "test", "goedemiddag", "lijst", "uitbreiden");
+    private ListView searchmatches;
+    private List<String> allMedicationNames;
+    private int firstId;
+    private int medicationCount;
+
+    Gson gson = new Gson();
+    private AppDatabase db;
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        // DEze database wordt ook in HomeFragment aangemaakt, dus ik weet niet of we het ergens 'globaal' kunnen doen?
+         db = Room
+                .databaseBuilder(getApplicationContext(), AppDatabase.class, "medicine")
+                .allowMainThreadQueries() // Dit moet nog weg!!!
+                .build();
+
+        allMedicationNames = new ArrayList<>();
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
@@ -53,38 +70,12 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        TextView searchmatches = (TextView)findViewById(R.id.matchPills);
-        searchmatches.setMovementMethod(new ScrollingMovementMethod());
-        for(int i = 0; i < pills.size(); i++){
-            searchmatches.append(pills.get(i) + "\n");
-        }
-
         SharedPreferences prefs = getSharedPreferences("prefs", MODE_PRIVATE);
         boolean firstStart = prefs.getBoolean("firstStart", true);
 
         if (firstStart){
             showStartScreen();
         }
-
-
-        SearchView searchView = (SearchView) findViewById(R.id.searchview);
-
-        searchView.setOnQueryTextListener(
-                new SearchView.OnQueryTextListener() {
-                    @Override
-                    public boolean onQueryTextSubmit(String s) {
-                        Log.d("searchsubmit", s);
-                        return false;
-                    }
-
-                    @Override
-                    public boolean onQueryTextChange(String s) {
-                        Log.d("searchchange", s);
-                        findMatches(s);
-                        return false;
-                    }
-                }
-        );
 
         Log.d("tessst", "tessst");
 
@@ -102,15 +93,9 @@ public class MainActivity extends AppCompatActivity {
 
 //        NetworkManager.getInstance(getApplicationContext()).getRequest("http://136.144.230.97:8080/api/userinfo/anouk?api_token=rx7Mi675A1WDEvZPsGnrgvwkCEeOKlrX7rIPoXocluBKnupp9A02OLz7QcSL", new VolleyCallback(){
 //            @Override
-//            public void onSuccess(String result) { //de anonieme klasse gaat nu dingen doen
-//                Gson gson = new Gson();
-//
-//                testApi testpi = gson.fromJson(result, testApi.class);
-//
-//                Log.d("tessst", testpi.getName());
-//                Log.d("tessst", "tessst");
-//
-//           }
+//            public void onSuccess(String result) {
+//                medicationCount = parseInt(result);
+//            }
 //        });
 
     }
@@ -126,18 +111,6 @@ public class MainActivity extends AppCompatActivity {
         startActivity(myIntent);
     }
 
-    private void findMatches(String search){
-        TextView searchmatches = (TextView)findViewById(R.id.matchPills);
-        searchmatches.setText("");
-
-        for(int i = 0; i < pills.size() ; i++){
-            if (pills.get(i).startsWith(search)){
-                searchmatches.append(pills.get(i) + "\n");
-                Log.d("pills",pills.get(i));
-            }
-        }
-    }
-
     private void insertIntoDatabase(String name, int milligram, int time, Boolean isChecked){
         Medicine m = new Medicine(name, milligram, time, isChecked);
 
@@ -145,4 +118,11 @@ public class MainActivity extends AppCompatActivity {
 
         Log.d("Medicine", "Naar de database geschreven");
     }
+
+    private void handleApiCall(int id){
+        int callid = id;
+
+    }
+
+
 }

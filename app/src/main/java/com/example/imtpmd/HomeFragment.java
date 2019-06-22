@@ -37,6 +37,11 @@ public class HomeFragment extends Fragment {
     private HomeData[] homeData = new HomeData[4];
 
 
+//    AppDatabase db = Room
+//            .databaseBuilder(getActivity(), AppDatabase.class, "medicine")
+//            .allowMainThreadQueries() // Dit moet nog weg!!!
+//            .build();
+
     public HomeFragment() {
         // Required empty public constructor
     }
