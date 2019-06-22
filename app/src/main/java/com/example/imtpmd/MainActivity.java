@@ -98,10 +98,18 @@ public class MainActivity extends AppCompatActivity {
 //            }
 //        });
 
-//        insertIntoDatabase("testOchtend", 40, 9, false);
-//        insertIntoDatabase("testMiddag", 40, 13, false);
-//        insertIntoDatabase("testAvond", 40, 20, false);
-//        insertIntoDatabase("testNacht", 40, 5, false);
+//        insertIntoDatabase("testOchtend9", 40, 9, false);
+//        insertIntoDatabase("testMiddag15", 40, 15, false);
+//        insertIntoDatabase("testAvond20", 40, 20, false);
+//        insertIntoDatabase("testNacht4", 40, 4, false);
+//        insertIntoDatabase("testOchtend10", 40, 10, false);
+//        insertIntoDatabase("testMiddag17", 40, 17, false);
+//        insertIntoDatabase("testAvond22", 40, 22, false);
+//        insertIntoDatabase("testNacht5", 40, 5, false);
+//        insertIntoDatabase("testOchtend8", 40, 8, false);
+//        insertIntoDatabase("testMiddag13", 40, 13, false);
+//        insertIntoDatabase("testAvond23", 40, 23, false);
+//        insertIntoDatabase("testNacht2", 40, 2, false);
 
     }
 

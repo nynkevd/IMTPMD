@@ -10,6 +10,8 @@ import android.widget.CheckBox;
 import android.widget.TextView;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 
 public class MedicationAdapter extends RecyclerView.Adapter<MedicationAdapter.MyViewHolder> {
     private View v;
@@ -18,14 +20,31 @@ public class MedicationAdapter extends RecyclerView.Adapter<MedicationAdapter.My
     public static class MyViewHolder extends RecyclerView.ViewHolder{
         public TextView medicationNameView;
         public CheckBox checkBoxView;
+        public TextView timeView;
         public MyViewHolder(View v){
             super(v);
             medicationNameView = v.findViewById(R.id.name);
             checkBoxView = v.findViewById(R.id.checkBox);
+            timeView = v.findViewById(R.id.time);
         }
     }
 
-    public MedicationAdapter(ArrayList<Medicine> medicationList){
+    public MedicationAdapter(final ArrayList<Medicine> medicationList){
+
+        // Sorteer de lijst op basis van tijdstip
+        Collections.sort(medicationList, new Comparator<Medicine>() {
+            @Override
+            public int compare(Medicine medicine, Medicine t1) {
+                if(medicine.getTime() > t1.getTime()){
+                    return 1;
+                }else if (medicine.getTime() < t1.getTime()){
+                    return -1;
+                }else{
+                    return 0;
+                }
+            }
+        });
+
         this.medicationList = medicationList;
     }
 
@@ -43,6 +62,7 @@ public class MedicationAdapter extends RecyclerView.Adapter<MedicationAdapter.My
     public void onBindViewHolder(@NonNull MedicationAdapter.MyViewHolder myViewHolder, int i) {
         myViewHolder.medicationNameView.setText(medicationList.get(i).getName());
         myViewHolder.checkBoxView.setChecked(medicationList.get(i).getChecked());
+        myViewHolder.timeView.setText(String.valueOf(medicationList.get(i).getTime()));
 
         final int position = i;
 
