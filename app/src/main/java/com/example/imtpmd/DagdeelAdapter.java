@@ -1,29 +1,31 @@
 package com.example.imtpmd;
 
 import android.support.annotation.NonNull;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public class DagdeelAdapter extends RecyclerView.Adapter<DagdeelAdapter.MyViewHolder> {
     private HomeData[] data;
     private View v;
+    private RecyclerView.Adapter medicationAdapter;
+    private static RecyclerView.LayoutManager layoutManager;
 
     public static class MyViewHolder extends RecyclerView.ViewHolder {
         // each data item is just a string in this case
         public TextView titleTextView;
-        public ListView medicineListView;
+        public RecyclerView medicineListView;
         public MyViewHolder(View v) {
             super(v);
             titleTextView = v.findViewById(R.id.title_text_view);
-            medicineListView = v.findViewById(R.id.medicine_list);
+            medicineListView = v.findViewById(R.id.recycler_view_medication_list);
+
+            layoutManager = new LinearLayoutManager(v.getContext());
+            medicineListView.setLayoutManager(layoutManager);
         }
     }
 
@@ -36,7 +38,7 @@ public class DagdeelAdapter extends RecyclerView.Adapter<DagdeelAdapter.MyViewHo
     public DagdeelAdapter.MyViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
         // De view van de xml
         v = LayoutInflater.from(viewGroup.getContext())
-                .inflate(R.layout.temp_text_view, viewGroup, false);
+                .inflate(R.layout.dagdeel_home_view, viewGroup, false);
 
         MyViewHolder vh = new MyViewHolder(v);
         return vh;
@@ -47,7 +49,11 @@ public class DagdeelAdapter extends RecyclerView.Adapter<DagdeelAdapter.MyViewHo
         if(data[i] != null){
             myViewHolder.titleTextView.setText(data[i].getTitle());
 
-            vulList(myViewHolder.medicineListView, i);
+            //vulList(myViewHolder.medicineListView, i);
+            //roep de nieuwe Recyclerview aan
+
+            medicationAdapter = new MedicationAdapter(data[i].getMedicineList());
+            myViewHolder.medicineListView.setAdapter(medicationAdapter);
         }
 
     }

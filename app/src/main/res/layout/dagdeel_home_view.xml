@@ -18,13 +18,21 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"/>
 
-    <ListView
-        android:id="@+id/medicine_list"
+    <!--<ListView-->
+        <!--android:id="@+id/medicine_list"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="0dp"-->
+        <!--android:layout_marginStart="8dp"-->
+        <!--android:layout_marginTop="8dp"-->
+        <!--android:layout_marginEnd="8dp"-->
+        <!--android:layout_weight="1"/>-->
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/recycler_view_medication_list"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
+        android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_weight="1"/>
+        android:layout_marginEnd="8dp" />
 
 </LinearLayout>
