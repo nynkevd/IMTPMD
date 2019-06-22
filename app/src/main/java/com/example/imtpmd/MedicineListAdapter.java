@@ -32,7 +32,7 @@ public class MedicineListAdapter extends ArrayAdapter<Medicine> {
     public View getView(int position, @Nullable View convertView, ViewGroup parent){
         View listItem = convertView;
 
-        // list_item.xml wordt heir aangeroepen
+        // list_item.xml wordt hier aangeroepen
         if(listItem == null){
             listItem = LayoutInflater.from(context).inflate(R.layout.list_item, parent, false);
         }
@@ -57,15 +57,4 @@ public class MedicineListAdapter extends ArrayAdapter<Medicine> {
         return listItem;
 
     }
-
-//    private void updateMedicineChecked(Medicine medicine, View view){
-//
-//        medicine.setChecked(!medicine.getChecked());
-//
-//        medicineRepository.update(medicine);
-//
-//        Log.d("Medicine", medicine.getName() + ": " + medicine.getChecked().toString());
-//    }
-
-
 }

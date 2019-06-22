@@ -8,6 +8,8 @@ import android.arch.persistence.room.Room;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -19,7 +21,9 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 
 /**
@@ -27,6 +31,11 @@ import java.util.List;
  */
 public class HomeFragment extends Fragment {
     private static MedicineViewModel medicineViewModel;
+    private RecyclerView recyclerView;
+    private RecyclerView.Adapter mAdapter;
+    private RecyclerView.LayoutManager layoutManager;
+    private HomeData[] homeData = new HomeData[4];
+
 
     public HomeFragment() {
         // Required empty public constructor
@@ -39,6 +48,13 @@ public class HomeFragment extends Fragment {
         // Inflate the layout for this fragment
         final View view = inflater.inflate(R.layout.fragment_home, container, false);
 
+        recyclerView = (RecyclerView) view.findViewById(R.id.recycler_view_ochtend);
+        layoutManager = new LinearLayoutManager(getContext());
+        recyclerView.setLayoutManager(layoutManager);
+        mAdapter = new DagdeelAdapter(homeData);
+        recyclerView.setAdapter(mAdapter);
+
+        // Vraag de medicijnen op per dagdeel
         medicineViewModel = ViewModelProviders.of(this).get(MedicineViewModel.class);
 
         final Observer<List<Medicine>> ochtendObserver = new Observer<List<Medicine>>(){
@@ -50,8 +66,11 @@ public class HomeFragment extends Fragment {
                     list.add(medicine);
                 }
 
-                vulList("pil_list_ochtend", list, view);
-                Log.d("tessst", "OBSERVVVEEEEEEEE" + newList.get(0).getName());
+                homeData[0] = new HomeData("Ochtend", list);
+
+                mAdapter.notifyItemChanged(0);
+
+
             }
 
         };
@@ -67,8 +86,14 @@ public class HomeFragment extends Fragment {
                     list.add(medicine);
                 }
 
-                vulList("pil_list_middag", list, view);
-                Log.d("tessst", "OBSERVVVEEEEEEEE" + newList.get(0).getName());
+                homeData[1] = new HomeData("Middag", list);
+
+                //mAdapter.notifyDataSetChanged();
+                mAdapter.notifyItemChanged(1);
+
+                Log.d("recycler", "middagObserver");
+
+
             }
 
         };
@@ -83,9 +108,6 @@ public class HomeFragment extends Fragment {
                 for(Medicine medicine : newList ){
                     list.add(medicine);
                 }
-
-                vulList("pil_list_avond", list, view);
-                Log.d("tessst", "OBSERVVVEEEEEEEE" + newList.get(0).getName());
             }
 
         };
@@ -110,7 +132,6 @@ public class HomeFragment extends Fragment {
 //        };
 //
 //        medicineViewModel.getNachtList().observe(this, nachtObserver);
-
 
         return view;
     }
