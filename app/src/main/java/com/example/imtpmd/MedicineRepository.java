@@ -6,6 +6,8 @@ import android.os.AsyncTask;
 import android.util.Log;
 import android.widget.Toast;
 
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 public class MedicineRepository {
@@ -21,11 +23,21 @@ public class MedicineRepository {
         AppDatabase db = AppDatabase.getDatabase(application);
         medicineDAO = db.medicineDAO();
         allMedication = medicineDAO.loadAll();
-        ochtendList = medicineDAO.loadByTime(6, 12);
-        middagList = medicineDAO.loadByTime(12, 18);
-        avondList = medicineDAO.loadByTime(18, 24);
-        nachtList = medicineDAO.loadByTime(0, 6);
+
+        ochtendList = medicineDAO.loadByTime(getDateTime(6), getDateTime(12));
+        middagList = medicineDAO.loadByTime(getDateTime(12), getDateTime(18));
+        avondList = medicineDAO.loadByTime(getDateTime(18), getDateTime(24));
+        nachtList = medicineDAO.loadByTime(getDateTime(0), getDateTime(6));
         app = application;
+    }
+
+    private Long getDateTime(int hour){
+        Calendar currentTime = Calendar.getInstance();
+        currentTime.set(Calendar.HOUR_OF_DAY, hour);
+        currentTime.set(Calendar.MINUTE, 0);
+        currentTime.set(Calendar.MILLISECOND, 0);
+
+        return currentTime.getTimeInMillis();
     }
 
     LiveData<List<Medicine>> getAllMedication() {

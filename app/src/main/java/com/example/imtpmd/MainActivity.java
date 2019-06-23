@@ -20,7 +20,12 @@ import android.widget.ListView;
 
 import com.google.gson.Gson;
 
+import java.sql.Time;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.List;
 
 import static java.lang.Integer.parseInt;
@@ -98,19 +103,28 @@ public class MainActivity extends AppCompatActivity {
 //            }
 //        });
 
-//        insertIntoDatabase("testOchtend9", 40, 9, false);
-//        insertIntoDatabase("testMiddag15", 40, 15, false);
-//        insertIntoDatabase("testAvond20", 40, 20, false);
-//        insertIntoDatabase("testNacht4", 40, 4, false);
-//        insertIntoDatabase("testOchtend10", 40, 10, false);
-//        insertIntoDatabase("testMiddag17", 40, 17, false);
-//        insertIntoDatabase("testAvond22", 40, 22, false);
-//        insertIntoDatabase("testNacht5", 40, 5, false);
-//        insertIntoDatabase("testOchtend8", 40, 8, false);
-//        insertIntoDatabase("testMiddag13", 40, 13, false);
-//        insertIntoDatabase("testAvond23", 40, 23, false);
-//        insertIntoDatabase("testNacht2", 40, 2, false);
+//        insertIntoDatabase("testOchtend9", 40, getDateTime(9, 0), false);
+//        insertIntoDatabase("testMiddag155", 40, getDateTime(15, 30), false);
+//        insertIntoDatabase("testAvond20", 40, getDateTime(20, 18), false);
+//        insertIntoDatabase("testNacht4", 40, getDateTime(4, 0), false);
+//        insertIntoDatabase("testOchtend10", 40, getDateTime(10, 50), false);
+//        insertIntoDatabase("testMiddag15", 40, getDateTime(15, 0), false);
+//        insertIntoDatabase("testAvond22", 40, getDateTime(22, 7), false);
+//        insertIntoDatabase("testNacht5", 40, getDateTime(5, 0), false);
+//        insertIntoDatabase("testOchtend8", 40, getDateTime(8, 22), false);
+//        insertIntoDatabase("testMiddag13", 40, getDateTime(13, 0), false);
+//        insertIntoDatabase("testAvond23", 40, getDateTime(23, 31), false);
+//        insertIntoDatabase("testNacht2", 40, getDateTime(2, 0), false);
 
+    }
+
+    private Long getDateTime(int hour, int minute){
+        Calendar currentTime = Calendar.getInstance();
+        currentTime.set(Calendar.HOUR_OF_DAY, hour);
+        currentTime.set(Calendar.MINUTE, minute);
+        currentTime.set(Calendar.MILLISECOND, 0);
+
+        return currentTime.getTimeInMillis();
     }
 
     private void showStartScreen() {
@@ -124,8 +138,8 @@ public class MainActivity extends AppCompatActivity {
         startActivity(myIntent);
     }
 
-    private void insertIntoDatabase(String name, int milligram, int time, Boolean isChecked){
-        Medicine m = new Medicine(name, milligram, time, isChecked);
+    private void insertIntoDatabase(String name, int milligram, Long date, Boolean isChecked){
+        Medicine m = new Medicine(name, milligram, date, isChecked);
 
         medicineViewModel.insert(m);
 

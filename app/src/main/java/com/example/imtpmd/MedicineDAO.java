@@ -7,6 +7,7 @@ import android.arch.persistence.room.Insert;
 import android.arch.persistence.room.Query;
 import android.arch.persistence.room.Update;
 
+import java.util.Date;
 import java.util.List;
 
 @Dao
@@ -15,8 +16,8 @@ public interface MedicineDAO {
     LiveData<List<Medicine>> loadAll();
 
     // Selecteert medicijnen op basis van de tijd dat het genomen moet worden
-    @Query("SELECT * FROM medicine WHERE time >= :timeStart AND time < :timeEnd")
-    LiveData<List<Medicine>> loadByTime(int timeStart, int timeEnd);
+    @Query("SELECT * FROM medicine WHERE date >= :timeStart AND date < :timeEnd")
+    LiveData<List<Medicine>> loadByTime(Long timeStart, Long timeEnd);
 
     // Verander de waardes van een bepaald medicijn (bijvoorbeeld checked)
     @Update

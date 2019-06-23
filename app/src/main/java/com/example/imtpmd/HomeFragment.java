@@ -36,12 +36,6 @@ public class HomeFragment extends Fragment {
     private RecyclerView.LayoutManager layoutManager;
     private HomeData[] homeData = new HomeData[4];
 
-
-//    AppDatabase db = Room
-//            .databaseBuilder(getActivity(), AppDatabase.class, "medicine")
-//            .allowMainThreadQueries() // Dit moet nog weg!!!
-//            .build();
-
     public HomeFragment() {
         // Required empty public constructor
     }
@@ -53,6 +47,7 @@ public class HomeFragment extends Fragment {
         // Inflate the layout for this fragment
         final View view = inflater.inflate(R.layout.fragment_home, container, false);
 
+        // Recycler view variabelen
         recyclerView = (RecyclerView) view.findViewById(R.id.recycler_view_home);
         layoutManager = new LinearLayoutManager(getContext());
         recyclerView.setLayoutManager(layoutManager);
@@ -62,6 +57,7 @@ public class HomeFragment extends Fragment {
         // Vraag de medicijnen op per dagdeel
         medicineViewModel = ViewModelProviders.of(this).get(MedicineViewModel.class);
 
+        // Observer ochtend
         final Observer<List<Medicine>> ochtendObserver = new Observer<List<Medicine>>(){
             @Override
             public void onChanged(@Nullable final List<Medicine> newList){
@@ -82,6 +78,7 @@ public class HomeFragment extends Fragment {
 
         medicineViewModel.getOchtendList().observe(this, ochtendObserver);
 
+        // Observer middag
         final Observer<List<Medicine>> middagObserver = new Observer<List<Medicine>>(){
             @Override
             public void onChanged(@Nullable final List<Medicine> newList){
@@ -93,7 +90,6 @@ public class HomeFragment extends Fragment {
 
                 homeData[1] = new HomeData("Middag", list);
 
-                //mAdapter.notifyDataSetChanged();
                 mAdapter.notifyItemChanged(1);
 
 
@@ -103,6 +99,7 @@ public class HomeFragment extends Fragment {
 
         medicineViewModel.getMiddagList().observe(this, middagObserver);
 
+        //
         final Observer<List<Medicine>> avondObserver = new Observer<List<Medicine>>(){
             @Override
             public void onChanged(@Nullable final List<Medicine> newList){
@@ -120,7 +117,6 @@ public class HomeFragment extends Fragment {
 
         medicineViewModel.getAvondList().observe(this, avondObserver);
 
-        //Er moet nog een optie voor nacht gemaakt worden:
 
         final Observer<List<Medicine>> nachtObserver = new Observer<List<Medicine>>(){
             @Override
@@ -142,25 +138,6 @@ public class HomeFragment extends Fragment {
         return view;
     }
 
-    // Vult een lijst met de namen van de medicijnen om deze te laten zien in het overzicht
-    private void vulList(String id, ArrayList list, View view){
-        int listId = getResources().getIdentifier(id, "id", getContext().getPackageName());
-
-        MedicineListAdapter medicineAdapter = new MedicineListAdapter(getActivity(), list);
-
-        ListView listView = view.findViewById(listId);
-
-        listView.setAdapter(medicineAdapter);
-
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                Toast.makeText(getActivity(), "Je hebt geklikt op iets, wat een feest", Toast.LENGTH_LONG).show();
-            }
-        });
-
-
-    }
 
     public static void updateMedicineChecked(Medicine medicine, View view){
         medicine.setChecked(!medicine.getChecked());

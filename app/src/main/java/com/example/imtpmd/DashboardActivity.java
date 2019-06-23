@@ -40,7 +40,7 @@ public class DashboardActivity extends AppCompatActivity {
         calendarFragment = new CalendarFragment();
         settingsFragment = new SettingsFragment();
 
-        day = new SimpleDateFormat("EEEE").format(new Date()); // Toevoegen dat de dag met een hoofdletter is
+        day = new SimpleDateFormat("EEEE").format(new Date());
 
         day = day.substring(0, 1).toUpperCase() + day.substring(1);
 

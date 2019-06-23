@@ -35,9 +35,9 @@ public class MedicationAdapter extends RecyclerView.Adapter<MedicationAdapter.My
         Collections.sort(medicationList, new Comparator<Medicine>() {
             @Override
             public int compare(Medicine medicine, Medicine t1) {
-                if(medicine.getTime() > t1.getTime()){
+                if(medicine.getDate() > t1.getDate()){
                     return 1;
-                }else if (medicine.getTime() < t1.getTime()){
+                }else if (medicine.getDate() < t1.getDate()){
                     return -1;
                 }else{
                     return 0;
@@ -62,7 +62,7 @@ public class MedicationAdapter extends RecyclerView.Adapter<MedicationAdapter.My
     public void onBindViewHolder(@NonNull MedicationAdapter.MyViewHolder myViewHolder, int i) {
         myViewHolder.medicationNameView.setText(medicationList.get(i).getName());
         myViewHolder.checkBoxView.setChecked(medicationList.get(i).getChecked());
-        myViewHolder.timeView.setText(String.valueOf(medicationList.get(i).getTime()));
+        myViewHolder.timeView.setText(String.valueOf(medicationList.get(i).getDate()));
 
         final int position = i;
 

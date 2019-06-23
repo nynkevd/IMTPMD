@@ -49,9 +49,6 @@ public class DagdeelAdapter extends RecyclerView.Adapter<DagdeelAdapter.MyViewHo
         if(data[i] != null){
             myViewHolder.titleTextView.setText(data[i].getTitle());
 
-            //vulList(myViewHolder.medicineListView, i);
-            //roep de nieuwe Recyclerview aan
-
             medicationAdapter = new MedicationAdapter(data[i].getMedicineList());
             myViewHolder.medicineListView.setAdapter(medicationAdapter);
         }
@@ -63,9 +60,4 @@ public class DagdeelAdapter extends RecyclerView.Adapter<DagdeelAdapter.MyViewHo
         return 4;
     }
 
-    private void vulList(ListView listView, int i){
-        MedicineListAdapter medicineAdapter = new MedicineListAdapter(v.getContext(), data[i].getMedicineList());
-
-        listView.setAdapter(medicineAdapter);
-    }
 }
