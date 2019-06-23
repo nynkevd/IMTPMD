@@ -1,18 +1,15 @@
 package com.example.imtpmd;
 
-import android.arch.persistence.room.util.StringUtil;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.MenuItem;
 import android.widget.FrameLayout;
 
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
 import java.util.Date;
 
 public class DashboardActivity extends AppCompatActivity {
@@ -21,7 +18,7 @@ public class DashboardActivity extends AppCompatActivity {
     private FrameLayout DashboardFrame;
 
     private HomeFragment homeFragment;
-    private CalendarFragment calendarFragment;
+    private OverviewFragment overviewFragment;
     private SettingsFragment settingsFragment;
 
     private String day;
@@ -37,7 +34,7 @@ public class DashboardActivity extends AppCompatActivity {
         DashboardFrame = (FrameLayout) findViewById(R.id.dashboard_frame);
 
         homeFragment = new HomeFragment();
-        calendarFragment = new CalendarFragment();
+        overviewFragment = new OverviewFragment();
         settingsFragment = new SettingsFragment();
 
         day = new SimpleDateFormat("EEEE").format(new Date());
@@ -59,8 +56,8 @@ public class DashboardActivity extends AppCompatActivity {
                         return true;
 
                     case R.id.nav_calendar:
-                        setFragment(calendarFragment);
-                        setTitle("Kalender");
+                        setFragment(overviewFragment);
+                        setTitle("Mijn medicijnen");
                         return true;
 
                     case R.id.nav_settings:

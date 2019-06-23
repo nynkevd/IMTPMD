@@ -14,12 +14,12 @@ import android.widget.AdapterView;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class CalendarFragment extends Fragment {
+public class OverviewFragment extends Fragment {
 
     private FloatingActionButton AddButton;
 
 
-    public CalendarFragment() {
+    public OverviewFragment() {
         // Required empty public constructor
     }
 
