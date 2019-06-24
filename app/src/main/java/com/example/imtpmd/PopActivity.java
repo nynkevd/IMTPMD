@@ -12,7 +12,11 @@ public class PopActivity extends AppCompatActivity {
 
     RelativeLayout layout1;
     private String medName;
+    private String medSort;
+    private String medUse;
     private TextView medNameTV;
+    private TextView medSortTV;
+    private TextView medUseTV;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -20,9 +24,18 @@ public class PopActivity extends AppCompatActivity {
         setContentView(R.layout.activity_pop);
 
         medNameTV = findViewById(R.id.medNameTV);
+        medSortTV = findViewById(R.id.medSortTV);
+        medUseTV = findViewById(R.id.medUseTV);
 
         medName = getIntent().getStringExtra("givenMedName");
         medNameTV.setText(medName);
+
+        medSort = getIntent().getStringExtra("givenMedSort");
+        medSortTV.setText(medSort);
+
+        medUse = getIntent().getStringExtra("givenMedUse");
+        medUseTV.setText(medUse);
+
 
 
         layout1 = new RelativeLayout(this);
