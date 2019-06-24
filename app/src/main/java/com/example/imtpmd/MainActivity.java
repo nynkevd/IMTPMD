@@ -1,6 +1,9 @@
 package com.example.imtpmd;
 
+import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.Observer;
+import android.arch.lifecycle.Transformations;
+import android.arch.lifecycle.ViewModel;
 import android.arch.lifecycle.ViewModelProviders;
 import android.arch.persistence.db.SupportSQLiteOpenHelper;
 import android.arch.persistence.room.DatabaseConfiguration;
@@ -15,8 +18,12 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
+import android.widget.PopupWindow;
+import android.widget.Toast;
 
 import com.google.gson.Gson;
 
@@ -27,32 +34,31 @@ import static java.lang.Integer.parseInt;
 
 
 public class MainActivity extends AppCompatActivity {
-    private MedicineViewModel medicineViewModel;
+    private static MedicineViewModel medicineViewModel;
+    private static MedicationNameViewModel medicationNameViewModel;
 
-    private ListView searchmatches;
-    private List<String> allMedicationNames;
-    private int firstId;
+    private ListView medNameListview;
+    private ArrayList<String> allMedicationNamesAL = new ArrayList<>();
+   // private int firstId;
     private int medicationCount;
 
     Gson gson = new Gson();
-    private AppDatabase db;
-
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         // DEze database wordt ook in HomeFragment aangemaakt, dus ik weet niet of we het ergens 'globaal' kunnen doen?
-         db = Room
-                .databaseBuilder(getApplicationContext(), AppDatabase.class, "medicine")
-                .allowMainThreadQueries() // Dit moet nog weg!!!
-                .build();
-
-        allMedicationNames = new ArrayList<>();
+//         db = Room
+//                .databaseBuilder(getApplicationContext(), AppDatabase.class, "medicine")
+//                .allowMainThreadQueries() // Dit moet nog weg!!!
+//                .build();
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
         medicineViewModel = ViewModelProviders.of(this).get(MedicineViewModel.class);
+        medicationNameViewModel = ViewModelProviders.of(this).get(MedicationNameViewModel.class);
+
+         medNameListview = findViewById(R.id.medslistview);
 
         if (android.os.Build.VERSION.SDK_INT > 9)
         {
@@ -60,6 +66,7 @@ public class MainActivity extends AppCompatActivity {
                     StrictMode.ThreadPolicy.Builder().permitAll().build();
             StrictMode.setThreadPolicy(policy);
         }
+
 
         Button naarhome = (Button) findViewById(R.id.naarhome);
 
@@ -103,11 +110,36 @@ public class MainActivity extends AppCompatActivity {
 //        insertIntoDatabase("testAvond", 40, 20, false);
 //        insertIntoDatabase("testNacht", 40, 5, false);
 
+
+        medicationNameViewModel.getAllMedicationNames().observe(this, new Observer<List<MedicationName>>() {
+           @Override
+           public void onChanged(@Nullable final List<MedicationName> meds){
+                for (MedicationName medicationName : meds){
+                    allMedicationNamesAL.add(medicationName.getName());
+                    Log.d("ARRAYLIST", "onChanged: " + medicationName.getName());
+
+                    ArrayAdapter<String> allMedicationNamesAdapter = new ArrayAdapter<String>(getApplicationContext(), android.R.layout.simple_list_item_1, allMedicationNamesAL);
+                    medNameListview.setAdapter(allMedicationNamesAdapter);
+                }
+           }
+        });
+
+        medNameListview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                Toast.makeText(getApplicationContext(), "Je hebt geklikt!" + adapterView.getItemAtPosition(i), Toast.LENGTH_SHORT ).show();
+                Intent in = new Intent(MainActivity.this, PopActivity.class);
+                in.putExtra("givenMedName", adapterView.getItemAtPosition(i).toString());
+                startActivity(in);
+            }
+        });
+
+
+
     }
 
     private void showStartScreen() {
         Intent myIntent = new Intent(getBaseContext(), WelcomeActivity.class);
-
         SharedPreferences prefs = getSharedPreferences("prefs", MODE_PRIVATE);
         SharedPreferences.Editor editor = prefs.edit();
         editor.putBoolean("firstStart", false);

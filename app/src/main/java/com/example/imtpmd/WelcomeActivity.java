@@ -28,8 +28,12 @@ public class WelcomeActivity extends AppCompatActivity {
 
         medicationNameViewModel = ViewModelProviders.of(this).get(MedicationNameViewModel.class);
 
-        MedicationName mn = new MedicationName("first");
-        medicationNameViewModel.insert(mn);
+        //verwijderen van database!
+//        MedicationName mn = new MedicationName("first");
+//        medicationNameViewModel.insert(mn);
+
+//        Log.d("DLETE", "DELETE DATABASE");
+//        medicationNameViewModel.deleteAll();
 
         NetworkManager.getInstance(this).getRequest("http://136.144.230.97:8090/api/medicationcount?api_token=CilZjPDfkHDmb29qcJkqBS7bB2cup9T7Onqcmfaqt027QhvpqBhFvLinJ6Dp", new VolleyCallback() {
             @Override

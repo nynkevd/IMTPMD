@@ -75,7 +75,6 @@ public class HomeFragment extends Fragment {
 
                 mAdapter.notifyItemChanged(0);
 
-
             }
 
         };
