@@ -23,7 +23,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginEnd="8dp"
-        android:layout_marginBottom="76dp"
+        android:layout_marginBottom="56dp"
         android:text="@string/verder"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -32,10 +32,13 @@
 
     <ListView
         android:id="@+id/medslistview"
-        android:layout_width="243dp"
-        android:layout_height="444dp"
+        android:layout_width="340dp"
+        android:layout_height="461dp"
+        android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
         app:layout_constraintBottom_toTopOf="@+id/naarhome"
-        app:layout_constraintTop_toBottomOf="@+id/searchview"
-        tools:layout_editor_absoluteX="83dp" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/searchview" />
 </android.support.constraint.ConstraintLayout>

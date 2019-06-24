@@ -12,14 +12,14 @@ public class MedicationNameViewModel extends AndroidViewModel {
     private LiveData<List<MedicationName>> allMedicationNames;
     private static LiveData<String> requestedMedicationName;
     private int id;
-    private static LiveData<Integer> firstId;
+    //private static LiveData<Integer> firstId;
 
     public MedicationNameViewModel(Application application) {
         super(application);
         medicationNameRepository = new MedicationNameRepository(application);
-        allMedicationNames = medicationNameRepository.getAllMedicationName();
+        allMedicationNames = medicationNameRepository.getAllMedicationNames();
         requestedMedicationName = medicationNameRepository.getMedicationName(id);
-        firstId = medicationNameRepository.getFirstId();
+       // firstId = medicationNameRepository.getFirstId();
     }
 
     LiveData<List<MedicationName>> getAllMedicationNames() {
@@ -31,12 +31,17 @@ public class MedicationNameViewModel extends AndroidViewModel {
         return this.requestedMedicationName;
     }
 
-    LiveData<Integer> getFirstId() {
-        return this.firstId;
-    }
+    //LiveData<Integer> getFirstId() {
+    //    return this.firstId;
+    //}
 
     public void insert(MedicationName medicationName){
         Log.d("INSERT", "Insert in MedicationNameViewModel");
         medicationNameRepository.insert(medicationName);
+    }
+
+    public void deleteAll(){
+        Log.d("DELETE", "Delete in MedicationNameViewModel");
+        medicationNameRepository.deleteAll();
     }
 }

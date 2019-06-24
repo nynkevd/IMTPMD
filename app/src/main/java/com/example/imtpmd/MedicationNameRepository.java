@@ -12,7 +12,7 @@ public class MedicationNameRepository {
     private LiveData<List<MedicationName>> allMedicationNames;
     private LiveData<String> requestedMedicationName;
     private int id;
-    private LiveData<Integer> firstId;
+    //private LiveData<Integer> firstId;
     private String firstName;
     private static Application app;
 
@@ -21,12 +21,12 @@ public class MedicationNameRepository {
         medicationNameDAO = db.medicationNameDAO();
         allMedicationNames = medicationNameDAO.loadAll();
         requestedMedicationName = medicationNameDAO.getMedicationName(id);
-        firstId = medicationNameDAO.getFirstId("first");
+       // firstId = medicationNameDAO.getFirstId("first");
 
         app = application;
     }
 
-    LiveData<List<MedicationName>> getAllMedicationName() {
+    LiveData<List<MedicationName>> getAllMedicationNames() {
         return allMedicationNames;
     }
 
@@ -35,9 +35,9 @@ public class MedicationNameRepository {
         return requestedMedicationName;
     }
 
-    LiveData<Integer> getFirstId() {
-        return firstId;
-    }
+    //LiveData<Integer> getFirstId() {
+    //    return firstId;
+    //}
 
     public void insert(MedicationName medicationName){
         new insertAsyncTask(medicationNameDAO).execute(medicationName);
@@ -53,6 +53,29 @@ public class MedicationNameRepository {
         @Override
         protected Void doInBackground(MedicationName... medicationNames) {
             asyncTaskDAO.insertAll(medicationNames);
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Void result) {
+            Toast.makeText(app.getApplicationContext(), "Medicationnames toegevoegd aan database", Toast.LENGTH_LONG);
+        }
+    }
+
+    public void deleteAll() {
+        new insertAsyncTask(medicationNameDAO).execute();
+    }
+
+    private static class deleteAsyncTask extends AsyncTask<Void, Void, Void> {
+        private MedicationNameDAO asyncTaskDAO;
+
+        deleteAsyncTask(MedicationNameDAO dao){
+            asyncTaskDAO = dao;
+        }
+
+        @Override
+        protected Void doInBackground(Void... voids) {
+            asyncTaskDAO.deleteAll();
             return null;
         }
 
