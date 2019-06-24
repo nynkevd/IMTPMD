@@ -16,7 +16,6 @@ public class DagdeelAdapter extends RecyclerView.Adapter<DagdeelAdapter.MyViewHo
     private static RecyclerView.LayoutManager layoutManager;
 
     public static class MyViewHolder extends RecyclerView.ViewHolder {
-        // each data item is just a string in this case
         public TextView titleTextView;
         public RecyclerView medicineListView;
         public MyViewHolder(View v) {
