@@ -3,6 +3,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent" android:layout_height="match_parent" android:background="@drawable/border" android:elevation="2dp">
 
+
+
     <TextView
         android:id="@+id/textView"
         style="@android:style/Widget.DeviceDefault.TextView"
@@ -37,6 +39,7 @@
 
     <TextView
         android:id="@+id/medNameTV"
+        style="@android:style/Widget.DeviceDefault.TextView"
         android:layout_width="wrap_content"
         android:layout_height="31dp"
         android:layout_below="@+id/textView"
@@ -46,7 +49,9 @@
         android:layout_marginTop="-2dp"
         android:layout_marginEnd="2dp"
         android:text="Medicijn"
-        android:textAppearance="@style/TextAppearance.AppCompat.Large" />
+        android:textAppearance="@style/TextAppearance.AppCompat.Body2"
+        app:fontFamily="sans-serif-medium"
+        android:textSize="21dp"/>
 
     <TextView
         android:id="@+id/medUseTV"
@@ -59,7 +64,9 @@
         android:layout_marginTop="-4dp"
         android:layout_marginEnd="1dp"
         android:text="Medicijn"
-        android:textAppearance="@style/TextAppearance.AppCompat.Large" />
+        android:textAppearance="@style/TextAppearance.AppCompat.Body2"
+        app:fontFamily="sans-serif-medium"
+        android:textSize="21dp" />
 
     <TextView
         android:id="@+id/medSortTV"
@@ -72,7 +79,9 @@
         android:layout_marginTop="3dp"
         android:layout_marginEnd="1dp"
         android:text="Medicijn"
-        android:textAppearance="@style/TextAppearance.AppCompat.Large" />
+        android:textAppearance="@style/TextAppearance.AppCompat.Body2"
+        app:fontFamily="sans-serif-medium"
+        android:textSize="21dp" />
 
     <TextView
         android:id="@+id/textView3"
@@ -123,9 +132,99 @@
         android:layout_alignStart="@+id/textView"
         android:layout_alignEnd="@+id/textView"
         android:layout_marginStart="-1dp"
-        android:layout_marginTop="-3dp"
+        android:layout_marginTop="-5dp"
         android:layout_marginEnd="2dp"
         android:text="Huidige Tijd"
-        android:textAppearance="@style/TextAppearance.AppCompat.Large" />
+        android:textAppearance="@style/TextAppearance.AppCompat.Body2"
+        app:fontFamily="sans-serif-medium"
+        android:textSize="21dp" />
+
+    <Button
+        android:id="@+id/dateBTN"
+        style="@style/Widget.AppCompat.Button.Colored"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/textView3"
+        android:layout_alignParentEnd="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="64dp"
+        android:layout_marginEnd="237dp"
+        android:text=" Kies datum van" />
+
+    <Button
+        android:id="@+id/dateBTN2"
+        style="@style/Widget.AppCompat.Button.Colored"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/textView3"
+        android:layout_alignParentEnd="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="62dp"
+        android:layout_marginEnd="48dp"
+        android:text=" Kies datum tot" />
+
+    <TextView
+        android:id="@+id/dateTV2"
+        android:layout_width="345dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/textView3"
+        android:layout_alignEnd="@+id/dateTV"
+        android:layout_marginStart="1dp"
+        android:layout_marginTop="29dp"
+        android:layout_marginEnd="-1dp"
+        android:layout_toEndOf="@+id/textView9"
+        android:text="25 jun. 2019"
+        android:textAppearance="@style/TextAppearance.AppCompat.Body2"
+        android:textSize="21dp"
+        app:fontFamily="sans-serif-medium" />
+
+    <TextView
+        android:id="@+id/dateTV"
+        android:layout_width="290dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/textView3"
+        android:layout_alignEnd="@+id/textView3"
+        android:layout_marginTop="0dp"
+        android:layout_marginEnd="0dp"
+        android:text="25 jun. 2019"
+        android:textAppearance="@style/TextAppearance.AppCompat.Body2"
+        android:textSize="21dp"
+        app:fontFamily="sans-serif-medium" />
+
+    <TextView
+        android:id="@+id/textView9"
+        android:layout_width="53dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/textView3"
+        android:layout_alignParentStart="true"
+        android:layout_marginStart="30dp"
+        android:layout_marginTop="37dp"
+        android:text="tot" />
+
+    <TextView
+        android:id="@+id/textView10"
+        android:layout_width="52dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/textView3"
+        android:layout_alignBottom="@+id/dateTV"
+        android:layout_alignParentStart="true"
+        android:layout_marginStart="31dp"
+        android:layout_marginTop="9dp"
+        android:layout_marginEnd="1dp"
+        android:layout_marginBottom="0dp"
+        android:layout_toStartOf="@+id/dateTV"
+        android:text="van" />
+
+    <Button
+        android:id="@+id/confirmBTN"
+        android:layout_width="134dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/dateBTN2"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginStart="129dp"
+        android:layout_marginTop="40dp"
+        android:layout_marginEnd="148dp"
+        android:text="bevestigen" />
 
 </RelativeLayout>
