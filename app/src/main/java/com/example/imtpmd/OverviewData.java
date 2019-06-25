@@ -7,11 +7,11 @@ public class OverviewData {
     //private Long[] time;
 
     //, Long dateVan, Long dateTo, Long time
-    public OverviewData(String name, Long dateVan, Long dateTot){
+    public OverviewData(String name){
         this.name = name;
-        this.dateVan = dateVan;
-        this.dateTot = dateTot;
-        //,
+//        this.dateVan = dateVan;
+//        this.dateTot = dateTot;
+        //, Long dateVan, Long dateTot
     }
 
     public String getName() {

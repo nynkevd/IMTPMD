@@ -28,7 +28,7 @@ public class OverviewFragment extends Fragment {
     private RecyclerView.Adapter medAdapter;
     private RecyclerView.LayoutManager layoutManager;
     //private OverviewData[] overviewData;
-    private List<OverviewData> overviewData = new ArrayList<>();
+    private List<OverviewData> overviewData;
     private static MedicineViewModel medicineViewModel;
 
 
@@ -42,6 +42,8 @@ public class OverviewFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_overview, container, false);
+
+        overviewData = new ArrayList<>();
 
         AddButton = (FloatingActionButton) view.findViewById(R.id.add_button);
 
@@ -66,7 +68,7 @@ public class OverviewFragment extends Fragment {
             @Override
             public void onChanged(@Nullable List<String> medicines) {
                 for(String name : medicines){
-//                    overviewData.add(new OverviewData(name, 12342245, 23441234));
+                    overviewData.add(new OverviewData(name));
                 }
 
 
@@ -76,22 +78,22 @@ public class OverviewFragment extends Fragment {
 
         medicineViewModel.getDistinctNames().observe(this, observerNames);
 
-        final Observer<List<Medicine>> observerOverviewData = new Observer<List<Medicine>>(){
-
-            @Override
-            public void onChanged(@Nullable List<Medicine> overviewDatas) { // overviewDatas is een mooie naam
-
-                for(Medicine overviewData : overviewDatas){
-                    Log.d("daaaataaaa", overviewData.getName() + " " + overviewData.getDate());
-                }
-
-
-
-                medAdapter.notifyDataSetChanged();
-            }
-        };
-
-        medicineViewModel.getOverviewData().observe(this, observerOverviewData);
+//        final Observer<List<Medicine>> observerOverviewData = new Observer<List<Medicine>>(){
+//
+//            @Override
+//            public void onChanged(@Nullable List<Medicine> overviewDatas) { // overviewDatas is een mooie naam
+//
+//                for(Medicine overviewData : overviewDatas){
+//                    Log.d("daaaataaaa", overviewData.getName() + " " + overviewData.getDate());
+//                }
+//
+//
+//
+//                medAdapter.notifyDataSetChanged();
+//            }
+//        };
+//
+//        medicineViewModel.getOverviewData().observe(this, observerOverviewData);
 //
 //        final Observer<List<String>> observerDateTot = new Observer<List<String>>(){
 //
