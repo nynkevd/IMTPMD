@@ -17,6 +17,10 @@ public class MedicineRepository {
     private LiveData<List<Medicine>> middagList;
     private LiveData<List<Medicine>> avondList;
     private LiveData<List<Medicine>> nachtList;
+    private LiveData<List<String>> distinctNames;
+    private LiveData<Long> dateVan;
+    private LiveData<Long> dateTot;
+    private LiveData<List<Medicine>> overviewData;
     private static Application app;
 
     MedicineRepository(Application application){
@@ -28,6 +32,12 @@ public class MedicineRepository {
         middagList = medicineDAO.loadByTime(getDateTime(12), getDateTime(18));
         avondList = medicineDAO.loadByTime(getDateTime(18), getDateTime(24));
         nachtList = medicineDAO.loadByTime(getDateTime(0), getDateTime(6));
+
+        distinctNames = medicineDAO.loadDistinctNames();
+        dateVan = medicineDAO.loadDateVan("testOchtend9"); //aanpassen!!
+        dateTot = medicineDAO.loadDateTot("testOchtend9"); //aanapssen!!
+
+        overviewData = medicineDAO.loadOverviewData();
         app = application;
     }
 
@@ -59,6 +69,20 @@ public class MedicineRepository {
     LiveData<List<Medicine>> getNachtList(){
         return nachtList;
     }
+
+    LiveData<List<String>> getDistinctNames() { return distinctNames; }
+
+    LiveData<Long> getDateVan() { return dateVan; }
+
+    LiveData<Long> getDateTot() {return dateTot; }
+
+    LiveData<List<Medicine>> getOverviewData() {return overviewData; }
+
+//    LiveData<List<OverviewData>> getOverviewData(){
+////        for(String name : distinctNames){
+////
+////        }
+//    }
 
     public void insert(Medicine medicine){
         new insertAsyncTask(medicineDAO).execute(medicine);

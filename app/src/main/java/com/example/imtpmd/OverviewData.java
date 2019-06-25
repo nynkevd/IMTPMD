@@ -3,12 +3,15 @@ package com.example.imtpmd;
 public class OverviewData {
     private String name;
     private Long dateVan;
-    private Long dateTo;
-    private Long[] time;
+    private Long dateTot;
+    //private Long[] time;
 
     //, Long dateVan, Long dateTo, Long time
-    public OverviewData(String name){
+    public OverviewData(String name, Long dateVan, Long dateTot){
         this.name = name;
+        this.dateVan = dateVan;
+        this.dateTot = dateTot;
+        //,
     }
 
     public String getName() {
@@ -19,13 +22,13 @@ public class OverviewData {
         return dateVan;
     }
 
-    public Long getDateTo() {
-        return dateTo;
+    public Long getDateTot() {
+        return dateTot;
     }
 
-    public Long[] getTime() {
-        return time;
-    }
+//    public Long[] getTime() {
+//        return time;
+//    }
 
 
     public void setName(String name) {
@@ -36,13 +39,13 @@ public class OverviewData {
         this.dateVan = dateVan;
     }
 
-    public void setDateTo(Long dateTo) {
-        this.dateTo = dateTo;
+    public void setDateTot(Long dateTot) {
+        this.dateTot = dateTot;
     }
 
-    public void setTime(Long[] time) {
-        this.time = time;
-    }
+//    public void setTime(Long[] time) {
+//        this.time = time;
+//    }
 
 
 

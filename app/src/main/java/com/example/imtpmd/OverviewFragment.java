@@ -61,33 +61,52 @@ public class OverviewFragment extends Fragment {
 
         medicineViewModel = ViewModelProviders.of(this).get(MedicineViewModel.class);
 
-        final Observer<List<Medicine>> observer = new Observer<List<Medicine>>(){
+        final Observer<List<String>> observerNames = new Observer<List<String>>(){
 
             @Override
-            public void onChanged(@Nullable List<Medicine> medicines) {
-                Boolean inArray = false;
-
-                // dit is niet zo netjes
-                for(Medicine medicine : medicines){
-                    Log.d("aaaaaa", "Medicine name: " + medicine.getName());
-                    for(OverviewData oldData : overviewData){
-                        Log.d("aaaaaa", "OldData name: " + oldData.getName());
-                        if(oldData.getName().equals(medicine.getName())){
-                            inArray = true;
-                            Log.d("aaaaaaa", "Deze waarde komt al in de lijst voor: " + oldData.getName());
-                        }
-                    }
-
-                    if(!inArray){
-                        overviewData.add(new OverviewData(medicine.getName()));
-                    }
+            public void onChanged(@Nullable List<String> medicines) {
+                for(String name : medicines){
+//                    overviewData.add(new OverviewData(name, 12342245, 23441234));
                 }
+
 
                 medAdapter.notifyDataSetChanged();
             }
         };
 
-        medicineViewModel.getAllMedication().observe(this, observer);
+        medicineViewModel.getDistinctNames().observe(this, observerNames);
+
+        final Observer<List<Medicine>> observerOverviewData = new Observer<List<Medicine>>(){
+
+            @Override
+            public void onChanged(@Nullable List<Medicine> overviewDatas) { // overviewDatas is een mooie naam
+
+                for(Medicine overviewData : overviewDatas){
+                    Log.d("daaaataaaa", overviewData.getName() + " " + overviewData.getDate());
+                }
+
+
+
+                medAdapter.notifyDataSetChanged();
+            }
+        };
+
+        medicineViewModel.getOverviewData().observe(this, observerOverviewData);
+//
+//        final Observer<List<String>> observerDateTot = new Observer<List<String>>(){
+//
+//            @Override
+//            public void onChanged(@Nullable List<String> medicines) {
+//                for(String name : medicines){
+//                    overviewData.add(new OverviewData(name));
+//                }
+//
+//
+//                medAdapter.notifyDataSetChanged();
+//            }
+//        };
+//
+//        medicineViewModel.getDistinctNames().observe(this, observerDateTot);
 
         return view;
 
