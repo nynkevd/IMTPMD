@@ -67,12 +67,12 @@ public class OverviewFragment extends Fragment {
 
             @Override
             public void onChanged(@Nullable List<String> medicines) {
-                for(String name : medicines){
-                    overviewData.add(new OverviewData(name));
-                }
+            for(String name : medicines){
+                overviewData.add(new OverviewData(name));
+            }
 
 
-                medAdapter.notifyDataSetChanged();
+            medAdapter.notifyDataSetChanged();
             }
         };
 
