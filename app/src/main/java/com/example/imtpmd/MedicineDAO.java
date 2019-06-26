@@ -35,6 +35,10 @@ public interface MedicineDAO {
     @Query("SELECT med.* FROM medicine med INNER JOIN (SELECT name, MAX(date) AS dateTot FROM medicine GROUP BY name) groupMed ON med.name = groupMed.name AND med.date = groupMed.dateTot")
     LiveData<List<Medicine>> loadOverviewData();
 
+    // Delete alle medicijnen met een bepaalde naam
+    @Query("DELETE FROM medicine WHERE name = :name")
+    void deleteByName(String name);
+
     // Verander de waardes van een bepaald medicijn (bijvoorbeeld checked)
     @Update
     void update(Medicine... medicines);

@@ -3,6 +3,7 @@ package com.example.imtpmd;
 
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
+import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
@@ -13,6 +14,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,14 +24,14 @@ import java.util.List;
  * A simple {@link Fragment} subclass.
  */
 public class OverviewFragment extends Fragment {
-
+    private static MedicineViewModel medicineViewModel;
     private FloatingActionButton AddButton;
     private RecyclerView recyclerView;
-    private RecyclerView.Adapter medAdapter;
+    private static RecyclerView.Adapter medAdapter;
     private RecyclerView.LayoutManager layoutManager;
     //private OverviewData[] overviewData;
     private List<OverviewData> overviewData;
-    private static MedicineViewModel medicineViewModel;
+    private Context context;
 
 
     public OverviewFragment() {
@@ -45,6 +47,8 @@ public class OverviewFragment extends Fragment {
 
         overviewData = new ArrayList<>();
 
+        context = this.getContext();
+
         AddButton = (FloatingActionButton) view.findViewById(R.id.add_button);
 
         AddButton.setOnClickListener(new View.OnClickListener() {
@@ -55,6 +59,7 @@ public class OverviewFragment extends Fragment {
             }
         });
 
+        // Recycler view variabelen
         recyclerView = (RecyclerView) view.findViewById(R.id.recycler_view_overview);
         layoutManager = new LinearLayoutManager(getContext());
         recyclerView.setLayoutManager(layoutManager);
@@ -67,51 +72,28 @@ public class OverviewFragment extends Fragment {
 
             @Override
             public void onChanged(@Nullable List<String> medicines) {
-            for(String name : medicines){
-                overviewData.add(new OverviewData(name));
-            }
+                //Als er nieuwe data is wordt de hele lijst eerst geleegd, zodat alle nieuwe data opnieuw toegevoegd kan worden
+                overviewData.clear();
 
+                for(String name : medicines){
+                    overviewData.add(new OverviewData(name));
+                }
 
-            medAdapter.notifyDataSetChanged();
+                medAdapter.notifyDataSetChanged();
             }
         };
 
         medicineViewModel.getDistinctNames().observe(this, observerNames);
 
-//        final Observer<List<Medicine>> observerOverviewData = new Observer<List<Medicine>>(){
-//
-//            @Override
-//            public void onChanged(@Nullable List<Medicine> overviewDatas) { // overviewDatas is een mooie naam
-//
-//                for(Medicine overviewData : overviewDatas){
-//                    Log.d("daaaataaaa", overviewData.getName() + " " + overviewData.getDate());
-//                }
-//
-//
-//
-//                medAdapter.notifyDataSetChanged();
-//            }
-//        };
-//
-//        medicineViewModel.getOverviewData().observe(this, observerOverviewData);
-//
-//        final Observer<List<String>> observerDateTot = new Observer<List<String>>(){
-//
-//            @Override
-//            public void onChanged(@Nullable List<String> medicines) {
-//                for(String name : medicines){
-//                    overviewData.add(new OverviewData(name));
-//                }
-//
-//
-//                medAdapter.notifyDataSetChanged();
-//            }
-//        };
-//
-//        medicineViewModel.getDistinctNames().observe(this, observerDateTot);
 
         return view;
 
+    }
+
+    // Functie om de medicijenen met een bepaalde naam te kunnen verwijderen
+    // Deze functie wordt aanggeroepen vanui MedicationOverviewAdapter
+    public static void deleteByName(String name){
+        medicineViewModel.deleteByName(name);
     }
 
 }

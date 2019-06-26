@@ -1,5 +1,6 @@
 package com.example.imtpmd;
 
+import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -12,6 +13,7 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.List;
 
@@ -52,15 +54,18 @@ public class MedicationOverviewAdapter extends RecyclerView.Adapter<MedicationOv
     }
 
     @Override
-    public void onBindViewHolder(@NonNull MyViewHolder myViewHolder, int i) {
+    public void onBindViewHolder(@NonNull final MyViewHolder myViewHolder, int i) {
         myViewHolder.name.setText(data.get(i).getName());
 
         final int position = i;
 
+        // Als er op de delete knop geklikt wordt worden alle medicijnen met dezelfde naam uit de database verwijderd
         myViewHolder.delete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Log.d("teeeest", "Klik op delete" + data.get(position).getName());
+            OverviewFragment.deleteByName(data.get(position).getName());
+            //toast werkt niet?
+            //Toast.makeText(view.getContext(), "Medicijn verwijderd", Toast.LENGTH_LONG);
             }
         });
     }
@@ -69,7 +74,5 @@ public class MedicationOverviewAdapter extends RecyclerView.Adapter<MedicationOv
     public int getItemCount() {
         return data.size();
     }
-
-
 
 }

@@ -121,4 +121,26 @@ public class MedicineRepository {
         }
     }
 
+    public void deleteByName(String name){new deleteAsyncTask(medicineDAO).execute(name);}
+
+    private static class deleteAsyncTask extends AsyncTask<String, Void, Void>{
+        private MedicineDAO asyncTaskDAO;
+
+        deleteAsyncTask(MedicineDAO dao){asyncTaskDAO = dao;}
+
+        @Override
+        protected Void doInBackground(String... strings) {
+            for(String name : strings ){
+                asyncTaskDAO.deleteByName(name);
+            }
+            return null;
+
+        }
+
+        @Override
+        protected void onPostExecute(Void result){
+            Log.d("teeeeest", "postexecute");
+        }
+    }
+
 }
