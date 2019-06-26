@@ -7,7 +7,9 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -33,6 +35,7 @@ public class OverviewFragment extends Fragment {
     private List<OverviewData> overviewData;
     private Context context;
 
+    private static FragmentActivity fa;
 
     public OverviewFragment() {
         // Required empty public constructor
@@ -49,12 +52,15 @@ public class OverviewFragment extends Fragment {
 
         context = this.getContext();
 
+        fa = getActivity();
+
         AddButton = (FloatingActionButton) view.findViewById(R.id.add_button);
 
         AddButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Log.d("test", "addddd");
+
                 // Naar toevoegen pagina
             }
         });
@@ -93,7 +99,12 @@ public class OverviewFragment extends Fragment {
     // Functie om de medicijenen met een bepaalde naam te kunnen verwijderen
     // Deze functie wordt aanggeroepen vanui MedicationOverviewAdapter
     public static void deleteByName(String name){
-        medicineViewModel.deleteByName(name);
-    }
+        Bundle bundle = new Bundle();
+        bundle.putString("name", name);
+        DialogFragment warningFragment = new WarningFragment();
+        warningFragment.setArguments(bundle);
+        warningFragment.show(fa.getSupportFragmentManager(), "warningfragment");
+
+        }
 
 }

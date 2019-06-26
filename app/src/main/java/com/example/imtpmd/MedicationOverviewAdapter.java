@@ -63,6 +63,7 @@ public class MedicationOverviewAdapter extends RecyclerView.Adapter<MedicationOv
         myViewHolder.delete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
             OverviewFragment.deleteByName(data.get(position).getName());
             //toast werkt niet?
             //Toast.makeText(view.getContext(), "Medicijn verwijderd", Toast.LENGTH_LONG);
