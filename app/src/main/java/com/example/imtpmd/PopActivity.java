@@ -19,8 +19,10 @@ import android.widget.TextView;
 import android.widget.TimePicker;
 
 import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Locale;
 
 public class PopActivity extends AppCompatActivity implements TimePickerDialog.OnTimeSetListener, DatePickerDialog.OnDateSetListener{
     private static MedicineViewModel medicineViewModel;
@@ -29,6 +31,11 @@ public class PopActivity extends AppCompatActivity implements TimePickerDialog.O
     private String medName;
     private String medSort;
     private String medUse;
+
+    private String dateString;
+    private Long medDate;
+    private int medHour;
+    private int medMin;
 
     private TextView medNameTV;
     private TextView medSortTV;
@@ -77,6 +84,7 @@ public class PopActivity extends AppCompatActivity implements TimePickerDialog.O
         String currentDate = DateFormat.getDateInstance().format(c.getTime());
         String currentDate2 = DateFormat.getDateInstance().format(c2.getTime());
 
+        date = c.getTime();
         date = c.getTime();
         date2 = c2.getTime();
 
@@ -157,6 +165,8 @@ public class PopActivity extends AppCompatActivity implements TimePickerDialog.O
 
 
     public void setTime(int i, int i1){
+        medHour = i;
+        medMin = i1;
         if (i >= 10 && i1 >= 10){
             timeTV.setText(i + ":" + i1);
         }
@@ -221,16 +231,26 @@ public class PopActivity extends AppCompatActivity implements TimePickerDialog.O
         Long dateFrom = this.date.getTime();
         Long dateTo = this.date2.getTime();
 
+        Calendar c = Calendar.getInstance();
+        c.setTime(date);
+        c.set(Calendar.HOUR, medHour);
+        c.set(Calendar.MINUTE, medMin);
+
+
 
         long diff = date2.getTime() - date.getTime();
         int dayCount = (int) diff / (24 * 60 * 60 * 1000);
         Log.d("DAYS", String.valueOf(dayCount));
 
-//        for {
-//            Medicine m = new Medicine(name, milligram, date, isChecked, dateFrom, dateTo);
-//
-//            medicineViewModel.insert(m);
-//        }
+        for (int i = 0; i <= dayCount; i++){
+            Log.d("CAL", DateFormat.getDateInstance().format(c.getTime()));
+            medDate = c.getTime().getTime();
+
+            Medicine m = new Medicine(name, milligram, medDate, isChecked, dateFrom, dateTo);
+
+            medicineViewModel.insert(m);
+                c.add(Calendar.DATE, 1);
+        }
         Log.d("Medicine", "Naar de database geschreven");
     }
 }
