@@ -125,10 +125,7 @@ public class PopActivity extends AppCompatActivity implements TimePickerDialog.O
         confirmBTN.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-
-
-                //insertIntoDatabase(name, milligram, date, isChecked);
+                insertIntoDatabase();
             }
         });
 
@@ -186,6 +183,9 @@ public class PopActivity extends AppCompatActivity implements TimePickerDialog.O
         if (selectedBTN == 0) {
             date = c.getTime();
 
+            //DATUMVAN IN EEN LONG
+            Log.d("TIJDVAN", "c.gettime    " + c.getTime().getTime());
+
             dateTV.setText(currentDate);
 
             if (date2.before(date)){
@@ -194,6 +194,9 @@ public class PopActivity extends AppCompatActivity implements TimePickerDialog.O
             }
         } else if (selectedBTN == 1) {
             date2 = c.getTime();
+
+            //DATUMTOT IN EEN LONG
+            Log.d("TIJDTOT", "c.gettime    " + c.getTime().getTime());
 
             dateTV2.setText(currentDate);
 
@@ -205,11 +208,23 @@ public class PopActivity extends AppCompatActivity implements TimePickerDialog.O
 
     }
 
-    private void insertIntoDatabase(String name, int milligram, Long date, Boolean isChecked){
-        Medicine m = new Medicine(name, milligram, date, isChecked);
+    private void insertIntoDatabase(){
+        String name =  this.medName;
+        int milligram = 0;
+        boolean isChecked = false;
+        Long dateFrom = this.date.getTime();
+        Long dateTo = this.date2.getTime();
 
-        medicineViewModel.insert(m);
 
+        long diff = date2.getTime() - date.getTime();
+        int dayCount = (int) diff / (24 * 60 * 60 * 1000);
+        Log.d("DAYS", String.valueOf(dayCount));
+
+//        for {
+//            Medicine m = new Medicine(name, milligram, date, isChecked, dateFrom, dateTo);
+//
+//            medicineViewModel.insert(m);
+//        }
         Log.d("Medicine", "Naar de database geschreven");
     }
 }

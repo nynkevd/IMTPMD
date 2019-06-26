@@ -186,8 +186,8 @@ public class MainActivity extends AppCompatActivity {
         startActivity(myIntent);
     }
 
-    private void insertIntoDatabase(String name, int milligram, Long date, Boolean isChecked){
-        Medicine m = new Medicine(name, milligram, date, isChecked);
+    private void insertIntoDatabase(String name, int milligram, Long date, Boolean isChecked, Long dateFrom, Long dateTo){
+        Medicine m = new Medicine(name, milligram, date, isChecked, dateFrom, dateTo);
 
         medicineViewModel.insert(m);
 
