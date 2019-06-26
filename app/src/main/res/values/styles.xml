@@ -9,8 +9,9 @@
   </style>
   
   <style name="AppTheme.PopupwindowTheme" parent="Theme.AppCompat.Light.NoActionBar">
-    <item name="android:colorBackground"> @color/colorAccent </item>
+    <!--<item name="android:colorBackground"> @color/colorAccent </item>-->
     <item name="android:windowIsTranslucent"> true </item>
+    <item name="android:backgroundDimEnabled">true</item>
     <item name="android:windowCloseOnTouchOutside"> true </item>
   </style>
 

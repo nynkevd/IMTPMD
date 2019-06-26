@@ -45,7 +45,8 @@ public class MainActivity extends AppCompatActivity {
     private ListView medNameListview;
     private ArrayList<String> allMedicationNamesAL = new ArrayList<>();
    // private int firstId;
-    private int medicationCount;
+    private Intent in;
+
 
     Gson gson = new Gson();
 
@@ -62,6 +63,8 @@ public class MainActivity extends AppCompatActivity {
 
         medicineViewModel = ViewModelProviders.of(this).get(MedicineViewModel.class);
         medicationNameViewModel = ViewModelProviders.of(this).get(MedicationNameViewModel.class);
+
+        in = new Intent(MainActivity.this, PopActivity.class);
 
          medNameListview = findViewById(R.id.medslistview);
 
@@ -141,9 +144,22 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 Toast.makeText(getApplicationContext(), "Je hebt geklikt!" + adapterView.getItemAtPosition(i), Toast.LENGTH_SHORT ).show();
-                Intent in = new Intent(MainActivity.this, PopActivity.class);
+
                 in.putExtra("givenMedName", adapterView.getItemAtPosition(i).toString());
-                startActivity(in);
+
+                NetworkManager.getInstance(getApplicationContext()).getRequest("http://136.144.230.97:8090/api/medicationinfo/" + adapterView.getItemAtPosition(i).toString() + "?api_token=CilZjPDfkHDmb29qcJkqBS7bB2cup9T7Onqcmfaqt027QhvpqBhFvLinJ6Dp", new VolleyCallback() {
+                    @Override
+                    public void onSuccess(String result) {
+                        Gson gson = new Gson();
+                        MedicationInfo medicationInfo = gson.fromJson(result, MedicationInfo.class);
+                        in.putExtra("givenMedSort" , medicationInfo.getSort());
+                        in.putExtra("givenMedUse" , medicationInfo.getUse());
+
+                        startActivity(in);
+
+                    }
+                });
+
             }
         });
 
@@ -170,8 +186,8 @@ public class MainActivity extends AppCompatActivity {
         startActivity(myIntent);
     }
 
-    private void insertIntoDatabase(String name, int milligram, Long date, Boolean isChecked){
-        Medicine m = new Medicine(name, milligram, date, isChecked);
+    private void insertIntoDatabase(String name, int milligram, Long date, Boolean isChecked, Long dateFrom, Long dateTo){
+        Medicine m = new Medicine(name, milligram, date, isChecked, dateFrom, dateTo);
 
         medicineViewModel.insert(m);
 
