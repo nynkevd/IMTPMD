@@ -6,4 +6,7 @@
 
     <color name="colorWHite">#fff</color>
     <color name="colorWHiteTransparent">#80ffffff</color>
+
+    <!--AANPASSEN-->
+    <color name="grey">#8F8F8F</color>
 </resources>

@@ -173,6 +173,9 @@ public class MainActivity extends AppCompatActivity {
         currentTime.set(Calendar.MINUTE, minute);
         currentTime.set(Calendar.MILLISECOND, 0);
 
+        Log.d("tijd", String.valueOf(currentTime.getTimeInMillis()));
+        Log.d("tijd", String.valueOf(currentTime.getTime().getTime()));
+
         return currentTime.getTimeInMillis();
     }
 
