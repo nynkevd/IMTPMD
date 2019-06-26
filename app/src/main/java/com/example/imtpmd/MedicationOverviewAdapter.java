@@ -8,6 +8,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -23,7 +25,7 @@ public class MedicationOverviewAdapter extends RecyclerView.Adapter<MedicationOv
         public TextView dateVan;
         public TextView dateTot;
         public TextView tijd;
-        public Button delete;
+        public ImageButton delete;
 
         public MyViewHolder(View v){
             super(v);

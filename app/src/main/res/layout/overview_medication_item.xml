@@ -50,29 +50,18 @@
         android:layout_toEndOf="@+id/date_van_text"
         android:text="tijdstip" />
 
-    <!--<Button-->
-        <!--android:id="@+id/delete_button"-->
-        <!--style="@style/Widget.AppCompat.Button.Borderless.Colored"-->
-        <!--android:layout_width="24dp"-->
-        <!--android:layout_height="24dp"-->
-        <!--android:layout_alignParentTop="true"-->
-        <!--android:layout_alignParentEnd="true"-->
-        <!--android:layout_marginTop="0dp"-->
-        <!--android:layout_marginEnd="0dp"-->
-        <!--android:drawableBottom="@drawable/ic_action_delete"-->
-        <!--android:drawablePadding="0dp" />-->
-
-    <ImageView
+    <ImageButton
         android:id="@+id/delete_button"
+        style="@style/Widget.AppCompat.ImageButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
         android:layout_alignParentEnd="true"
-        android:layout_alignParentBottom="false"
-        android:layout_marginTop="0dp"
+        android:layout_centerInParent="true"
         android:layout_marginEnd="0dp"
-        android:layout_marginBottom="5dp"
-        app:srcCompat="@drawable/ic_action_delete" />
+        android:layout_marginBottom="0dp"
+        android:background="@null"
+        app:srcCompat="@drawable/ic_action_delete"
+        tools:ignore="VectorDrawableCompat" />
 
 
 </RelativeLayout>
