@@ -177,6 +177,10 @@ public class PopActivity extends AppCompatActivity implements TimePickerDialog.O
         Calendar c = Calendar.getInstance();
         c.set(Calendar.MONTH, m);
         c.set(Calendar.DAY_OF_MONTH, d);
+        c.set(Calendar.HOUR_OF_DAY, 0);
+        c.set(Calendar.MINUTE, 0);
+        c.set(Calendar.SECOND, 0);
+        c.set(Calendar.MILLISECOND, 0);
 
         String currentDate = DateFormat.getDateInstance().format(c.getTime());
 
@@ -191,6 +195,7 @@ public class PopActivity extends AppCompatActivity implements TimePickerDialog.O
             if (date2.before(date)){
                 c.add(Calendar.DATE, 1);
                 dateTV2.setText(DateFormat.getDateInstance().format(c.getTime()));
+                date2 = c.getTime();
             }
         } else if (selectedBTN == 1) {
             date2 = c.getTime();
@@ -203,6 +208,7 @@ public class PopActivity extends AppCompatActivity implements TimePickerDialog.O
             if (date2.before(date)){
                 c.add(Calendar.DATE, -1);
                 dateTV.setText(DateFormat.getDateInstance().format(c.getTime()));
+                date = c.getTime();
             }
         }
 
