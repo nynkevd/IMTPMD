@@ -37,13 +37,12 @@ public class NotificationHandler extends Worker {
     public static void cancelReminder(String tag) {
         WorkManager instance = WorkManager.getInstance();
         Log.d("notification", "Cancelled all notifications for " + tag);
-        instance.cancelAllWorkByTag(tag); //ook cancelAllWork mogelijk, tag zou eventueel misschien dagdeel kunnen zijn? Geen idee wat mogelijk is maar daar moeten we zo even naar kijken
+        instance.cancelAllWorkByTag(tag);
     }
 
     @NonNull
     @Override
     public ListenableWorker.Result doWork() {
-        // --------------------------------- TOEVOEGEN hoeft denk niet??? -------------------------------------
         String title = getInputData().getString("title");
         String text = getInputData().getString("text");
         int id = (int) getInputData().getLong("id", 0);

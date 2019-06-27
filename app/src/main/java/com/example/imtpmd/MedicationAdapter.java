@@ -1,6 +1,5 @@
 package com.example.imtpmd;
 
-import android.icu.util.Calendar;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -12,6 +11,7 @@ import android.widget.TextView;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Collections;
 import java.util.Comparator;
 
@@ -65,11 +65,9 @@ public class MedicationAdapter extends RecyclerView.Adapter<MedicationAdapter.My
         myViewHolder.medicationNameView.setText(medicationList.get(i).getName());
         myViewHolder.checkBoxView.setChecked(medicationList.get(i).getChecked());
 
-//        Calendar time = Calendar.getInstance();
-//        time.setTimeInMillis(medicationList.get(i).getDate());
-
         SimpleDateFormat test = new SimpleDateFormat("HH:mm");
         String time = test.format(medicationList.get(i).getDate());
+
 
         myViewHolder.timeView.setText(time);
 
