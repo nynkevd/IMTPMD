@@ -24,6 +24,8 @@ import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
+import androidx.work.Data;
+
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -110,8 +112,9 @@ public class PopAddActivity extends AppCompatActivity implements TimePickerDialo
         String currentDate2 = DateFormat.getDateInstance().format(c2.getTime());
 
         date = c.getTime();
-        date = c.getTime();
         date2 = c2.getTime();
+        Log.d("tijdvan", "dateVan " + date.getTime());
+        Log.d("tijdtot", "dateTot " + date2.getTime());
 
         dateTV.setText(currentDate);
         dateTV2.setText(currentDate2);
@@ -131,11 +134,12 @@ public class PopAddActivity extends AppCompatActivity implements TimePickerDialo
             @Override
             public void onClick(View v) {
                 Bundle bundle = new Bundle();
-                bundle.putInt("DATE",1);
+                bundle.putLong("DATE", date.getTime());
 
                 selectedBTN = 0;
 
                 DialogFragment datePicker = new DatePickerFragment();
+                datePicker.setArguments(bundle);
                 datePicker.show(getSupportFragmentManager(), "datepicker");
             }
         });
@@ -145,11 +149,12 @@ public class PopAddActivity extends AppCompatActivity implements TimePickerDialo
             @Override
             public void onClick(View v) {
                 Bundle bundle = new Bundle();
-                bundle.putInt("DATE",1);
+                bundle.putLong("DATE", date2.getTime());
 
                 selectedBTN = 1;
 
                 DialogFragment datePicker = new DatePickerFragment();
+                datePicker.setArguments(bundle);
                 datePicker.show(getSupportFragmentManager(), "datepicker");
             }
         });
@@ -199,6 +204,7 @@ public class PopAddActivity extends AppCompatActivity implements TimePickerDialo
     public void onDateSet(DatePicker datePicker, int y, int m, int d) {
         Log.d("DATEPICKER", datePicker.toString());
         Calendar c = Calendar.getInstance();
+        c.set(Calendar.YEAR, y);
         c.set(Calendar.MONTH, m);
         c.set(Calendar.DAY_OF_MONTH, d);
         c.set(Calendar.HOUR_OF_DAY, 0);
@@ -255,6 +261,8 @@ public class PopAddActivity extends AppCompatActivity implements TimePickerDialo
             c.setTime(date);
             c.set(Calendar.HOUR, medHour);
             c.set(Calendar.MINUTE, medMin);
+            c.set(Calendar.SECOND, 0);
+            c.set(Calendar.MILLISECOND, 0);
 
 
             long diff = date2.getTime() - date.getTime();
@@ -266,9 +274,15 @@ public class PopAddActivity extends AppCompatActivity implements TimePickerDialo
                 medDate = c.getTime().getTime();
 
                 Medicine m = new Medicine(name, milligram, medDate, isChecked, dateFrom, dateTo, time);
+                Log.d("tijd", m.getDateFrom().toString());
+                Log.d("tijd", m.getDateTo().toString());
 
                 medicineViewModel.insert(m);
                 c.add(Calendar.DATE, 1);
+
+                // Voeg notificatie toe
+                String tag = name + dateFrom + dateTo + time; // Misschien moet de tag uniek zijn, mar hierdoor kunnen we alle notificaties voor de medicijnen verwijderen
+                scheduleNotification(medDate, tag, name);
             }
 
             Toast.makeText(getApplicationContext(), name + " toegevoegd!", Toast.LENGTH_SHORT).show();
@@ -278,5 +292,19 @@ public class PopAddActivity extends AppCompatActivity implements TimePickerDialo
             Toast.makeText(getApplicationContext(), "Naam mag niet leeg zijn.", Toast.LENGTH_LONG).show();
         }
 
+    }
+
+    private void scheduleNotification(Long time, String tag, String name){
+        long alertTime = time - System.currentTimeMillis();
+
+        Log.d("notification", "Alert time: " + alertTime);
+
+        Data data = new Data.Builder()
+                .putString("title", "Medicijn")
+                .putString("text", "Vergeet niet om " + name + " te nemen?!?!?!?!?!")
+                .putInt("id", 0)
+                .build();
+
+        NotificationHandler.scheduleReminder(alertTime, data, tag);
     }
 }

@@ -94,7 +94,6 @@ public class PopActivity extends AppCompatActivity implements TimePickerDialog.O
         String currentDate2 = DateFormat.getDateInstance().format(c2.getTime());
 
         date = c.getTime();
-        date = c.getTime();
         date2 = c2.getTime();
 
         dateTV.setText(currentDate);
@@ -196,6 +195,7 @@ public class PopActivity extends AppCompatActivity implements TimePickerDialog.O
     public void onDateSet(DatePicker datePicker, int y, int m, int d) {
         Log.d("DATEPICKER", datePicker.toString());
         Calendar c = Calendar.getInstance();
+        c.set(Calendar.YEAR, y);
         c.set(Calendar.MONTH, m);
         c.set(Calendar.DAY_OF_MONTH, d);
         c.set(Calendar.HOUR_OF_DAY, 0);
@@ -249,6 +249,8 @@ public class PopActivity extends AppCompatActivity implements TimePickerDialog.O
         c.setTime(date);
         c.set(Calendar.HOUR, medHour);
         c.set(Calendar.MINUTE, medMin);
+        c.set(Calendar.SECOND, 0);
+        c.set(Calendar.MILLISECOND, 0);
 
 
 
