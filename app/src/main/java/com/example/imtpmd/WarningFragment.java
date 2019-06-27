@@ -36,6 +36,7 @@ public class WarningFragment extends DialogFragment {
                 .setPositiveButton("ja", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
                         medicineViewModel.deleteMedicine(overviewData);
+                        cancelNotifications(overviewData);
                     }
                 })
                 .setNegativeButton("nee", new DialogInterface.OnClickListener() {
@@ -45,6 +46,11 @@ public class WarningFragment extends DialogFragment {
                 });
         // Create the AlertDialog object and return it
         return builder.create();
+    }
+
+    private void cancelNotifications(OverviewData overviewData){
+        String tag = overviewData.getName() + overviewData.getDateVan() + overviewData.getDateTot() + overviewData.getTime();
+        NotificationHandler.cancelReminder(tag);
     }
 
 }

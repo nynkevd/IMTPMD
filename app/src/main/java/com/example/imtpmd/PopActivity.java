@@ -20,12 +20,15 @@ import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
+import androidx.work.Data;
+
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.Locale;
+import java.util.UUID;
 
 public class PopActivity extends AppCompatActivity implements TimePickerDialog.OnTimeSetListener, DatePickerDialog.OnDateSetListener{
     private static MedicineViewModel medicineViewModel;
@@ -261,11 +264,29 @@ public class PopActivity extends AppCompatActivity implements TimePickerDialog.O
 
             medicineViewModel.insert(m);
                 c.add(Calendar.DATE, 1);
+
+            // Voeg notificatie toe
+            String tag = name + dateFrom + dateTo + time; // Misschien moet de tag uniek zijn, mar hierdoor kunnen we alle notificaties voor de medicijnen verwijderen
+            scheduleNotification(medDate, tag, name);
         }
 
         Toast.makeText(getApplicationContext(), name + " toegevoegd!", Toast.LENGTH_SHORT ).show();
         Log.d("Medicine", "Naar de database geschreven");
         finish();
 
+    }
+
+    private void scheduleNotification(Long time, String tag, String name){
+        long alertTime = time - System.currentTimeMillis();
+
+        Log.d("notification", "Alert time: " + alertTime);
+
+        Data data = new Data.Builder()
+                .putString("title", "Medicijn")
+                .putString("text", "Vergeet niet om " + name + " te nemen?!?!?!?!?!")
+                .putInt("id", 0)
+                .build();
+
+        NotificationHandler.scheduleReminder(alertTime, data, tag);
     }
 }

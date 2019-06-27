@@ -34,6 +34,8 @@ import android.widget.PopupWindow;
 import android.widget.SearchView;
 import android.widget.Toast;
 
+import androidx.work.Data;
+
 import com.google.gson.Gson;
 
 import java.sql.Time;
@@ -45,6 +47,7 @@ import java.util.Collections;
 import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.List;
+import java.util.UUID;
 
 import static java.lang.Integer.parseInt;
 
@@ -110,30 +113,6 @@ public class MainActivity extends AppCompatActivity {
 //        insertIntoDatabase("testDubbel", 40, getDateTime(12, 0), false , getDate(6, 24), getDate(6, 30));
 //        insertIntoDatabase("testDubbel", 40, getDateTime(16, 0), false , getDate(6, 22), getDate(6, 30));
 
-        String channelID = "1";
-        Intent intent = new Intent(this, DashboardActivity.class);
-        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);//De activity komt bovenop de andere actieve activity
-        PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_ONE_SHOT);
-
-        NotificationCompat.Builder builder = new NotificationCompat.Builder(this, channelID)
-                .setSmallIcon(R.drawable.ic_action_pil) // het klopt nu niet dat er action in de naam staat denk ik...
-                .setContentTitle("HALLOOOOOO")
-                .setContentText("Je moet niet je medicijnen vergeten!")
-                .setContentIntent(pendingIntent)
-                .setPriority(NotificationCompat.PRIORITY_DEFAULT)
-                .setAutoCancel(true);
-
-
-        //Vanaf android oreo en verder, gebruik deze code
-        NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
-
-        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.O){
-            NotificationChannel channel = new NotificationChannel(
-                    channelID, "Test", NotificationManager.IMPORTANCE_DEFAULT
-            );
-            notificationManager.createNotificationChannel(channel);
-            notificationManager.notify(0, builder.build());
-        }
 
 
 
@@ -192,8 +171,6 @@ public class MainActivity extends AppCompatActivity {
 
             }
         });
-
-
 
     }
 
