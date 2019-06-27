@@ -63,9 +63,8 @@ public class MedicineViewModel extends AndroidViewModel {
         medicineRepository.update(medicine);
     }
 
-    public void deleteByName(String name){
-        Log.d("delete", "Deleted " + name);
-        medicineRepository.deleteByName(name);
+    public void deleteMedicine(OverviewData overviewData){
+        medicineRepository.deleteByName(overviewData);
     }
 
 }

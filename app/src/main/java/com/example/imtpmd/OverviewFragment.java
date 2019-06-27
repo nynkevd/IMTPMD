@@ -74,22 +74,23 @@ public class OverviewFragment extends Fragment {
 
         medicineViewModel = ViewModelProviders.of(this).get(MedicineViewModel.class);
 
-        final Observer<List<String>> observerNames = new Observer<List<String>>(){
+        final Observer<List<Medicine>> observerNames = new Observer<List<Medicine>>(){
 
             @Override
-            public void onChanged(@Nullable List<String> medicines) {
+            public void onChanged(@Nullable List<Medicine> medicines) {
                 //Als er nieuwe data is wordt de hele lijst eerst geleegd, zodat alle nieuwe data opnieuw toegevoegd kan worden
                 overviewData.clear();
 
-                for(String name : medicines){
-                    overviewData.add(new OverviewData(name));
+                for(Medicine medicine : medicines){
+                    Log.d("teeeest", "dateVan: " + medicine.getDateFrom().toString() + ", date:" + medicine.getDate().toString());
+                    overviewData.add(new OverviewData(medicine.getName(), medicine.getDateFrom(), medicine.getDateTo()));
                 }
 
                 medAdapter.notifyDataSetChanged();
             }
         };
 
-        medicineViewModel.getDistinctNames().observe(this, observerNames);
+        medicineViewModel.getOverviewData().observe(this, observerNames);
 
 
         return view;
@@ -98,9 +99,11 @@ public class OverviewFragment extends Fragment {
 
     // Functie om de medicijenen met een bepaalde naam te kunnen verwijderen
     // Deze functie wordt aanggeroepen vanui MedicationOverviewAdapter
-    public static void deleteByName(String name){
+    public static void deleteMedicine(OverviewData medicine){
         Bundle bundle = new Bundle();
-        bundle.putString("name", name);
+        bundle.putString("name", medicine.getName());
+        bundle.putLong("dateFrom", medicine.getDateVan());
+        bundle.putLong("dateTo", medicine.getDateTot());
         DialogFragment warningFragment = new WarningFragment();
         warningFragment.setArguments(bundle);
         warningFragment.show(fa.getSupportFragmentManager(), "warningfragment");

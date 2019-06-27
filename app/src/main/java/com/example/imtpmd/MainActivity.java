@@ -113,8 +113,9 @@ public class MainActivity extends AppCompatActivity {
 //            }
 //        });
 
-//        insertIntoDatabase("testOchtend9", 40, getDateTime(9, 0), false);
-//        insertIntoDatabase("testMiddag155", 40, getDateTime(15, 30), false);
+//        insertIntoDatabase("testDubbel", 40, getDateTime(12, 0), false , getDate(6, 24), getDate(6, 30));
+//        insertIntoDatabase("testDubbel", 40, getDateTime(16, 0), false , getDate(6, 22), getDate(6, 30));
+//        insertIntoDatabase("testMiddag155", 40, getDateTime(15, 30), false, getDate(6, 18), getDate(6, 27));
 //        insertIntoDatabase("testAvond20", 40, getDateTime(20, 18), false);
 //        insertIntoDatabase("testNacht4", 40, getDateTime(4, 0), false);
 //        insertIntoDatabase("testOchtend10", 40, getDateTime(10, 50), false);
@@ -177,6 +178,18 @@ public class MainActivity extends AppCompatActivity {
         Log.d("tijd", String.valueOf(currentTime.getTime().getTime()));
 
         return currentTime.getTimeInMillis();
+    }
+
+    private Long getDate(int month, int day){
+        Calendar currentTIme = Calendar.getInstance();
+        currentTIme.set(Calendar.MONTH, month);
+        currentTIme.set(Calendar.DAY_OF_MONTH, day);
+        currentTIme.set(Calendar.HOUR_OF_DAY, 0);
+        currentTIme.set(Calendar.MINUTE, 0);
+        currentTIme.set(Calendar.SECOND, 0);
+        currentTIme.set(Calendar.MILLISECOND, 0);
+
+        return currentTIme.getTimeInMillis();
     }
 
     private void showStartScreen() {

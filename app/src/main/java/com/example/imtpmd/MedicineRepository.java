@@ -37,7 +37,7 @@ public class MedicineRepository {
         dateVan = medicineDAO.loadDateVan("testOchtend9"); //aanpassen!!
         dateTot = medicineDAO.loadDateTot("testOchtend9"); //aanapssen!!
 
-        overviewData = medicineDAO.loadOverviewData();
+        overviewData = medicineDAO.loadDistinctData();
         app = application;
     }
 
@@ -121,25 +121,22 @@ public class MedicineRepository {
         }
     }
 
-    public void deleteByName(String name){new deleteAsyncTask(medicineDAO).execute(name);}
+    public void deleteByName(OverviewData overviewData){new deleteAsyncTask(medicineDAO).execute(overviewData);}
 
-    private static class deleteAsyncTask extends AsyncTask<String, Void, Void>{
+    private static class deleteAsyncTask extends AsyncTask<OverviewData, Void, Void>{
         private MedicineDAO asyncTaskDAO;
 
         deleteAsyncTask(MedicineDAO dao){asyncTaskDAO = dao;}
 
         @Override
-        protected Void doInBackground(String... strings) {
-            for(String name : strings ){
-                asyncTaskDAO.deleteByName(name);
+        protected Void doInBackground(OverviewData... overviewData) {
+            for(OverviewData medicine : overviewData ){
+                Log.d("teeeest", "verwijder: " + medicine.getName() + medicine.getDateVan().toString() + medicine.getDateTot().toString());
+                asyncTaskDAO.deleteByName(medicine.getName(), medicine.getDateVan(), medicine.getDateTot());
             }
+
             return null;
 
-        }
-
-        @Override
-        protected void onPostExecute(Void result){
-            Log.d("teeeeest", "postexecute");
         }
     }
 

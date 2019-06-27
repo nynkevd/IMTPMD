@@ -23,6 +23,11 @@ public interface MedicineDAO {
     @Query("SELECT DISTINCT name FROM medicine")
     LiveData<List<String>> loadDistinctNames(); //uit list halen
 
+//    @Query("SELECT DISTINCT name, dateFrom, dateTo, milligram, isChecked, id FROM medicine")
+    //@Query("SELECT med.* FROM medicine med INNER JOIN (SELECT name, dateFrom, dateTo FROM medicine GROUP BY name) groupMed ON med.name = groupMed.name AND med.dateFrom = groupMed.dateFrom")
+    @Query("SELECT * FROM medicine GROUP BY name, dateFrom, dateTo")
+    LiveData<List<Medicine>> loadDistinctData(); //where datum > datum vandaag
+
     // Selecteer de startdatum van een medicijn
     @Query("SELECT MIN(date) FROM medicine WHERE name = :name")
     LiveData<Long> loadDateVan(String name);
@@ -36,8 +41,8 @@ public interface MedicineDAO {
     LiveData<List<Medicine>> loadOverviewData();
 
     // Delete alle medicijnen met een bepaalde naam
-    @Query("DELETE FROM medicine WHERE name = :name")
-    void deleteByName(String name);
+    @Query("DELETE FROM medicine WHERE name = :name AND dateFrom = :dateFrom AND dateTo = :dateTo")
+    void deleteByName(String name, Long dateFrom, Long dateTo); //Tijdstip toevoegen!!!
 
     // Verander de waardes van een bepaald medicijn (bijvoorbeeld checked)
     @Update

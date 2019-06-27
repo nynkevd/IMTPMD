@@ -15,6 +15,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.text.DateFormat;
 import java.util.List;
 
 public class MedicationOverviewAdapter extends RecyclerView.Adapter<MedicationOverviewAdapter.MyViewHolder> {
@@ -32,8 +33,8 @@ public class MedicationOverviewAdapter extends RecyclerView.Adapter<MedicationOv
         public MyViewHolder(View v){
             super(v);
             name = v.findViewById(R.id.name_text);
-            //dateVan = v.findViewById(R.id.date_van_text);
-            //dateTot = v.findViewById(R.id.date_tot_text);
+            dateVan = v.findViewById(R.id.date_van_text);
+            dateTot = v.findViewById(R.id.date_tot_text);
             delete = v.findViewById(R.id.delete_button);
 
         }
@@ -56,6 +57,8 @@ public class MedicationOverviewAdapter extends RecyclerView.Adapter<MedicationOv
     @Override
     public void onBindViewHolder(@NonNull final MyViewHolder myViewHolder, int i) {
         myViewHolder.name.setText(data.get(i).getName());
+        myViewHolder.dateVan.setText(getStringFromDate(data.get(i).getDateVan()));
+        myViewHolder.dateTot.setText(getStringFromDate(data.get(i).getDateTot()));
 
         final int position = i;
 
@@ -64,7 +67,7 @@ public class MedicationOverviewAdapter extends RecyclerView.Adapter<MedicationOv
             @Override
             public void onClick(View view) {
 
-            OverviewFragment.deleteByName(data.get(position).getName());
+            OverviewFragment.deleteMedicine(data.get(position));
             //toast werkt niet?
             //Toast.makeText(view.getContext(), "Medicijn verwijderd", Toast.LENGTH_LONG);
             }
@@ -74,6 +77,12 @@ public class MedicationOverviewAdapter extends RecyclerView.Adapter<MedicationOv
     @Override
     public int getItemCount() {
         return data.size();
+    }
+
+    private String getStringFromDate(Long date){
+        String dateString = DateFormat.getDateInstance().format(date);
+
+        return  dateString;
     }
 
 }

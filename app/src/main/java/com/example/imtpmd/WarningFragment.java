@@ -11,6 +11,9 @@ public class WarningFragment extends DialogFragment {
 
     private static MedicineViewModel medicineViewModel;
     private String name;
+    private Long dateFrom;
+    private Long dateTo;
+    private OverviewData overviewData;
 
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
@@ -19,6 +22,10 @@ public class WarningFragment extends DialogFragment {
 
         if (bundle != null) {
             name = bundle.getString("name");
+            dateFrom = bundle.getLong("dateFrom");
+            dateTo = bundle.getLong("dateTo");
+
+            overviewData = new OverviewData(name, dateFrom, dateTo);
         }
 
         // Use the Builder class for convenient dialog construction
@@ -26,7 +33,7 @@ public class WarningFragment extends DialogFragment {
         builder.setMessage("Weet je zeker dat je " + name + " wilt verwijderen?")
                 .setPositiveButton("ja", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
-                        medicineViewModel.deleteByName(name);
+                        medicineViewModel.deleteMedicine(overviewData);
                     }
                 })
                 .setNegativeButton("nee", new DialogInterface.OnClickListener() {
