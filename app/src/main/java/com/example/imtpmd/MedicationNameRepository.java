@@ -63,7 +63,7 @@ public class MedicationNameRepository {
     }
 
     public void deleteAll() {
-        new insertAsyncTask(medicationNameDAO).execute();
+        new deleteAsyncTask(medicationNameDAO).execute();
     }
 
     private static class deleteAsyncTask extends AsyncTask<Void, Void, Void> {
@@ -81,7 +81,7 @@ public class MedicationNameRepository {
 
         @Override
         protected void onPostExecute(Void result) {
-            Toast.makeText(app.getApplicationContext(), "Medicationnames toegevoegd aan database", Toast.LENGTH_LONG);
+            Toast.makeText(app.getApplicationContext(), "Medicationnames verwijderd aan database", Toast.LENGTH_SHORT);
         }
     }
 }

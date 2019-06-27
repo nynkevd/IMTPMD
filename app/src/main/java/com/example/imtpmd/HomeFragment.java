@@ -5,6 +5,9 @@ import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProvider;
 import android.arch.lifecycle.ViewModelProviders;
 import android.arch.persistence.room.Room;
+import android.content.Context;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -20,10 +23,14 @@ import android.widget.CheckBox;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import com.google.gson.Gson;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import static java.lang.Integer.parseInt;
 
 
 /**
@@ -31,10 +38,13 @@ import java.util.Map;
  */
 public class HomeFragment extends Fragment {
     private static MedicineViewModel medicineViewModel;
+//    private static MedicationNameViewModel medicationNameViewModel;
     private RecyclerView recyclerView;
     private RecyclerView.Adapter mAdapter;
     private RecyclerView.LayoutManager layoutManager;
     private HomeData[] homeData = new HomeData[4];
+
+    WelcomeActivity welcomeActivity;
 
     public HomeFragment() {
         // Required empty public constructor
@@ -43,6 +53,10 @@ public class HomeFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+
+        // Vraag de medicijnen op per dagdeel
+//        medicationNameViewModel = ViewModelProviders.of(this).get(MedicationNameViewModel.class);
+
         // Inflate the layout for this fragment
         final View view = inflater.inflate(R.layout.fragment_home, container, false);
 

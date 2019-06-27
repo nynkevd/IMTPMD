@@ -102,12 +102,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        SharedPreferences prefs = getSharedPreferences("prefs", MODE_PRIVATE);
-        boolean firstStart = prefs.getBoolean("firstStart", true);
 
-        if (firstStart){
-            showStartScreen();
-        }
 
         // HE VOORDAT JE DEZE DOET NOG EVEN EEN TIJD TOEVOEGEN!!!!
 //        insertIntoDatabase("testDubbel", 40, getDateTime(12, 0), false , getDate(6, 24), getDate(6, 30));
@@ -138,7 +133,11 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public boolean onQueryTextChange(String s) {
                 Log.d("SEARCHVIEW", "onQueryTextChange: " + s);
-                allMedicationNamesAdapter.getFilter().filter(s);
+                try {
+                    allMedicationNamesAdapter.getFilter().filter(s);
+                } catch (Exception e) {
+                    Log.d("CRASH", "Nog niets in de database!");
+                }
                 return false;
             }
         });

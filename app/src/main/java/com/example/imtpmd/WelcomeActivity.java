@@ -35,6 +35,29 @@ public class WelcomeActivity extends AppCompatActivity {
 //        Log.d("DLETE", "DELETE DATABASE");
 //        medicationNameViewModel.deleteAll();
 
+        insertMedicationNamesFromApiIntoDatabase();
+
+        Button verderBtn = (Button)findViewById(R.id.verder_btn);
+
+        verderBtn.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view){
+                startActivity(new Intent(WelcomeActivity.this, MainActivity.class));
+            }
+        });
+
+        TextView overslaan_txt = (TextView)findViewById(R.id.overslaan_txt);
+
+        overslaan_txt.setOnClickListener(new View.OnClickListener(){
+           @Override
+           public void onClick(View view){
+               startActivity(new Intent(WelcomeActivity.this, DashboardActivity.class));
+           }
+        });
+
+    }
+
+    public void insertMedicationNamesFromApiIntoDatabase(){
         NetworkManager.getInstance(this).getRequest("http://136.144.230.97:8090/api/medicationcount?api_token=CilZjPDfkHDmb29qcJkqBS7bB2cup9T7Onqcmfaqt027QhvpqBhFvLinJ6Dp", new VolleyCallback() {
             @Override
             public void onSuccess(String result) {
@@ -54,27 +77,5 @@ public class WelcomeActivity extends AppCompatActivity {
                 }
             }
         });
-
-        Button verder_btn = (Button)findViewById(R.id.verder_btn);
-
-        verder_btn.setOnClickListener(new View.OnClickListener(){
-            @Override
-            public void onClick(View view){
-                startActivity(new Intent(WelcomeActivity.this, MainActivity.class));
-            }
-        });
-
-        TextView overslaan_txt = (TextView)findViewById(R.id.overslaan_txt);
-
-        overslaan_txt.setOnClickListener(new View.OnClickListener(){
-           @Override
-           public void onClick(View view){
-               startActivity(new Intent(WelcomeActivity.this, DashboardActivity.class));
-           }
-        });
-
-
-
-
     }
 }
