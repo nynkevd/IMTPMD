@@ -81,7 +81,7 @@ public class HomeFragment extends Fragment {
                 }
 
                 homeData[0] = new HomeData("Nacht", list);
-                mAdapter.notifyItemChanged(3);
+                mAdapter.notifyItemChanged(0);
             }
 
         };
@@ -101,7 +101,7 @@ public class HomeFragment extends Fragment {
 
                 homeData[1] = new HomeData("Ochtend", list);
 
-                mAdapter.notifyItemChanged(0);
+                mAdapter.notifyItemChanged(1);
 
             }
 
@@ -123,7 +123,7 @@ public class HomeFragment extends Fragment {
 
                 homeData[2] = new HomeData("Middag", list);
 
-                mAdapter.notifyItemChanged(1);
+                mAdapter.notifyItemChanged(2);
             }
 
         };
@@ -142,7 +142,7 @@ public class HomeFragment extends Fragment {
                 }
 
                 homeData[3] = new HomeData("Avond", list);
-                mAdapter.notifyItemChanged(2);
+                mAdapter.notifyItemChanged(3);
             }
 
         };

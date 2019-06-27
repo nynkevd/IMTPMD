@@ -259,7 +259,7 @@ public class PopAddActivity extends AppCompatActivity implements TimePickerDialo
 
             Calendar c = Calendar.getInstance();
             c.setTime(date);
-            c.set(Calendar.HOUR, medHour);
+            c.set(Calendar.HOUR_OF_DAY, medHour);
             c.set(Calendar.MINUTE, medMin);
             c.set(Calendar.SECOND, 0);
             c.set(Calendar.MILLISECOND, 0);
