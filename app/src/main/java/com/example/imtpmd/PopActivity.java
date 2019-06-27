@@ -4,6 +4,7 @@ import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.arch.lifecycle.ViewModelProviders;
 import android.arch.persistence.room.PrimaryKey;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.support.v4.app.DialogFragment;
@@ -17,10 +18,14 @@ import android.widget.DatePicker;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.TimePicker;
+import android.widget.Toast;
 
 import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.GregorianCalendar;
+import java.util.Locale;
 
 public class PopActivity extends AppCompatActivity implements TimePickerDialog.OnTimeSetListener, DatePickerDialog.OnDateSetListener{
     private static MedicineViewModel medicineViewModel;
@@ -29,6 +34,11 @@ public class PopActivity extends AppCompatActivity implements TimePickerDialog.O
     private String medName;
     private String medSort;
     private String medUse;
+
+    private String dateString;
+    private Long medDate;
+    private int medHour;
+    private int medMin;
 
     private TextView medNameTV;
     private TextView medSortTV;
@@ -45,6 +55,9 @@ public class PopActivity extends AppCompatActivity implements TimePickerDialog.O
     private Date date;
     private Date date2;
 
+    private int i;
+    private int i1;
+
     private int selectedBTN;
 
     @Override
@@ -56,8 +69,8 @@ public class PopActivity extends AppCompatActivity implements TimePickerDialog.O
 
         Calendar c = Calendar.getInstance();
         Calendar c2 = Calendar.getInstance();
-        int i = c.get(Calendar.HOUR_OF_DAY);
-        int i1 = c.get(Calendar.MINUTE);
+        i = c.get(Calendar.HOUR_OF_DAY);
+        i1 = c.get(Calendar.MINUTE);
         int y = c.get(Calendar.YEAR);
         int m = c.get(Calendar.MONTH);
         int d = c.get(Calendar.DAY_OF_MONTH);
@@ -77,6 +90,7 @@ public class PopActivity extends AppCompatActivity implements TimePickerDialog.O
         String currentDate = DateFormat.getDateInstance().format(c.getTime());
         String currentDate2 = DateFormat.getDateInstance().format(c2.getTime());
 
+        date = c.getTime();
         date = c.getTime();
         date2 = c2.getTime();
 
@@ -157,6 +171,8 @@ public class PopActivity extends AppCompatActivity implements TimePickerDialog.O
 
 
     public void setTime(int i, int i1){
+        medHour = i;
+        medMin = i1;
         if (i >= 10 && i1 >= 10){
             timeTV.setText(i + ":" + i1);
         }
@@ -215,22 +231,39 @@ public class PopActivity extends AppCompatActivity implements TimePickerDialog.O
     }
 
     private void insertIntoDatabase(){
+        String time = timeTV.getText().toString();
+        Log.d("TIME", time);
+
         String name =  this.medName;
         int milligram = 0;
         boolean isChecked = false;
         Long dateFrom = this.date.getTime();
         Long dateTo = this.date2.getTime();
 
+        Calendar c = Calendar.getInstance();
+        c.setTime(date);
+        c.set(Calendar.HOUR, medHour);
+        c.set(Calendar.MINUTE, medMin);
+
+
 
         long diff = date2.getTime() - date.getTime();
         int dayCount = (int) diff / (24 * 60 * 60 * 1000);
         Log.d("DAYS", String.valueOf(dayCount));
 
-//        for {
-//            Medicine m = new Medicine(name, milligram, date, isChecked, dateFrom, dateTo);
-//
-//            medicineViewModel.insert(m);
-//        }
+        for (int i = 0; i <= dayCount; i++){
+            Log.d("CAL", DateFormat.getDateInstance().format(c.getTime()));
+            medDate = c.getTime().getTime();
+
+            Medicine m = new Medicine(name, milligram, medDate, isChecked, dateFrom, dateTo, time);
+
+            medicineViewModel.insert(m);
+                c.add(Calendar.DATE, 1);
+        }
+
+        Toast.makeText(getApplicationContext(), name + " toegevoegd!", Toast.LENGTH_SHORT ).show();
         Log.d("Medicine", "Naar de database geschreven");
+        finish();
+
     }
 }

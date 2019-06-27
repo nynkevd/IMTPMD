@@ -11,19 +11,21 @@ public class Medicine {
     @PrimaryKey(autoGenerate = true)
     private int id;
     private String name;
+    private String time;
     private int milligram;
     private Long date;
     private Long dateFrom;
     private Long dateTo;
     private Boolean isChecked;
 
-    public Medicine(String name, int milligram, Long date, Boolean isChecked, Long dateFrom, Long dateTo){
+    public Medicine(String name, int milligram, Long date, Boolean isChecked, Long dateFrom, Long dateTo, String time){
         this.name = name;
         this.milligram = milligram;
         this.date = date;
         this.isChecked = isChecked;
         this.dateFrom = dateFrom;
         this.dateTo = dateTo;
+        this.time = time;
     }
 
     public int getId(){return this.id;}
@@ -33,6 +35,7 @@ public class Medicine {
     public Long getDateFrom(){return this.dateFrom;}
     public Long getDateTo(){return this.dateTo;}
     public Boolean getChecked(){return this.isChecked;}
+    public String getTime(){return this.time;}
 
     public void setId(int id){this.id = id;}
     public void setName(String name){this.name = name;}
@@ -41,5 +44,6 @@ public class Medicine {
     public void setDateFrom(Long dateFrom){this.dateFrom = dateFrom;}
     public void setDateTo(Long dateTo){this.dateTo = dateTo;}
     public void setChecked(Boolean isChecked){this.isChecked = isChecked;}
+    public void setTime(String time){this.time = time;}
 
 }
