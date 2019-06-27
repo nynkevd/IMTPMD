@@ -37,7 +37,8 @@ public class MedicineRepository {
         dateVan = medicineDAO.loadDateVan("testOchtend9"); //aanpassen!!
         dateTot = medicineDAO.loadDateTot("testOchtend9"); //aanapssen!!
 
-        overviewData = medicineDAO.loadDistinctData();
+        Long currentTime = Calendar.getInstance().getTimeInMillis();
+        overviewData = medicineDAO.loadDistinctData(currentTime);
         app = application;
     }
 
@@ -132,7 +133,7 @@ public class MedicineRepository {
         protected Void doInBackground(OverviewData... overviewData) {
             for(OverviewData medicine : overviewData ){
                 Log.d("teeeest", "verwijder: " + medicine.getName() + medicine.getDateVan().toString() + medicine.getDateTot().toString());
-                asyncTaskDAO.deleteByName(medicine.getName(), medicine.getDateVan(), medicine.getDateTot());
+                asyncTaskDAO.deleteByName(medicine.getName(), medicine.getDateVan(), medicine.getDateTot(), medicine.getTime());
             }
 
             return null;

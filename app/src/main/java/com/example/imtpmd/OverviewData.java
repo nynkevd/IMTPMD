@@ -4,14 +4,14 @@ public class OverviewData {
     private String name;
     private Long dateVan;
     private Long dateTot;
-    //private Long[] time;
+    private String time;
 
     //, Long dateVan, Long dateTo, Long time
-    public OverviewData(String name, Long dateVan, Long dateTot){
+    public OverviewData(String name, Long dateVan, Long dateTot, String time){
         this.name = name;
         this.dateVan = dateVan;
         this.dateTot = dateTot;
-        //, Long dateVan, Long dateTot
+        this.time = time;
     }
 
     public String getName() {
@@ -26,9 +26,7 @@ public class OverviewData {
         return dateTot;
     }
 
-//    public Long[] getTime() {
-//        return time;
-//    }
+    public String getTime() { return time; }
 
 
     public void setName(String name) {
@@ -43,9 +41,7 @@ public class OverviewData {
         this.dateTot = dateTot;
     }
 
-//    public void setTime(Long[] time) {
-//        this.time = time;
-//    }
+    public void setTime(String time) { this.time = time; }
 
 
 

@@ -19,6 +19,8 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 
@@ -81,9 +83,16 @@ public class OverviewFragment extends Fragment {
                 //Als er nieuwe data is wordt de hele lijst eerst geleegd, zodat alle nieuwe data opnieuw toegevoegd kan worden
                 overviewData.clear();
 
+                Collections.sort(medicines, new Comparator<Medicine>() {
+                    @Override
+                    public int compare(Medicine medicine, Medicine t1) {
+                        return medicine.getName().compareTo(t1.getName());
+                    }
+                });
+
                 for(Medicine medicine : medicines){
                     Log.d("teeeest", "dateVan: " + medicine.getDateFrom().toString() + ", date:" + medicine.getDate().toString());
-                    overviewData.add(new OverviewData(medicine.getName(), medicine.getDateFrom(), medicine.getDateTo()));
+                    overviewData.add(new OverviewData(medicine.getName(), medicine.getDateFrom(), medicine.getDateTo(), medicine.getTime()));
                 }
 
                 medAdapter.notifyDataSetChanged();
@@ -104,6 +113,7 @@ public class OverviewFragment extends Fragment {
         bundle.putString("name", medicine.getName());
         bundle.putLong("dateFrom", medicine.getDateVan());
         bundle.putLong("dateTo", medicine.getDateTot());
+        bundle.putString("time", medicine.getTime());
         DialogFragment warningFragment = new WarningFragment();
         warningFragment.setArguments(bundle);
         warningFragment.show(fa.getSupportFragmentManager(), "warningfragment");

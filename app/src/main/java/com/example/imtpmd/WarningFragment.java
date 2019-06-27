@@ -13,6 +13,7 @@ public class WarningFragment extends DialogFragment {
     private String name;
     private Long dateFrom;
     private Long dateTo;
+    private String time;
     private OverviewData overviewData;
 
     @Override
@@ -24,8 +25,9 @@ public class WarningFragment extends DialogFragment {
             name = bundle.getString("name");
             dateFrom = bundle.getLong("dateFrom");
             dateTo = bundle.getLong("dateTo");
+            time = bundle.getString("time");
 
-            overviewData = new OverviewData(name, dateFrom, dateTo);
+            overviewData = new OverviewData(name, dateFrom, dateTo, time);
         }
 
         // Use the Builder class for convenient dialog construction

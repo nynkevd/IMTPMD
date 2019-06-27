@@ -15,6 +15,8 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import org.w3c.dom.Text;
+
 import java.text.DateFormat;
 import java.util.List;
 
@@ -27,8 +29,8 @@ public class MedicationOverviewAdapter extends RecyclerView.Adapter<MedicationOv
         public TextView name;
         public TextView dateVan;
         public TextView dateTot;
-        public TextView tijd;
         public ImageButton delete;
+        public TextView time;
 
         public MyViewHolder(View v){
             super(v);
@@ -36,6 +38,7 @@ public class MedicationOverviewAdapter extends RecyclerView.Adapter<MedicationOv
             dateVan = v.findViewById(R.id.date_van_text);
             dateTot = v.findViewById(R.id.date_tot_text);
             delete = v.findViewById(R.id.delete_button);
+            time = v.findViewById(R.id.tijd_text);
 
         }
     }
@@ -59,6 +62,7 @@ public class MedicationOverviewAdapter extends RecyclerView.Adapter<MedicationOv
         myViewHolder.name.setText(data.get(i).getName());
         myViewHolder.dateVan.setText(getStringFromDate(data.get(i).getDateVan()));
         myViewHolder.dateTot.setText(getStringFromDate(data.get(i).getDateTot()));
+        myViewHolder.time.setText(data.get(i).getTime());
 
         final int position = i;
 

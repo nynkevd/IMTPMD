@@ -28,7 +28,7 @@
         android:layout_alignParentStart="true"
         android:layout_marginStart="0dp"
         android:layout_marginTop="15dp"
-        android:text="date van" />
+        android:text="" />
 
     <TextView
         android:id="@+id/date_tot_text"
@@ -38,7 +38,7 @@
         android:layout_marginStart="8dp"
         android:layout_marginTop="15dp"
         android:layout_toEndOf="@+id/textView4"
-        android:text="date tot" />
+        android:text="" />
 
     <TextView
         android:id="@+id/tijd_text"
@@ -48,7 +48,7 @@
         android:layout_alignParentStart="true"
         android:layout_marginStart="0dp"
         android:layout_marginTop="15dp"
-        android:text="tijdstip" />
+        android:text="" />
 
     <ImageButton
         android:id="@+id/delete_button"
