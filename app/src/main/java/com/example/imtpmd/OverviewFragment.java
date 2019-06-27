@@ -4,6 +4,7 @@ package com.example.imtpmd;
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
@@ -34,6 +35,7 @@ public class OverviewFragment extends Fragment {
     //private OverviewData[] overviewData;
     private List<OverviewData> overviewData;
     private Context context;
+    private Intent in;
 
     private static FragmentActivity fa;
 
@@ -50,6 +52,8 @@ public class OverviewFragment extends Fragment {
 
         overviewData = new ArrayList<>();
 
+        in = new Intent(this.getActivity(), PopAddActivity.class);
+
         context = this.getContext();
 
         fa = getActivity();
@@ -60,7 +64,7 @@ public class OverviewFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 Log.d("test", "addddd");
-
+                startActivity(in);
                 // Naar toevoegen pagina
             }
         });
