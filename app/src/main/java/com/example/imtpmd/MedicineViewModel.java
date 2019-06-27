@@ -15,8 +15,8 @@ public class MedicineViewModel extends AndroidViewModel {
     private static LiveData<List<Medicine>> avondList;
     private static LiveData<List<Medicine>> nachtList;
     private LiveData<List<String>> distinctNames;
-    private LiveData<Long> dateVan;
-    private LiveData<Long> dateTot;
+//    private LiveData<Long> dateVan;
+//    private LiveData<Long> dateTot;
     private LiveData<List<Medicine>> overviewData;
 
     public MedicineViewModel(Application application){
@@ -28,8 +28,8 @@ public class MedicineViewModel extends AndroidViewModel {
         avondList = medicineRepository.getAvondList();
         nachtList = medicineRepository.getNachtList();
         distinctNames = medicineRepository.getDistinctNames();
-        dateVan = medicineRepository.getDateVan();
-        dateTot = medicineRepository.getDateTot();
+//        dateVan = medicineRepository.getDateVan();
+//        dateTot = medicineRepository.getDateTot();
         overviewData = medicineRepository.getOverviewData();
     }
 
@@ -46,10 +46,10 @@ public class MedicineViewModel extends AndroidViewModel {
     LiveData<List<Medicine>> getNachtList() {return this.nachtList;}
 
     LiveData<List<String>> getDistinctNames() {return this.distinctNames;}
-
-    LiveData<Long> getDateVan() {return this.dateVan;}
-
-    LiveData<Long> getDateTot() {return this.dateTot;}
+//
+//    LiveData<Long> getDateVan() {return this.dateVan;}
+//
+//    LiveData<Long> getDateTot() {return this.dateTot;}
 
     LiveData<List<Medicine>> getOverviewData() {return this.overviewData; }
 

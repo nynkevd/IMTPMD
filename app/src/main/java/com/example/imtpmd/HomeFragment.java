@@ -56,17 +56,36 @@ public class HomeFragment extends Fragment {
         // Vraag de medicijnen op per dagdeel
         medicineViewModel = ViewModelProviders.of(this).get(MedicineViewModel.class);
 
-        // Observer ochtend
-        final Observer<List<Medicine>> ochtendObserver = new Observer<List<Medicine>>(){
+        final Observer<List<Medicine>> nachtObserver = new Observer<List<Medicine>>(){
             @Override
             public void onChanged(@Nullable final List<Medicine> newList){
                 ArrayList<Medicine> list  = new ArrayList<>();
+                homeData[0] = null;
 
                 for(Medicine medicine : newList ){
                     list.add(medicine);
                 }
 
-                homeData[0] = new HomeData("Ochtend", list);
+                homeData[0] = new HomeData("Nacht", list);
+                mAdapter.notifyItemChanged(3);
+            }
+
+        };
+
+        medicineViewModel.getNachtList().observe(this, nachtObserver);
+
+        // Observer ochtend
+        final Observer<List<Medicine>> ochtendObserver = new Observer<List<Medicine>>(){
+            @Override
+            public void onChanged(@Nullable final List<Medicine> newList){
+                ArrayList<Medicine> list  = new ArrayList<>();
+                homeData[1] = null;
+
+                for(Medicine medicine : newList ){
+                    list.add(medicine);
+                }
+
+                homeData[1] = new HomeData("Ochtend", list);
 
                 mAdapter.notifyItemChanged(0);
 
@@ -81,33 +100,34 @@ public class HomeFragment extends Fragment {
             @Override
             public void onChanged(@Nullable final List<Medicine> newList){
                 ArrayList<Medicine> list  = new ArrayList<>();
+                homeData[2] = null;
 
                 for(Medicine medicine : newList ){
+                    Log.d("teeeeest", medicine.getName());
                     list.add(medicine);
                 }
 
-                homeData[1] = new HomeData("Middag", list);
+                homeData[2] = new HomeData("Middag", list);
 
                 mAdapter.notifyItemChanged(1);
-
-
             }
 
         };
 
         medicineViewModel.getMiddagList().observe(this, middagObserver);
 
-        //
+        // Observer avond
         final Observer<List<Medicine>> avondObserver = new Observer<List<Medicine>>(){
             @Override
             public void onChanged(@Nullable final List<Medicine> newList){
                 ArrayList<Medicine> list  = new ArrayList<>();
+                homeData[3] = null;
 
                 for(Medicine medicine : newList ){
                     list.add(medicine);
                 }
 
-                homeData[2] = new HomeData("Avond", list);
+                homeData[3] = new HomeData("Avond", list);
                 mAdapter.notifyItemChanged(2);
             }
 
@@ -116,22 +136,7 @@ public class HomeFragment extends Fragment {
         medicineViewModel.getAvondList().observe(this, avondObserver);
 
 
-        final Observer<List<Medicine>> nachtObserver = new Observer<List<Medicine>>(){
-            @Override
-            public void onChanged(@Nullable final List<Medicine> newList){
-                ArrayList<Medicine> list  = new ArrayList<>();
 
-                for(Medicine medicine : newList ){
-                    list.add(medicine);
-                }
-
-                homeData[3] = new HomeData("Nacht", list);
-                mAdapter.notifyItemChanged(3);
-            }
-
-        };
-
-        medicineViewModel.getNachtList().observe(this, nachtObserver);
 
         return view;
     }

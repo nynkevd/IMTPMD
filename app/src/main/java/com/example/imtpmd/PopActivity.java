@@ -112,11 +112,12 @@ public class PopActivity extends AppCompatActivity implements TimePickerDialog.O
             @Override
             public void onClick(View v) {
                 Bundle bundle = new Bundle();
-                bundle.putInt("DATE",1);
+                bundle.putLong("DATE", date.getTime());
 
                 selectedBTN = 0;
 
                 DialogFragment datePicker = new DatePickerFragment();
+                datePicker.setArguments(bundle);
                 datePicker.show(getSupportFragmentManager(), "datepicker");
             }
         });
@@ -126,11 +127,12 @@ public class PopActivity extends AppCompatActivity implements TimePickerDialog.O
             @Override
             public void onClick(View v) {
                 Bundle bundle = new Bundle();
-                bundle.putInt("DATE",1);
+                bundle.putLong("DATE", date2.getTime());
 
                 selectedBTN = 1;
 
                 DialogFragment datePicker = new DatePickerFragment();
+                datePicker.setArguments(bundle);
                 datePicker.show(getSupportFragmentManager(), "datepicker");
             }
         });

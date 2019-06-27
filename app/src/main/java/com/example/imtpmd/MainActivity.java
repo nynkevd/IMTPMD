@@ -1,5 +1,8 @@
 package com.example.imtpmd;
 
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.Transformations;
@@ -14,9 +17,11 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.os.Build;
 import android.os.StrictMode;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v4.app.NotificationCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -101,43 +106,35 @@ public class MainActivity extends AppCompatActivity {
             showStartScreen();
         }
 
-        Log.d("tessst", "tessst");
-
-//        NetworkManager.getInstance(this).getRequest("http://136.144.230.97:8090/api/medication?api_token=CilZjPDfkHDmb29qcJkqBS7bB2cup9T7Onqcmfaqt027QhvpqBhFvLinJ6Dp", new VolleyCallback(){
-//            @Override
-//            public void onSuccess(String result) { //de anonieme klasse gaat nu dingen doen
-////                Log.d("tessst", "HET WERKT");
-//            Gson gson = new Gson();
-//            testApi testpi = gson.fromJson(result, testApi.class);
-//
-//            Log.d("tessst", result);
-//
-//            }
-//        });
-
-//        NetworkManager.getInstance(getApplicationContext()).getRequest("http://136.144.230.97:8080/api/userinfo/anouk?api_token=rx7Mi675A1WDEvZPsGnrgvwkCEeOKlrX7rIPoXocluBKnupp9A02OLz7QcSL", new VolleyCallback(){
-//            @Override
-//            public void onSuccess(String result) {
-//                medicationCount = parseInt(result);
-//            }
-//        });
-
         // HE VOORDAT JE DEZE DOET NOG EVEN EEN TIJD TOEVOEGEN!!!!
 //        insertIntoDatabase("testDubbel", 40, getDateTime(12, 0), false , getDate(6, 24), getDate(6, 30));
 //        insertIntoDatabase("testDubbel", 40, getDateTime(16, 0), false , getDate(6, 22), getDate(6, 30));
-//        insertIntoDatabase("testMiddag155", 40, getDateTime(15, 30), false, getDate(6, 18), getDate(6, 27));
-//        insertIntoDatabase("testOchtend9", 40, getDateTime(9, 0), false);
-//        insertIntoDatabase("testMiddag155", 40, getDateTime(15, 30), false);
-//        insertIntoDatabase("testAvond20", 40, getDateTime(20, 18), false);
-//        insertIntoDatabase("testNacht4", 40, getDateTime(4, 0), false);
-//        insertIntoDatabase("testOchtend10", 40, getDateTime(10, 50), false);
-//        insertIntoDatabase("testMiddag15", 40, getDateTime(15, 0), false);
-//        insertIntoDatabase("testAvond22", 40, getDateTime(22, 7), false);
-//        insertIntoDatabase("testNacht5", 40, getDateTime(5, 0), false);
-//        insertIntoDatabase("testOchtend8", 40, getDateTime(8, 22), false);
-//        insertIntoDatabase("testMiddag13", 40, getDateTime(13, 0), false);
-//        insertIntoDatabase("testAvond23", 40, getDateTime(23, 31), false);
-//        insertIntoDatabase("testNacht2", 40, getDateTime(2, 0), false);
+
+        String channelID = "1";
+        Intent intent = new Intent(this, DashboardActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);//De activity komt bovenop de andere actieve activity
+        PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_ONE_SHOT);
+
+        NotificationCompat.Builder builder = new NotificationCompat.Builder(this, channelID)
+                .setSmallIcon(R.drawable.ic_action_pil) // het klopt nu niet dat er action in de naam staat denk ik...
+                .setContentTitle("HALLOOOOOO")
+                .setContentText("Je moet niet je medicijnen vergeten!")
+                .setContentIntent(pendingIntent)
+                .setPriority(NotificationCompat.PRIORITY_DEFAULT)
+                .setAutoCancel(true);
+
+
+        //Vanaf android oreo en verder, gebruik deze code
+        NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.O){
+            NotificationChannel channel = new NotificationChannel(
+                    channelID, "Test", NotificationManager.IMPORTANCE_DEFAULT
+            );
+            notificationManager.createNotificationChannel(channel);
+            notificationManager.notify(0, builder.build());
+        }
+
 
 
         medicationNameViewModel.getAllMedicationNames().observe(this, new Observer<List<MedicationName>>() {

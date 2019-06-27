@@ -34,8 +34,8 @@ public class MedicineRepository {
         nachtList = medicineDAO.loadByTime(getDateTime(0), getDateTime(6));
 
         distinctNames = medicineDAO.loadDistinctNames();
-        dateVan = medicineDAO.loadDateVan("testOchtend9"); //aanpassen!!
-        dateTot = medicineDAO.loadDateTot("testOchtend9"); //aanapssen!!
+//        dateVan = medicineDAO.loadDateVan("testOchtend9"); //aanpassen!!
+//        dateTot = medicineDAO.loadDateTot("testOchtend9"); //aanapssen!!
 
         Long currentTime = Calendar.getInstance().getTimeInMillis();
         overviewData = medicineDAO.loadDistinctData(currentTime);
@@ -73,9 +73,9 @@ public class MedicineRepository {
 
     LiveData<List<String>> getDistinctNames() { return distinctNames; }
 
-    LiveData<Long> getDateVan() { return dateVan; }
-
-    LiveData<Long> getDateTot() {return dateTot; }
+//    LiveData<Long> getDateVan() { return dateVan; }
+//
+//    LiveData<Long> getDateTot() {return dateTot; }
 
     LiveData<List<Medicine>> getOverviewData() {return overviewData; }
 
