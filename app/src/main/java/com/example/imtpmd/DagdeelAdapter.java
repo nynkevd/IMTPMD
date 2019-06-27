@@ -45,15 +45,22 @@ public class DagdeelAdapter extends RecyclerView.Adapter<DagdeelAdapter.MyViewHo
 
     @Override
     public void onBindViewHolder(@NonNull DagdeelAdapter.MyViewHolder myViewHolder, int i) {
-        if(data[i].getMedicineList().size() > 0){
+        if(data[i] != null){
             myViewHolder.titleTextView.setText(data[i].getTitle());
 
             medicationAdapter = new MedicationAdapter(data[i].getMedicineList());
             myViewHolder.medicineListView.setAdapter(medicationAdapter);
-        }else{
-            myViewHolder.titleTextView.setVisibility(View.GONE);
-            myViewHolder.medicineListView.setVisibility(View.GONE);
         }
+
+//        if(data[i].getMedicineList().size() > 0){
+//            myViewHolder.titleTextView.setText(data[i].getTitle());
+//
+//            medicationAdapter = new MedicationAdapter(data[i].getMedicineList());
+//            myViewHolder.medicineListView.setAdapter(medicationAdapter);
+//        }else{
+//            myViewHolder.titleTextView.setVisibility(View.GONE);
+//            myViewHolder.medicineListView.setVisibility(View.GONE);
+//        }
 
     }
 

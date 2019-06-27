@@ -1,5 +1,6 @@
 package com.example.imtpmd;
 
+import android.graphics.Color;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -68,8 +69,18 @@ public class MedicationAdapter extends RecyclerView.Adapter<MedicationAdapter.My
         SimpleDateFormat test = new SimpleDateFormat("HH:mm");
         String time = test.format(medicationList.get(i).getDate());
 
-
         myViewHolder.timeView.setText(time);
+
+        Calendar currentTime = Calendar.getInstance();
+        if(currentTime.getTimeInMillis() > medicationList.get(i).getDate()){
+            myViewHolder.medicationNameView.setTextColor(Color.parseColor("#A61D17"));
+            myViewHolder.timeView.setTextColor(Color.parseColor("#A61D17"));
+        }
+
+        if(medicationList.get(i).getChecked()){
+            myViewHolder.medicationNameView.setTextColor(Color.parseColor("#cccccc"));
+            myViewHolder.timeView.setTextColor(Color.parseColor("#cccccc"));
+        }
 
         final int position = i;
 
