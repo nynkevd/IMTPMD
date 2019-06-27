@@ -37,7 +37,6 @@ public class MedicationSettingsAdapter extends RecyclerView.Adapter<MedicationSe
             name = v.findViewById(R.id.name_text);
             time = v.findViewById(R.id.time_text);
             medSwitch = v.findViewById(R.id.switch1);
-
         }
     }
 
@@ -47,7 +46,11 @@ public class MedicationSettingsAdapter extends RecyclerView.Adapter<MedicationSe
 
     @NonNull
     @Override
-    public MedicationSettingsAdapter.MyViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
+    public MedicationSettingsAdapter.MyViewHolder
+
+
+
+    onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
         v = LayoutInflater.from(viewGroup.getContext())
                 .inflate(R.layout.settings_medication_item, viewGroup, false);
 
@@ -58,12 +61,13 @@ public class MedicationSettingsAdapter extends RecyclerView.Adapter<MedicationSe
     @Override
     public void onBindViewHolder(@NonNull final MyViewHolder myViewHolder, int i) {
         myViewHolder.name.setText(data.get(i).getName());
-
         myViewHolder.time.setText(data.get(i).getTime());
+        myViewHolder.medSwitch.setChecked(false);
     }
 
     @Override
     public int getItemCount() {
+        Log.d("COUNT", "getItemCount: " + data.size());
         return data.size();
     }
 
