@@ -9,7 +9,9 @@ import android.os.Bundle;
 import android.view.MenuItem;
 import android.widget.FrameLayout;
 
+import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 
 public class DashboardActivity extends AppCompatActivity {
@@ -41,7 +43,7 @@ public class DashboardActivity extends AppCompatActivity {
 
         day = day.substring(0, 1).toUpperCase() + day.substring(1);
 
-        date = new SimpleDateFormat("dd-MM-yyyy").format(new Date());
+        date = DateFormat.getDateInstance().format(Calendar.getInstance().getTimeInMillis());;
 
         setFragment(homeFragment);
         setTitle(day + " " + date);

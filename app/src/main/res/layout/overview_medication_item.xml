@@ -13,13 +13,13 @@
     android:elevation="2dp">
 
 
-
     <TextView
         android:id="@+id/name_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="TextView"
-        android:textColor="#0B0014"/>
+        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+        android:textColor="#0B0014" />
 
     <TextView
         android:id="@+id/date_van_text"

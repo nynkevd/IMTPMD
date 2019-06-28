@@ -166,7 +166,7 @@ public class PopActivity extends AppCompatActivity implements TimePickerDialog.O
 
         int width = dm.widthPixels ;
         int height = dm.heightPixels;
-        getWindow().setLayout((int) (width*.8), (int) (height*.8));
+        getWindow().setLayout((int) (width*.8), (int) (height*.6));
 
         View popup = findViewById(R.id.activityPopBegin);
         View root = popup.getRootView();
