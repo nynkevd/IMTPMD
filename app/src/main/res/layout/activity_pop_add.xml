@@ -1,16 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="match_parent" android:layout_height="match_parent" android:background="@drawable/border" android:elevation="2dp">
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:elevation="2dp"
+    android:id="@+id/activityPopAdd">
 
 
     <TextView
         android:id="@+id/textView"
         style="@android:style/Widget.DeviceDefault.TextView"
-        android:layout_width="343dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
-        android:layout_marginTop="0dp"
+        android:layout_marginStart="18dp"
+        android:layout_marginTop="18dp"
         android:text="Naam Medicijn"
         android:textAppearance="@style/TextAppearance.AppCompat.Medium"
         app:fontFamily="sans-serif-smallcaps"
@@ -19,10 +24,12 @@
 
     <TextView
         android:id="@+id/textView3"
-        android:layout_width="343dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/timeBTN"
-        android:layout_marginTop="0dp"
+        android:layout_below="@+id/timeTV"
+        android:layout_alignParentStart="true"
+        android:layout_marginStart="18dp"
+        android:layout_marginTop="18dp"
         android:text="Datum"
         android:textAppearance="@style/TextAppearance.AppCompat.Medium"
         app:fontFamily="sans-serif-smallcaps"
@@ -30,65 +37,39 @@
 
     <TextView
         android:id="@+id/textView5"
-        android:layout_width="343dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/medNameTV"
         android:layout_alignParentStart="true"
-        android:layout_marginTop="0dp"
+        android:layout_marginStart="18dp"
+        android:layout_marginTop="18dp"
         android:text="Tijd"
         android:textAppearance="@style/TextAppearance.AppCompat.Medium"
         app:fontFamily="sans-serif-smallcaps"
         app:textAllCaps="false" />
 
-    <Button
-        android:id="@+id/timeBTN"
-        style="@style/Widget.AppCompat.Button.Colored"
-        android:layout_width="127dp"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/textView5"
-        android:layout_marginStart="0dp"
-        android:layout_marginTop="0dp"
-        android:layout_toEndOf="@+id/timeTV"
-        android:text="Kies een tijd" />
 
     <TextView
         android:id="@+id/timeTV"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/textView5"
-        android:layout_marginTop="0dp"
+        android:layout_alignParentStart="true"
+        android:layout_marginStart="18dp"
+        android:layout_marginTop="6dp"
         android:text="Huidige Tijd"
         android:textAppearance="@style/TextAppearance.AppCompat.Body2"
         android:textSize="21dp"
         app:fontFamily="sans-serif-medium" />
 
-    <Button
-        android:id="@+id/dateBTN"
-        style="@style/Widget.AppCompat.Button.Colored"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/dateTV2"
-        android:layout_marginTop="0dp"
-        android:text=" Kies datum van" />
-
-    <Button
-        android:id="@+id/dateBTN2"
-        style="@style/Widget.AppCompat.Button.Colored"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/dateTV2"
-        android:layout_marginStart="0dp"
-        android:layout_marginTop="0dp"
-        android:layout_toEndOf="@+id/dateBTN"
-        android:text=" Kies datum tot" />
 
     <TextView
         android:id="@+id/dateTV2"
-        android:layout_width="276dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/dateTV"
         android:layout_marginStart="0dp"
-        android:layout_marginTop="0dp"
+        android:layout_marginTop="6dp"
         android:layout_toEndOf="@+id/textView9"
         android:text="25 jun. 2019"
         android:textAppearance="@style/TextAppearance.AppCompat.Body2"
@@ -97,11 +78,11 @@
 
     <TextView
         android:id="@+id/dateTV"
-        android:layout_width="276dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/textView3"
         android:layout_marginStart="0dp"
-        android:layout_marginTop="0dp"
+        android:layout_marginTop="6dp"
         android:layout_toEndOf="@+id/textView10"
         android:text="25 jun. 2019"
         android:textAppearance="@style/TextAppearance.AppCompat.Body2"
@@ -110,26 +91,31 @@
 
     <TextView
         android:id="@+id/textView9"
-        android:layout_width="53dp"
+        android:layout_width="40dp"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/dateTV"
-        android:layout_marginTop="0dp"
+        android:layout_alignBaseline="@id/dateTV2"
+        android:layout_alignParentStart="true"
+        android:layout_marginStart="18dp"
         android:text="tot" />
 
     <TextView
         android:id="@+id/textView10"
-        android:layout_width="57dp"
+        android:layout_width="40dp"
         android:layout_height="20dp"
         android:layout_below="@+id/textView3"
-        android:layout_marginTop="0dp"
+        android:layout_alignBaseline="@id/dateTV"
+        android:layout_alignParentStart="true"
+        android:layout_marginStart="18dp"
+        android:layout_marginTop="6dp"
         android:text="van" />
 
     <Button
         android:id="@+id/confirmBTN"
         android:layout_width="134dp"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/dateBTN"
-        android:layout_marginTop="0dp"
+        android:layout_below="@+id/dateTV2"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="24dp"
         android:text="bevestigen" />
 
     <AutoCompleteTextView
@@ -138,7 +124,79 @@
         android:layout_height="wrap_content"
 
         android:layout_below="@+id/textView"
-        android:layout_marginTop="0dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginStart="18dp"
+        android:layout_marginTop="6dp"
+        android:layout_marginEnd="18dp"
         android:completionThreshold="1" />
+
+    <ImageButton
+        android:id="@+id/dateBTN"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@id/dateTV"
+        android:layout_alignParentEnd="true"
+        android:layout_marginEnd="18dp"
+        android:background="@null"
+        android:tint="@color/grey"
+        app:srcCompat="@drawable/ic_action_calendar"
+        android:baselineAlignBottom="true"/>
+
+    <ImageButton
+        android:id="@+id/dateBTN2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@id/dateTV2"
+        android:layout_alignParentEnd="true"
+        android:layout_marginEnd="18dp"
+        android:background="@null"
+        android:tint="@color/grey"
+        app:srcCompat="@drawable/ic_action_calendar"
+        android:baselineAlignBottom="true"/>
+
+    <ImageButton
+        android:id="@+id/timeBTN"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@id/timeTV"
+        android:layout_alignParentEnd="true"
+        android:layout_marginEnd="18dp"
+        android:background="@null"
+        android:tint="@color/grey"
+        app:srcCompat="@drawable/ic_action_time"
+        android:baselineAlignBottom="true"/>
+
+    <!--<Button-->
+    <!--android:id="@+id/dateBTN"-->
+    <!--style="@style/Widget.AppCompat.Button.Colored"-->
+    <!--android:layout_width="wrap_content"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:layout_below="@+id/dateTV2"-->
+    <!--android:layout_alignParentStart="true"-->
+    <!--android:layout_marginStart="18dp"-->
+    <!--android:layout_marginTop="0dp"-->
+    <!--android:text=" Kies datum van" />-->
+
+    <!--<Button-->
+    <!--android:id="@+id/dateBTN2"-->
+    <!--style="@style/Widget.AppCompat.Button.Colored"-->
+    <!--android:layout_width="wrap_content"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:layout_below="@+id/dateTV2"-->
+    <!--android:layout_marginStart="0dp"-->
+    <!--android:layout_marginTop="0dp"-->
+    <!--android:layout_toEndOf="@+id/dateBTN"-->
+    <!--android:text=" Kies datum tot" />-->
+
+    <!--<Button-->
+    <!--android:id="@+id/timeBTN"-->
+    <!--style="@style/Widget.AppCompat.Button.Colored"-->
+    <!--android:layout_width="127dp"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:layout_alignBaseline="@id/textView5"-->
+    <!--android:layout_alignParentEnd="true"-->
+    <!--android:layout_marginEnd="18dp"-->
+    <!--android:text="Kies een tijd" />-->
 
 </RelativeLayout>
