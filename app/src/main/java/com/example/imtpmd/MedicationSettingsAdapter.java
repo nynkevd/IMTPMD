@@ -3,6 +3,7 @@ package com.example.imtpmd;
 import android.app.NotificationManager;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -29,23 +30,26 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
+import static android.content.Context.MODE_PRIVATE;
+
 public class MedicationSettingsAdapter extends RecyclerView.Adapter<MedicationSettingsAdapter.MyViewHolder> {
 
     private List<SettingsData> data;
     private View v;
     private int j;
+    private SharedPreferences prefs;
 
     public static class MyViewHolder extends RecyclerView.ViewHolder{
         public TextView name;
         public TextView time;
         public Switch medSwitch;
 
-
         public MyViewHolder(View v){
             super(v);
             name = v.findViewById(R.id.name_text);
             time = v.findViewById(R.id.time_text);
             medSwitch = v.findViewById(R.id.switch1);
+
         }
     }
 
@@ -71,74 +75,41 @@ public class MedicationSettingsAdapter extends RecyclerView.Adapter<MedicationSe
         myViewHolder.time.setText(data.get(i).getMedicine().getTime());
         myViewHolder.medSwitch.setChecked(data.get(i).getMedicine().getHasNotifs());
 
-//        myViewHolder.medSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-////            @Override
-////            public void onCheckedChanged(CompoundButton compoundButton, boolean isChecked) {
-////                if (isChecked) {
-////                    Log.d("CHECK", "onCheckedChanged: TEOVOEGEN " + data.get(j).getMedicine().getName());
-////                    SettingsFragment.updateMedicine(data.get(getItemViewType(j)).getMedicine());
-////                    return;
-////
-////                } else {
-////                    Log.d("CHECK" +
-////                            "", "onCheckedChanged: VERWIDJEREN");
-////
-////                    SettingsFragment.updateMedicine(data.get(getItemViewType(j)).getMedicine());
-////                    return;
-////                }
-////
-////            }
-////        });
+        prefs = v.getContext().getSharedPreferences("notifications", MODE_PRIVATE);
+
         myViewHolder.medSwitch.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick (View view) {
                 if (myViewHolder.medSwitch.isChecked()){
-                    Log.d("ah", "onClick: Hij si nu aan" + data.get(position).getMedicine().getName());
-
-                    long diff = data.get(position).getMedicine().getDateTo() - data.get(position).getMedicine().getDateFrom();
-                    int dayCount = (int) diff / (24 * 60 * 60 * 1000);
-                    Log.d("DAYS", String.valueOf(dayCount));
-
-                    Calendar c = Calendar.getInstance();
-                    c.setTimeInMillis(data.get(position).getMedicine().getDate());
 
                     String name = data.get(position).getMedicine().getName();
                     String tag = data.get(position).getMedicine().getTag();
 
                     SettingsFragment.updateMedicine(data.get(position).getMedicine());
 
-                    for (int x = 0; x < dayCount; x++){
-                        Long medDate = c.getTime().getTime();
-                        scheduleNotification(medDate, tag, name);
+                    //Notificaties aan zetten
+                    SharedPreferences.Editor editor = prefs.edit();
+                    editor.putBoolean(tag, true);
+                    editor.apply();
 
-                        c.add(Calendar.DATE, 1);
-                    }
+                    Toast.makeText(v.getContext(), "Notificaties voor " + name + " aangezet", Toast.LENGTH_LONG).show();
+
                 } else {
-                    Log.d("ah", "onClick: Hij is u uit");
                     SettingsFragment.updateMedicine(data.get(position).getMedicine());
 
+                    String name = data.get(position).getMedicine().getName();
                     String tag = data.get(position).getMedicine().getTag();
 
-                    NotificationHandler.cancelReminder(tag);
+                    //Notificatiet uit zetten
+                    SharedPreferences.Editor editor = prefs.edit();
+                    editor.putBoolean(tag, false);
+                    editor.apply();
+
+                    Toast.makeText(v.getContext(), "Notificaties voor " + name + " uitgezet", Toast.LENGTH_LONG).show();
                 }
             }
         });
     }
-
-    private void scheduleNotification(Long time, String tag, String name){
-        long alertTime = time - System.currentTimeMillis();
-
-        Log.d("notification", "Alert time: " + alertTime);
-
-        Data data = new Data.Builder()
-                .putString("title", "Medicijn")
-                .putString("text", "Vergeet niet om " + name + " te nemen?!?!?!?!?!")
-                .putInt("id", 0)
-                .build();
-
-        NotificationHandler.scheduleReminder(alertTime, data, tag);
-    }
-
 
     @Override
     public int getItemCount() {

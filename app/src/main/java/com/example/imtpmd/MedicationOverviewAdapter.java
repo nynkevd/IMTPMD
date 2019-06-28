@@ -72,8 +72,6 @@ public class MedicationOverviewAdapter extends RecyclerView.Adapter<MedicationOv
             public void onClick(View view) {
 
             OverviewFragment.deleteMedicine(data.get(position));
-            //toast werkt niet?
-            //Toast.makeText(view.getContext(), "Medicijn verwijderd", Toast.LENGTH_LONG);
             }
         });
     }

@@ -41,6 +41,7 @@ public class PopAddActivity extends AppCompatActivity implements TimePickerDialo
     private static MedicineViewModel medicineViewModel;
     private static MedicationNameViewModel medicationNameViewModel;
     RelativeLayout layout1;
+    private SharedPreferences prefs;
 
     private ArrayList<String> allMedicationNamesAL = new ArrayList<>();
     ArrayAdapter<String> allMedicationNamesAdapter;
@@ -77,6 +78,7 @@ public class PopAddActivity extends AppCompatActivity implements TimePickerDialo
         medicineViewModel = ViewModelProviders.of(this).get(MedicineViewModel.class);
         medicationNameViewModel = ViewModelProviders.of(this).get(MedicationNameViewModel.class);
 
+        prefs = getSharedPreferences("notifications", MODE_PRIVATE);
 
         medNameTV = (AutoCompleteTextView) findViewById(R.id.medNameTV);
         medicationNameViewModel.getAllMedicationNames().observe(this, new Observer<List<MedicationName>>() {
@@ -305,14 +307,23 @@ public class PopAddActivity extends AppCompatActivity implements TimePickerDialo
     private void scheduleNotification(Long time, String tag, String name){
         long alertTime = time - System.currentTimeMillis();
 
-        Log.d("notification", "Alert time: " + alertTime);
+        if(alertTime > 0){
+            Log.d("notification", "Alert time: " + alertTime);
 
-        Data data = new Data.Builder()
-                .putString("title", "Medicijn")
-                .putString("text", "Vergeet niet om " + name + " te nemen?!?!?!?!?!")
-                .putInt("id", 0)
-                .build();
+            Data data = new Data.Builder()
+                    .putString("title", name)
+                    .putString("text", "Vergeet niet om je medicijn " + name + " te nemen.")
+                    .putInt("id", 0)
+                    .putString("tag", tag)
+                    .build();
 
-        NotificationHandler.scheduleReminder(alertTime, data, tag);
+            NotificationHandler.scheduleReminder(alertTime, data, tag);
+
+            // Sla in de sharedpreferences op dat er standaard een notificatie gestuurd wordt
+            SharedPreferences.Editor editor = prefs.edit();
+            editor.putBoolean(tag, true);
+            editor.apply();
+        }
+
     }
 }
