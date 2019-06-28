@@ -73,8 +73,8 @@ public class MedicationAdapter extends RecyclerView.Adapter<MedicationAdapter.My
 
         Calendar currentTime = Calendar.getInstance();
         if(currentTime.getTimeInMillis() > medicationList.get(i).getDate()){
-            myViewHolder.medicationNameView.setTextColor(Color.parseColor("#A61D17"));
-            myViewHolder.timeView.setTextColor(Color.parseColor("#A61D17"));
+            myViewHolder.medicationNameView.setTextColor(Color.parseColor("#0A090C"));
+            myViewHolder.timeView.setTextColor(Color.parseColor("#0A090C"));
         }
 
         if(medicationList.get(i).getChecked()){

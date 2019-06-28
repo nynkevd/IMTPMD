@@ -116,7 +116,9 @@
         android:layout_below="@+id/dateTV2"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="24dp"
-        android:text="bevestigen" />
+        android:text="bevestigen"
+        android:background="@drawable/buttons"
+        android:textColor="@color/colorWHite"/>
 
     <AutoCompleteTextView
         android:id="@+id/medNameTV"
