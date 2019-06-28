@@ -5,6 +5,7 @@ import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Build;
 import android.support.annotation.NonNull;
 import android.support.v4.app.NotificationCompat;
@@ -21,8 +22,11 @@ import java.util.Objects;
 import java.util.concurrent.TimeUnit;
 
 public class NotificationHandler extends Worker {
+    private SharedPreferences prefs;
     public NotificationHandler(@NonNull Context context, @NonNull WorkerParameters workerParameters){
         super(context, workerParameters);
+
+        prefs = getApplicationContext().getSharedPreferences("notifications", Context.MODE_PRIVATE);
     }
 
     public static void scheduleReminder(Long duration, Data data, String tag){
@@ -46,8 +50,14 @@ public class NotificationHandler extends Worker {
         String title = getInputData().getString("title");
         String text = getInputData().getString("text");
         int id = (int) getInputData().getLong("id", 0);
+        String tag = getInputData().getString("tag");
 
-        sendNotification(title, text, id);
+        // Check of de notificaties voor het medicijn aan staan
+        Boolean notify = prefs.getBoolean(tag, false);
+
+        if(notify){
+            sendNotification(title, text, id);
+        }
 
         return Result.success();
     }

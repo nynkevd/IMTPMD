@@ -3,6 +3,7 @@ package com.example.imtpmd;
 
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -29,6 +30,7 @@ public class SettingsFragment extends Fragment {
     private RecyclerView.LayoutManager layoutManager;
     private List<SettingsData> settingsData;
     private static MedicineViewModel medicineViewModel;
+    private SharedPreferences prefs;
 
 
     public SettingsFragment() {
