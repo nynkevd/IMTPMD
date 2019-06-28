@@ -24,8 +24,8 @@
 
     <TextView
         android:id="@+id/textView2"
-        android:layout_width="297dp"
-        android:layout_height="102dp"
+        android:layout_width="312dp"
+        android:layout_height="128dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="36dp"
         android:layout_marginEnd="8dp"
@@ -60,7 +60,7 @@
         android:layout_width="wrap_content"
         android:layout_height="0dp"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="4dp"
+        android:layout_marginTop="24dp"
         android:layout_marginEnd="8dp"
         android:text="@string/overslaan"
         app:layout_constraintEnd_toEndOf="parent"
