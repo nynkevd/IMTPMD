@@ -28,7 +28,7 @@ public class SettingsFragment extends Fragment {
     private static RecyclerView.Adapter settingsAdapter;
     private RecyclerView.LayoutManager layoutManager;
     private List<SettingsData> settingsData;
-    private MedicineViewModel medicineViewModel;
+    private static MedicineViewModel medicineViewModel;
 
 
     public SettingsFragment() {
@@ -61,8 +61,7 @@ public class SettingsFragment extends Fragment {
 
                 for(Medicine medicine : medicines){
 
-
-                    settingsData.add(new SettingsData(medicine.getName(), medicine.getTime(), "tag"));
+                    settingsData.add(new SettingsData(medicine));
                 }
 
                 settingsAdapter.notifyDataSetChanged();
@@ -71,11 +70,13 @@ public class SettingsFragment extends Fragment {
 
         medicineViewModel.getOverviewData().observe(this, observerNames);
 
-
-
-
-
         return view;
+    }
+
+    public static void updateMedicine(Medicine medicineWithupdate){
+        Log.d("UPDATE", "updateMedicine: " + medicineWithupdate.getName());
+        medicineWithupdate.setHasNotifs(!medicineWithupdate.getHasNotifs());
+        medicineViewModel.update(medicineWithupdate);
     }
 
 }

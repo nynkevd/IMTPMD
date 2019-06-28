@@ -183,8 +183,8 @@ public class MainActivity extends AppCompatActivity {
         startActivity(myIntent);
     }
 
-    private void insertIntoDatabase(String name, int milligram, Long date, Boolean isChecked, Long dateFrom, Long dateTo, String time){
-        Medicine m = new Medicine(name, milligram, date, isChecked, dateFrom, dateTo, time);
+    private void insertIntoDatabase(String name, int milligram, Long date, Boolean isChecked, Long dateFrom, Long dateTo, String time, Boolean hasNotifs, String tag){
+        Medicine m = new Medicine(name, milligram, date, isChecked, dateFrom, dateTo, time, hasNotifs, tag);
 
         medicineViewModel.insert(m);
 

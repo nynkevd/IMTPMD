@@ -6,6 +6,7 @@ import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 import android.support.v7.app.AlertDialog;
+import android.util.Log;
 
 public class WarningFragment extends DialogFragment {
 
@@ -35,8 +36,11 @@ public class WarningFragment extends DialogFragment {
         builder.setMessage("Weet je zeker dat je " + name + " wilt verwijderen?")
                 .setPositiveButton("ja", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
-                        medicineViewModel.deleteMedicine(overviewData);
                         cancelNotifications(overviewData);
+                        Log.d("DEL", "onClick: Verijderds");
+
+                        medicineViewModel.deleteMedicine(overviewData);
+
                     }
                 })
                 .setNegativeButton("nee", new DialogInterface.OnClickListener() {

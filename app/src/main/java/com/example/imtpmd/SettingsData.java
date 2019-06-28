@@ -1,37 +1,20 @@
 package com.example.imtpmd;
 
 public class SettingsData {
-    private String name;
-    private String time;
-    private String tag;
+    private Medicine medicine;
 
-    public SettingsData(String name, String time, String tag){
-        this.name = name;
-        this.time = time;
-        this.tag = tag;
+    public SettingsData(Medicine medicine){
+        this.medicine = medicine;
     }
 
-    public String getName() {
-        return name;
+    public Medicine getMedicine() {
+        return medicine;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setMedicine( Medicine medicine) {
+        this.medicine = medicine;
     }
 
-    public String getTime() {
-        return time;
-    }
 
-    public void setTime(String time) {
-        this.time = time;
-    }
 
-    public String getTag() {
-        return tag;
-    }
-
-    public void setTag(String tag) {
-        this.tag = tag;
-    }
 }
