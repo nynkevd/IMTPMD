@@ -262,13 +262,15 @@ public class PopActivity extends AppCompatActivity implements TimePickerDialog.O
             Log.d("CAL", DateFormat.getDateInstance().format(c.getTime()));
             medDate = c.getTime().getTime();
 
-            Medicine m = new Medicine(name, milligram, medDate, isChecked, dateFrom, dateTo, time);
+            String tag = name + dateFrom + dateTo + time;
+
+            Medicine m = new Medicine(name, milligram, medDate, isChecked, dateFrom, dateTo, time, true, tag);
 
             medicineViewModel.insert(m);
-                c.add(Calendar.DATE, 1);
+            c.add(Calendar.DATE, 1);
 
             // Voeg notificatie toe
-            String tag = name + dateFrom + dateTo + time; // Misschien moet de tag uniek zijn, mar hierdoor kunnen we alle notificaties voor de medicijnen verwijderen
+            //String tag = name + dateFrom + dateTo + time; // Misschien moet de tag uniek zijn, mar hierdoor kunnen we alle notificaties voor de medicijnen verwijderen
             scheduleNotification(medDate, tag, name);
         }
 

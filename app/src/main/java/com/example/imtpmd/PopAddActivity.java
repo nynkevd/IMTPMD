@@ -259,6 +259,7 @@ public class PopAddActivity extends AppCompatActivity implements TimePickerDialo
         if (!name.equals("")) {
             int milligram = 0;
             boolean isChecked = false;
+
             Long dateFrom = this.date.getTime();
             Long dateTo = this.date2.getTime();
 
@@ -278,7 +279,9 @@ public class PopAddActivity extends AppCompatActivity implements TimePickerDialo
                 Log.d("CAL", DateFormat.getDateInstance().format(c.getTime()));
                 medDate = c.getTime().getTime();
 
-                Medicine m = new Medicine(name, milligram, medDate, isChecked, dateFrom, dateTo, time);
+                String tag = name + dateFrom + dateTo + time;
+
+                Medicine m = new Medicine(name, milligram, medDate, isChecked, dateFrom, dateTo, time, true, tag);
                 Log.d("tijd", m.getDateFrom().toString());
                 Log.d("tijd", m.getDateTo().toString());
 
@@ -286,7 +289,7 @@ public class PopAddActivity extends AppCompatActivity implements TimePickerDialo
                 c.add(Calendar.DATE, 1);
 
                 // Voeg notificatie toe
-                String tag = name + dateFrom + dateTo + time; // Misschien moet de tag uniek zijn, mar hierdoor kunnen we alle notificaties voor de medicijnen verwijderen
+//                String tag = name + dateFrom + dateTo + time; // Misschien moet de tag uniek zijn, mar hierdoor kunnen we alle notificaties voor de medicijnen verwijderen
                 scheduleNotification(medDate, tag, name);
             }
 

@@ -62,7 +62,7 @@ public class DashboardActivity extends AppCompatActivity {
 
                     case R.id.nav_settings:
                         setFragment(settingsFragment);
-                        setTitle("Instellingen");
+                        setTitle("Notificatie Instellingen");
                         return true;
 
                     default:

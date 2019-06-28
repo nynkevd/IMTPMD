@@ -17,8 +17,10 @@ public class Medicine {
     private Long dateFrom;
     private Long dateTo;
     private Boolean isChecked;
+    private Boolean hasNotifs;
+    private String tag;
 
-    public Medicine(String name, int milligram, Long date, Boolean isChecked, Long dateFrom, Long dateTo, String time){
+    public Medicine(String name, int milligram, Long date, Boolean isChecked, Long dateFrom, Long dateTo, String time, Boolean hasNotifs, String tag){
         this.name = name;
         this.milligram = milligram;
         this.date = date;
@@ -26,6 +28,8 @@ public class Medicine {
         this.dateFrom = dateFrom;
         this.dateTo = dateTo;
         this.time = time;
+        this.hasNotifs = hasNotifs;
+        this.tag = tag;
     }
 
     public int getId(){return this.id;}
@@ -36,6 +40,8 @@ public class Medicine {
     public Long getDateTo(){return this.dateTo;}
     public Boolean getChecked(){return this.isChecked;}
     public String getTime(){return this.time;}
+    public Boolean getHasNotifs(){return this.hasNotifs;}
+    public String getTag(){return this.tag;}
 
     public void setId(int id){this.id = id;}
     public void setName(String name){this.name = name;}
@@ -45,5 +51,7 @@ public class Medicine {
     public void setDateTo(Long dateTo){this.dateTo = dateTo;}
     public void setChecked(Boolean isChecked){this.isChecked = isChecked;}
     public void setTime(String time){this.time = time;}
+    public void setHasNotifs(Boolean hasNotifs){this.hasNotifs = hasNotifs;}
+    public void setTag(String tag){this.tag = tag;}
 
 }
