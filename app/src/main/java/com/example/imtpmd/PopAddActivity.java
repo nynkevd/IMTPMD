@@ -173,13 +173,13 @@ public class PopAddActivity extends AppCompatActivity implements TimePickerDialo
         DisplayMetrics dm = new DisplayMetrics();
         getWindowManager().getDefaultDisplay().getMetrics(dm);
 
+        int width = dm.widthPixels ;
+        int height = dm.heightPixels;
+        getWindow().setLayout((int) (width*.8), (int) (height*.6));
+
         View popup = findViewById(R.id.activityPopAdd);
         View root = popup.getRootView();
         root.setBackgroundResource(R.drawable.card_overview);
-
-        int width = dm.widthPixels ;
-        int height = dm.heightPixels;
-        getWindow().setLayout((int) (width*.8), (int) (height*.8));
     };
 
     @Override

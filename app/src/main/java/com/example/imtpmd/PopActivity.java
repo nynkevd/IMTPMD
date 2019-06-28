@@ -15,6 +15,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
+import android.widget.ImageButton;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.TimePicker;
@@ -50,9 +51,9 @@ public class PopActivity extends AppCompatActivity implements TimePickerDialog.O
     private TextView dateTV;
     private TextView dateTV2;
 
-    private Button timeBTN;
-    private Button dateBTN;
-    private Button dateBTN2;
+    private ImageButton timeBTN;
+    private ImageButton dateBTN;
+    private ImageButton dateBTN2;
     private Button confirmBTN;
 
     private Date date;
@@ -100,7 +101,7 @@ public class PopActivity extends AppCompatActivity implements TimePickerDialog.O
         dateTV2.setText(currentDate2);
         setTime(i, i1);
 
-        timeBTN = (Button) findViewById(R.id.timeBTN);
+        timeBTN = (ImageButton) findViewById(R.id.timeBTN);
         timeBTN.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -109,7 +110,7 @@ public class PopActivity extends AppCompatActivity implements TimePickerDialog.O
             }
         });
 
-        dateBTN = (Button) findViewById(R.id.dateBTN);
+        dateBTN = (ImageButton) findViewById(R.id.dateBTN);
         dateBTN.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -124,7 +125,7 @@ public class PopActivity extends AppCompatActivity implements TimePickerDialog.O
             }
         });
 
-        dateBTN2 = (Button) findViewById(R.id.dateBTN2);
+        dateBTN2 = (ImageButton) findViewById(R.id.dateBTN2);
         dateBTN2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -166,6 +167,10 @@ public class PopActivity extends AppCompatActivity implements TimePickerDialog.O
         int width = dm.widthPixels ;
         int height = dm.heightPixels;
         getWindow().setLayout((int) (width*.8), (int) (height*.8));
+
+        View popup = findViewById(R.id.activityPopBegin);
+        View root = popup.getRootView();
+        root.setBackgroundResource(R.drawable.card_overview);
     };
 
     @Override
